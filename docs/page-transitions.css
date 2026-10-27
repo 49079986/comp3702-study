@@ -1,5 +1,6 @@
 /* INFS 7903 Study transitions, adapted for the COMP3702 hash routers. */
 @media screen {
+  @media (min-width:801px) { .topbar { grid-template-columns:auto minmax(0,1fr) auto auto; } }
   .page-pixel-layer { position:fixed; z-index:30; display:grid; gap:0; overflow:hidden; pointer-events:none; contain:layout paint style; border-radius:8px; }
   .page-pixel { display:block; min-width:0; min-height:0; transform-origin:center; border-radius:1px; will-change:transform,opacity; }
   .topbar .motion-toggle { flex:none; padding:6px 9px; min-height:32px; font-size:10px; white-space:nowrap; color:#c2b29f; background:#1e1812; border-color:#51402c; }
