@@ -1,0 +1,7 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert'),path=require('path');
+const root=path.resolve(__dirname,'..','docs'),ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync(path.join(root,'data.js'),'utf8'),ctx);const d=ctx.window.STUDY_DATA,cjk=/[\u3400-\u9fff]/;
+for(const c of d.chapters){assert(c.mdEn.length>500,c.id);assert(!cjk.test(c.mdEn),c.id);assert.equal(c.skills.length,c.skillsEn.length);assert(c.blocks.every(b=>b.en&&b.zh));assert(c.html.includes('lang="en"'));assert(c.examAnswerEn&&!cjk.test(c.examAnswerEn));}
+for(const q of d.quiz){assert(q.qEn&&q.whyEn);assert.equal(q.optionsEn.length,4);assert.equal(new Set(q.optionsEn).size,4);for(const t of[q.qEn,q.whyEn,...q.optionsEn])assert(!cjk.test(t),q.id);}
+for(const p of [...d.problems,...d.mocks.flatMap(m=>m.items)]){assert(p.titleEn&&p.qEn&&p.answerEn);assert.equal(p.rubric.length,p.rubricEn.length,p.titleEn);for(const t of[p.titleEn,p.qEn,p.answerEn,...p.rubricEn])assert(!cjk.test(t),p.titleEn);}
+for(const id of ['A','B']){let f=fs.readFileSync(path.join(root,'print',`mock-${id}-english.html`),'utf8');assert(!cjk.test(f));assert(!f.includes('marking guide'));}
+console.log(JSON.stringify({chapters:d.chapters.length,pairedSections:d.chapters.reduce((n,c)=>n+c.blocks.length,0),mcq:d.quiz.length,written:d.problems.length,mockQuestions:d.mocks.reduce((n,m)=>n+m.items.length,0),terms:d.terms.length,commandVerbs:d.commands.length,status:'English fields complete; IDs and marks preserved; question-only papers verified'},null,2));

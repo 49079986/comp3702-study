@@ -1,0 +1,29 @@
+# downwind
+# num rows, num cols
+9, 28
+# rocket jumps
+1
+# min samples
+2
+# storm direction
+RIGHT
+# storm directional cost
+0.5
+# cost targets (min score target, max score target)
+14.0, 13.5
+# nodes targets (min score target, max score target)
+71, 37
+# UCS run time targets (min score target, max score target)
+0.1868, 0.0934
+# A* run time targets (min score target, max score target)
+0.035, 0.0175
+# grid data
+RRRRRRRRRRRRRRRRRRRRRRRRRRRR
+R  C       C        C      R
+R                          R
+R          P               R
+RE    RRRRRRRRRRRRRR       R
+R                          R
+R  C       C        C      R
+R                         ER
+RRRRRRRRRRRRRRRRRRRRRRRRRRRR

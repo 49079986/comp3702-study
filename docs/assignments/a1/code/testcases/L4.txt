@@ -1,0 +1,33 @@
+# the long haul
+# num rows, num cols
+13, 34
+# rocket jumps
+3
+# min samples
+3
+# storm direction
+RIGHT
+# storm directional cost
+0.5
+# cost targets (min score target, max score target)
+23.0, 21.5
+# nodes targets (min score target, max score target)
+189, 90
+# UCS run time targets (min score target, max score target)
+9.591, 4.7955
+# A* run time targets (min score target, max score target)
+0.0874, 0.0437
+# grid data
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+R   E    RRR                     R
+R        RRR C  C  C      RRR    R
+R  ****  RRR              RRR    R
+RP ****             C            R
+R    C      C           *****    R
+R     *****             *****    R
+R     *****             *****    R
+R     *****               C      R
+R           RR                   R
+R           RR                   R
+R                               ER
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR

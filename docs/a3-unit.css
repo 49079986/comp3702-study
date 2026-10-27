@@ -1,0 +1,231 @@
+/* A focused, offline learning unit on the existing Graphite surfaces. */
+.a3-unit-active .app-layout { display: block; max-width: 1600px; }
+.a3-unit-active .sidebar { display: none; }
+.a3-unit-active #main, [data-a3-standalone] #a3-root { max-width: 1520px; padding: 34px 30px 60px; }
+[data-a3-standalone] .topbar { max-width: 1510px; }
+.a3-unit { --a3-line:#303030; --a3-surface:#111; color:#dedede; }
+.a3-unit :is(h1,h2,h3) { color:#f2f2f2; font-weight:500; }
+.a3-unit h1 { font-size:clamp(25px,2.5vw,34px); letter-spacing:-1px; line-height:1.25; margin:0 0 10px; }
+.a3-unit h1 .bi-text>.lang-en { font-size:15px; letter-spacing:0; }
+.a3-unit h2 .bi-text>.lang-en { font-size:14px; }
+.a3-unit h2 { font-size:25px; margin:6px 0 10px; }
+.a3-unit h3 { font-size:17px; line-height:1.5; }
+.a3-unit p { font-size:13px; line-height:1.9; }
+.a3-unit .bi-text { display:inline-flex; vertical-align:middle; gap:4px; }
+.a3-unit .bi-text>.lang-zh { color:inherit; font-size:inherit; font-weight:inherit; }
+.a3-unit .bi-text>.lang-en { color:#969696; font-size:.8em; font-weight:400; line-height:1.6; }
+body[data-reading=en] .a3-unit .bi-text>.lang-en { color:inherit; font-size:inherit; }
+.a3-unit :is(button,a,input,select,textarea,summary):focus-visible { outline:2px solid #d5d5d5; outline-offset:3px; }
+.a3-unit button.primary .lang-en { color:#484848; }
+.a3-unit button { font-size:12px; min-height:36px; }
+.a3-unit .button { font-size:12px; }
+.a3-unit input:not([type=checkbox]),.a3-unit select,.a3-unit textarea { border:1px solid #414141; border-radius:6px; background:#171717; padding:8px 10px; min-width:0; color:#eee; max-width:100%; }
+.a3-unit input[type=range] { padding:4px 0; width:100%; accent-color:#dedede; }
+.a3-unit input[type=checkbox] { accent-color:#d5d5d5; width:16px; height:16px; vertical-align:middle; }
+.a3-unit code { font-family:Consolas,"SFMono-Regular",Menlo,monospace; font-size:11px; }
+.a3-unit pre { background:#151515; border:1px solid var(--a3-line); border-radius:7px; padding:14px; overflow:auto; color:#ddd; font:11px/1.8 Consolas,"SFMono-Regular",Menlo,monospace; }
+.a3-unit-top { display:flex; gap:24px; justify-content:space-between; margin-bottom:16px; }
+.a3-unit-top p { color:#a3a3a3; max-width:780px; margin-bottom:0; }
+.a3-unit-links { display:flex; flex-wrap:wrap; gap:8px; align-content:flex-start; justify-content:flex-end; max-width:310px; flex-shrink:0; }
+.a3-progress { display:grid; grid-template-columns:1fr auto; gap:7px 20px; margin-bottom:22px; font-size:11px; color:#aaa; }
+.a3-progress strong { color:#eee; font-size:18px; font-variant-numeric:tabular-nums; font-weight:500; }
+.a3-progress>div { grid-column:1/-1; height:3px; background:#232323; border-radius:4px; overflow:hidden; }
+.a3-progress i { display:block; height:100%; background:#c9c9c9; transition:width .25s; }
+.a3-unit-shell { display:grid; grid-template-columns:202px minmax(0,1fr); gap:27px; align-items:start; }
+.a3-lesson-nav { display:grid; gap:6px; position:sticky; top:108px; max-height:calc(100dvh - 126px); overflow-y:auto; scrollbar-width:thin; padding:2px 3px 12px; }
+.a3-lesson-nav>a { display:flex; align-items:flex-start; gap:12px; color:#a2a2a2; text-decoration:none; padding:11px 10px; border:1px solid transparent; border-radius:7px; font-size:12px; }
+.a3-lesson-nav>a>span:first-child:not(.bi-text) { color:#737373; min-width:18px; font:11px/1.9 Consolas,monospace; }
+.a3-lesson-nav>a.active { background:#171717; border-color:#414141; color:#f2f2f2; }
+.a3-lesson-nav>a.done>span:first-child { color:#b9cdbf; }
+.a3-lesson-nav>a:hover { background:#151515; color:#eee; }
+.a3-main-column,.a3-workspace>* { min-width:0; }
+.a3-lesson-head { margin:0 0 22px; }
+.a3-lesson-head p { color:#aaa; margin:0; }
+.a3-workspace { display:grid; grid-template-columns:minmax(0,1fr) 292px; gap:18px; align-items:start; }
+.a3-controls,.a3-scene,.a3-source,.a3-notes { background:var(--a3-surface); border:1px solid var(--a3-line); border-radius:9px; }
+.a3-controls { padding:18px; margin-bottom:14px; }
+.a3-controls:empty { display:none; }
+.a3-controls>.button-row { margin-top:12px; }
+.a3-controls label { font-size:12px; color:#c7c7c7; }
+.a3-controls output { font:12px Consolas,monospace; color:#e5e5e5; }
+.a3-label { font-size:13px; line-height:1.8; margin-bottom:14px; }
+.a3-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px 18px; margin-bottom:14px; }
+.a3-field { display:grid; gap:7px; min-width:0; margin-bottom:12px; }
+.a3-field select { width:100%; }
+.a3-direction-pad { display:flex; flex-wrap:wrap; gap:8px; }
+.a3-direction-pad button { min-width:84px; padding:9px 14px; }
+.a3-scene { padding:20px; }
+.a3-scene>p:last-child { margin-bottom:0; }
+.a3-badge { display:inline-block; color:#aaa; font:10px/1.5 Consolas,monospace; padding:4px 8px; border:1px solid #353535; border-radius:5px; margin-bottom:15px; }
+.a3-split { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(190px,1fr); gap:20px; align-items:start; }
+.a3-board { position:relative; aspect-ratio:var(--cols)/var(--rows); width:100%; background:#171717; border:1px solid #424242; border-radius:7px; overflow:hidden; }
+.a3-board:focus-visible { outline:2px solid #d5d5d5; outline-offset:3px; }
+.a3-board-cells { height:100%; display:grid; grid-template-columns:repeat(var(--cols),minmax(0,1fr)); grid-template-rows:repeat(var(--rows),minmax(0,1fr)); }
+.a3-cell { display:flex; align-items:center; justify-content:center; padding:0!important; margin:0; border:1px solid #252525!important; border-radius:0!important; min-height:0!important; min-width:0; background:#161616!important; font:11px/1 Consolas,monospace!important; color:#9c9c9c!important; user-select:none; }
+button.a3-cell:hover { background:#353535!important; }
+button.a3-cell:focus-visible { outline-offset:-3px!important; z-index:3; }
+.a3-cell.tile-R { background:#303030!important; opacity:1; }
+.a3-cell.tile-L { background:repeating-linear-gradient(45deg,#342828,#342828 4px,#271e1e 4px,#271e1e 8px)!important; color:#cd9990!important; }
+.a3-cell.tile-\* { background:#0a0a0a!important; color:#aaa!important; font-size:20px!important; }
+.a3-cell.rover-cell { box-shadow:inset 0 0 0 1px #a1a1a1; }
+.a3-cell:disabled { cursor:default; opacity:1; }
+.a3-rover { position:absolute; padding:3px; pointer-events:none; z-index:2; transition:left 300ms ease,top 300ms ease; display:grid; place-items:center; }
+.a3-rover svg { width:100%; max-height:100%; fill:#c7c7c7; stroke:#171717; stroke-width:2; filter:drop-shadow(0 2px 2px #0008); }
+.a3-state-card h3 { margin-top:0; }
+.a3-metrics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-bottom:15px; }
+.a3-metric { padding:11px 12px; background:#181818; border:1px solid #303030; border-radius:6px; min-width:0; }
+.a3-metric>span { display:block; color:#999; font-size:10px; margin-bottom:6px; }
+.a3-metric>strong { display:block; color:#efefef; font:17px/1.5 Consolas,monospace; overflow-wrap:anywhere; }
+.a3-metric small { color:#999; }
+.a3-status { border-left:2px solid #a5a5a5; background:#1b1b1b; padding:12px 14px; margin:14px 0; font-size:12px; line-height:1.8; }
+.a3-small,.a3-origin-note { color:#858585; font-size:11px!important; line-height:1.9; }
+.a3-callout { padding:13px 15px; background:#1b1916; border:1px solid #4a4034; border-radius:6px; font-size:12px; line-height:1.8; margin-bottom:15px; }
+.a3-glossary { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.a3-glossary details,.a3-oral-cards details { border:1px solid #333; padding:12px; border-radius:6px; background:#151515; font-size:12px; }
+.a3-glossary p,.a3-oral-cards p { margin:10px 0 0; font-size:12px; }
+.a3-experiment { margin-top:18px; padding-top:14px; border-top:1px solid #333; }
+.a3-experiment summary { font-size:13px; cursor:pointer; color:#d2d2d2; margin-bottom:12px; }
+.a3-source { overflow:hidden; position:sticky; top:108px; padding-bottom:16px; }
+.a3-code-head { padding:15px; border-bottom:1px solid #333; font-size:12px; }
+.a3-code-head small { display:block; margin-top:8px; color:#888; font:10px Consolas,monospace; }
+.a3-code-lines { list-style:none; padding:10px 0; margin:0; overflow-x:auto; scrollbar-width:thin; }
+.a3-code-lines li { display:flex; gap:10px; padding:5px 10px; line-height:1.7; border-left:2px solid transparent; min-width:0; }
+.a3-code-lines li>span { width:26px; text-align:right; color:#737373; font:10px/1.8 Consolas,monospace; flex-shrink:0; }
+.a3-code-lines code { white-space:pre-wrap; overflow-wrap:anywhere; min-width:0; color:#b0b0b0; font-size:11px; }
+.a3-code-lines li.current { border-left-color:#ff8833; background:#24201c; }
+.a3-code-lines li.current code { color:#eee; }
+.a3-full-source { padding:0 15px; }
+.a3-full-source summary { font-size:11px; color:#aaa; cursor:pointer; }
+.a3-full-source pre { max-height:420px; font-size:10px; }
+.a3-source>a { display:block; padding:0 15px; margin-top:14px; font-size:11px; }
+.a3-dictionary { display:flex; align-items:center; flex-wrap:wrap; gap:14px; padding:18px; margin:15px 0; border:1px solid #3b3b3b; border-radius:7px; font:16px Consolas,monospace; }
+.a3-q-cells { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+.a3-q-cells button { display:flex; flex-direction:column; align-items:stretch; padding:15px 10px; overflow:hidden; }
+.a3-q-cells span { font-size:11px; }
+.a3-q-cells strong { font:25px/1.7 Consolas,monospace; }
+.a3-q-cells i { height:3px; display:block; background:#858585; width:var(--amount); }
+.a3-predict { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:18px; }
+.a3-predict label { flex-basis:100%; }
+.a3-predict input { width:120px; }
+.a3-steps { display:flex; padding:0; margin:0 0 20px; list-style:none; gap:5px; overflow-x:auto; }
+.a3-steps li { display:flex; align-items:center; gap:5px; color:#777; border-bottom:2px solid #303030; padding:8px 5px; font-size:10px; flex:1; white-space:nowrap; }
+.a3-steps li span { font-family:Consolas,monospace; }
+.a3-steps li.past { border-bottom-color:#7b7b7b; color:#aaa; }
+.a3-steps li.current { border-bottom-color:#ff8833; color:#ededed; }
+.a3-formula-rule { display:grid; gap:10px; border:1px solid #414141; border-radius:7px; background:#191919; padding:16px; margin:12px 0 18px; overflow-x:auto; }
+.a3-formula-rule code { font-size:13px; white-space:nowrap; }
+.a3-calculation-list { display:grid; gap:8px; margin-bottom:14px; }
+.a3-calculation-list>div { display:grid; grid-template-columns:minmax(110px,.8fr) minmax(0,1.7fr); gap:12px; padding:13px; border:1px solid #2e2e2e; border-radius:6px; font-size:12px; }
+.a3-calculation-list>div>span { color:#9c9c9c; }
+.a3-calculation-list strong { font:13px/1.6 Consolas,"Microsoft YaHei",monospace; overflow-wrap:anywhere; }
+.a3-calculation-list>.current { border-color:#6a6259; background:#201d19; }
+.a3-q-mini { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; margin-top:15px; }
+.a3-q-mini>div { border:1px solid #333; background:#181818; padding:9px; font-size:11px; }
+.a3-q-mini span { color:#9d9d9d; }
+.a3-q-mini strong { display:block; font:15px/1.8 Consolas,monospace; }
+.a3-q-mini>.current { border-color:#9b9b9b; }
+.a3-budget { margin:18px 0 10px; border:1px solid #333; border-radius:6px; overflow:hidden; font-size:11px; }
+.a3-budget>span { display:block; padding:8px 12px; }
+.a3-budget>i { display:block; height:4px; background:#b1b1b1; transition:width .25s; }
+.a3-dice-meter { position:relative; height:13px; border:1px solid #454545; border-radius:3px; background:#232323; margin:20px 0; }
+.a3-dice-meter i { display:block; height:100%; background:#8c8c8c; }
+.a3-dice-meter b { position:absolute; width:2px; background:#ff8833; height:23px; top:-6px; }
+.a3-histogram>div,.a3-weight-strips>div { display:grid; grid-template-columns:110px minmax(0,1fr) 44px; gap:10px; align-items:center; margin:10px 0; font-size:11px; }
+.a3-histogram i,.a3-weight-strips i { height:9px; border-radius:2px; background:#a9a9a9; display:block; transform-origin:left; animation:a3-grow .35s ease-out; }
+@keyframes a3-grow { from{transform:scaleX(0)}to{transform:scaleX(1)} }
+.a3-crystal-switches { display:flex; flex-wrap:wrap; gap:12px; padding-bottom:10px; }
+.a3-feature-focus { padding:14px; border:1px solid #454545; border-radius:6px; }
+.a3-feature-focus>span,.a3-feature-focus>code { display:block; margin-bottom:8px; }
+.a3-feature-focus>code { color:#a9a9a9; overflow-wrap:anywhere; }
+.a3-feature-focus strong { font:14px/1.8 Consolas,monospace; }
+.a3-feature-vector { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; }
+.a3-feature-vector button { position:relative; display:flex; flex-direction:column; align-items:stretch; gap:5px; padding:10px; text-align:left; overflow:hidden; }
+.a3-feature-vector button>span { font-size:10px; }
+.a3-feature-vector i { height:3px; background:#777; display:block; }
+.a3-feature-vector button.selected i { background:#555; }
+.a3-table-scroll { overflow-x:auto; max-width:100%; margin:17px 0; }
+.a3-table-scroll table { border-collapse:collapse; width:100%; font-size:11px; font-variant-numeric:tabular-nums; }
+.a3-table-scroll :is(th,td) { border-bottom:1px solid #333; padding:10px; text-align:right; white-space:nowrap; }
+.a3-table-scroll th:first-child { text-align:left; }
+.a3-table-scroll thead { background:#222; }
+.a3-curve { display:block; width:100%; background:#161616; border:1px solid #333; border-radius:7px; cursor:crosshair; margin-bottom:15px; }
+.a3-curve text { fill:#969696; font:10px Consolas,monospace; }
+.a3-curve path { fill:none; stroke-width:1.5; }
+.a3-chart-axis { stroke:#666; }
+.a3-curve-ghost { stroke:#3f3f3f; }
+.a3-curve-reveal { stroke:#e1e1e1; }
+.a3-chart-cursor { stroke:#a97b55; stroke-dasharray:3 4; }
+.a3-curve circle { fill:#ff8833; }
+.a3-reward-chips { display:flex; flex-wrap:wrap; gap:6px; }
+.a3-reward-chips>span { display:grid; padding:9px; min-width:43px; text-align:center; border:1px solid #333; color:#777; font:14px Consolas,monospace; }
+.a3-reward-chips small { font-size:9px; margin-bottom:5px; }
+.a3-reward-chips>.active { background:#252525; color:#eee; border-color:#8f8f8f; }
+.a3-milestone-focus h3 { font-size:22px; }
+.a3-accept { border:1px solid #4c4c4c; padding:14px; border-radius:7px; background:#1a1a1a; margin:15px 0; }
+.a3-accept strong { font-weight:500; font-size:13px; }
+.a3-commit-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; margin:22px 0; }
+.a3-commit-grid button { text-align:left; display:flex; align-items:flex-start; gap:8px; padding:12px; font-size:11px; }
+.a3-commit-grid span { font-family:Consolas,monospace; }
+.a3-oral-cards { display:grid; gap:8px; }
+.a3-oral-cards summary { cursor:pointer; }
+.a3-notes { margin-top:22px; padding:19px; }
+.a3-notes label { font-size:13px; }
+.a3-notes textarea { display:block; width:100%; min-height:105px; margin:12px 0; font-size:13px; line-height:1.8; resize:vertical; }
+.a3-next-row { display:flex; justify-content:space-between; gap:10px; margin:25px 0; }
+.a3-origin-note { border-top:1px solid #292929; padding-top:20px; }
+.a3-unit.is-presenting .a3-unit-shell { grid-template-columns:minmax(0,1fr); }
+.a3-unit.is-presenting .a3-lesson-nav { display:flex; position:static; overflow:auto; max-height:none; }
+.a3-unit.is-presenting .a3-lesson-nav>a { min-width:150px; }
+@media(min-width:1181px) { .a3-unit.is-presenting .a3-workspace { grid-template-columns:minmax(0,1fr) 400px; } }
+@media(max-width:1180px) {
+  .a3-workspace { grid-template-columns:minmax(0,1fr); }
+  .a3-source { position:static; }
+  .a3-unit-top { align-items:flex-start; }
+  .a3-unit-links { max-width:265px; }
+}
+@media(max-width:1000px) {
+  .a3-unit-active #main,[data-a3-standalone] #a3-root { padding:26px 20px 45px; }
+  .a3-unit-shell { grid-template-columns:175px minmax(0,1fr); gap:18px; }
+  .a3-split { grid-template-columns:minmax(0,1fr); }
+  .a3-board { max-width:520px; margin:auto; }
+  .a3-unit-top { display:block; }
+  .a3-unit-links { justify-content:flex-start; max-width:none; margin-top:18px; }
+}
+@media(max-width:760px) {
+  .a3-unit-shell { grid-template-columns:minmax(0,1fr); }
+  .a3-lesson-nav { position:static; display:flex; overflow-x:auto; max-height:none; margin-bottom:7px; padding-bottom:9px; }
+  .a3-lesson-nav>a { flex-shrink:0; width:158px; padding:9px; border-color:#303030; }
+  .a3-unit h1 { font-size:29px; }
+  .a3-unit h2 { font-size:23px; }
+  .a3-fields { gap:10px; }
+  .a3-scene { padding:16px; }
+  .a3-controls { padding:15px; }
+  .a3-glossary { grid-template-columns:minmax(0,1fr); }
+  .a3-direction-pad button { min-width:66px; flex:1; }
+  .a3-q-cells { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .a3-feature-vector { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .a3-calculation-list>div { grid-template-columns:minmax(0,1fr); gap:8px; }
+  .a3-commit-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .a3-unit code { font-size:10px; }
+  .a3-formula-rule code { font-size:11px; }
+  .a3-next-row .button { max-width:48%; }
+}
+.a3-home-entry { margin:28px 0; padding:28px; border:1px solid #3c3c3c; border-radius:8px; background:linear-gradient(120deg,#181818,#101010); display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.a3-home-entry h2 { margin:8px 0; font-size:25px; }
+.a3-home-entry p { color:#b5b5b5; max-width:660px; margin:0; line-height:1.7; }
+.a3-home-entry .button-row { flex-shrink:0; }
+@media(max-width:1000px) { .a3-home-entry { align-items:flex-start; flex-direction:column; } }
+@media(prefers-reduced-motion:reduce) {
+  .a3-unit *, .a3-unit *::before, .a3-unit *::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+}
+@media print {
+  .a3-unit { color:#202020; }
+  .a3-unit :is(h1,h2,h3,p,code),.a3-unit .bi-text>.lang-en { color:#202020; }
+  .a3-unit-shell,.a3-workspace { display:block; }
+  .a3-lesson-nav,.a3-controls,.a3-unit-links,.a3-next-row,.a3-notes .button-row { display:none; }
+  .a3-source,.a3-scene,.a3-notes,.a3-calculation-list>div,.a3-metric { background:white; color:#202020; border-color:#bbb; box-shadow:none; }
+  .a3-source { position:static; margin-top:20px; }
+  .a3-code-lines code { color:#202020; }
+  .a3-unit-active #main,[data-a3-standalone] #a3-root { padding:0; }
+  .a3-unit textarea { display:none; }
+}

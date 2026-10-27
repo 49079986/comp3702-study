@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><meta charset="utf-8"/><title>COMP3702 bilingual</title><link href="../styles.css" rel="stylesheet"/><body class="print-document"><main class="prose"><h1>Multiple-choice practice / 选择题 · 75 questions</h1>
+<p>English appears first; use Chinese only after attempting the question. / 先做英文，再看中文。</p>
+<h2>Q01 · Which statement best describes a rational agent?</h2>
+<p>理性智能体的准确描述是什么？</p>
+<p>A. It guarantees the best realised outcome every time. / 保证每次实际结果最好
+B. It must imitate human thought. / 必须模拟人的思维
+C. It must know all random outcomes in advance. / 必须事先知道所有随机结果
+D. It chooses the action with the best expected performance given its information and resources. / 基于已有信息和资源，选择期望表现最好的动作</p>
+<h2>Q02 · A fully observable robot can still slip when it acts. How should this environment be classified?</h2>
+<p>完全可观测的滑动机器人，动作仍会偏移。属于什么环境？</p>
+<p>A. Full observability necessarily makes effects deterministic. / 完全可观测、效果必然确定
+B. This is possible only in multi-agent environments. / 只有多智能体才会出现这种情况
+C. Its current state is observable, but its action effects are stochastic. / 观测确定、效果随机
+D. It is partially observable with deterministic effects. / 部分可观测、效果确定</p>
+<h2>Q03 · Why should a key-collection flag be included in a maze state?</h2>
+<p>有钥匙迷宫中，为什么状态要带 key 标志？</p>
+<p>A. It affects only the interface colour. / 它只影响界面颜色
+B. It affects future available actions, transitions or rewards. / 它影响未来可用动作或转移/回报
+C. It makes the heuristic larger. / 它能让启发式变大
+D. Every state must store the complete action history. / 所有状态都必须带历史全部动作</p>
+<h2>Q04 · What can happen when the same board is reached by different move sequences?</h2>
+<p>同一棋盘经不同落子顺序抵达，会怎样？</p>
+<p>A. The paths may produce different search nodes representing the same world state. / 可以是不同搜索节点但同一世界状态
+B. They must represent different world states. / 必然是不同世界状态
+C. A search node can store only the board. / 搜索节点只能包含棋盘
+D. The number of paths must equal the number of states. / 路径数一定等于状态数</p>
+<h2>Q05 · What is the relationship between online planning and model-free learning?</h2>
+<p>online planning 与 model-free 的关系是什么？</p>
+<p>A. They mean the same thing. / 二者同义
+B. Online planning never needs a simulator. / 在线规划一定不需要模拟器
+C. Model-free learning must be offline. / model-free 一定离线
+D. They are different classifications; online planning may use a model. / 是不同分类轴，在线规划也可使用模型</p>
+<h2>Q06 · With unequal nonnegative edge costs, what does a correctly implemented BFS first solution guarantee?</h2>
+<p>边权不同且非负时，BFS 最先找到的路径保证什么？</p>
+<p>A. The fewest node expansions. / 最少扩展节点
+B. Exactly the same path as UCS. / 与 UCS 完全相同的路径
+C. The fewest edges, but not necessarily the smallest total cost. / 最少边数（适当实现），不保证最低总成本
+D. The smallest total cost. / 最低总成本</p>
+<h2>Q07 · Why should UCS normally avoid stopping as soon as a goal is generated?</h2>
+<p>UCS 为什么通常不在生成目标时立即返回？</p>
+<p>A. The goal must always be the last node expanded. / 因为目标一定最后展开
+B. A cheaper unfinished path may still be on the frontier. / 还可能有 frontier 中更便宜的未完成路径
+C. A goal is not allowed on the frontier. / 因为目标不能放入 frontier
+D. UCS does not use path cost g. / 因为 UCS 不使用 g</p>
+<h2>Q08 · What is the key A* guarantee provided by a consistent heuristic?</h2>
+<p>一致启发式给 A* 的关键保证是什么？</p>
+<p>A. The first expansion of a state uses an optimal path cost g for that state. / 首次扩展某状态时到它的 g 已最优
+B. The first generation of a state always has optimal g. / 首次生成某状态时 g 一定最优
+C. There is no need to maintain better g values. / 不用维护更小 g
+D. The heuristic must equal the true remaining cost. / h 必须等于真实成本</p>
+<h2>Q09 · If h₁ and h₂ are admissible, which heuristic is necessarily admissible?</h2>
+<p>h₁、h₂ 都可采纳，哪一个必然可采纳？</p>
+<p>A. h₁+h₂ / h₁+h₂
+B. 2h₁ / 2h₁
+C. h₁+5 / h₁+5
+D. max(h₁, h₂) / max(h₁,h₂)</p>
+<h2>Q10 · What happens if 5 is added to the heuristic of every node, including goals?</h2>
+<p>在所有节点的启发式都加常数 5，会怎样？</p>
+<p>A. A* must return a suboptimal path. / 必然让 A* 返回次优路径
+B. UCS becomes DFS. / 会把 UCS 变为 DFS
+C. Admissibility is not guaranteed, but relative frontier priority is unchanged. / 不一定可采纳，但优先级相对排序不变
+D. A* must change its expansion order. / 必然改变 A* 展开顺序</p>
+<h2>Q11 · What does it mean for the arc X→Y to be consistent?</h2>
+<p>弧 X→Y 一致的含义是什么？</p>
+<p>A. X and Y must have identical domains. / X 和 Y 必须同域
+B. Every value of X has at least one compatible supporting value in Y. / X 的每个值都在 Y 中至少有一个兼容支持
+C. Some value of X is compatible with every value of Y. / X 的某个值兼容 Y 的所有值
+D. Every pair of values x, y is legal. / 所有 x,y 组合都合法</p>
+<h2>Q12 · After REVISE(X, Y) deletes values from X, which arcs should be reconsidered?</h2>
+<p>REVISE(X,Y) 删除了 X 的值后，应重查什么？</p>
+<p>A. Arcs Z→X from other neighbours Z. / 其他邻居 Z→X
+B. Only arcs X→Z. / 只检查 X→Z
+C. Delete every neighbouring domain. / 删除所有邻居域
+D. Only arcs Y→Z. / 只检查 Y→Z</p>
+<h2>Q13 · AC-3 finishes with no empty domains. What can be concluded?</h2>
+<p>AC-3 结束且所有域非空，能得出什么？</p>
+<p>A. A solution must exist. / 必然有解
+B. Every remaining value belongs to a complete solution. / 每个值都属于某个完整解
+C. The solution must be unique. / 只有一个解
+D. The complete CSP may still be unsatisfiable. / 仍可能整体无解</p>
+<h2>Q14 · What do MRV and LCV choose, respectively?</h2>
+<p>MRV 与 LCV 分别选择什么？</p>
+<p>A. Both choose a variable with the largest domain. / 都是挑最大域的变量
+B. Both choose the action deleting the most values. / 都是删除最多值的动作
+C. A variable and a value. / 变量与取值
+D. A value and a variable. / 取值与变量</p>
+<h2>Q15 · What is a common worst-case time bound for binary AC-3?</h2>
+<p>二元 AC-3 的常见最坏时间复杂度是？</p>
+<p>A. O(dⁿ), independent of the number of constraints. / O(dⁿ) 且无法利用约束数量
+B. O(ed³) / O(ed³)
+C. O(ed) / O(ed)
+D. O(n+d) / O(n+d)</p>
+<h2>Q16 · Which relationship holds for independent events A and B?</h2>
+<p>独立事件 A、B 的正确关系是什么？</p>
+<p>A. P(A∩B)=P(A)P(B) / P(A∩B)=P(A)P(B)
+B. P(A∩B)=0 / P(A∩B)=0
+C. P(A∪B)=P(A)+P(B) always. / P(A∪B)=P(A)+P(B) 总成立
+D. P(A∣B)=P(B∣A) / P(A∣B)=P(B∣A)</p>
+<h2>Q17 · Must a continuous probability density value f(x)=2 be invalid?</h2>
+<p>连续随机变量密度 f(x)=2 是否一定错误？</p>
+<p>A. Yes, because a probability cannot exceed 1. / 一定错误，因为概率不能超过 1
+B. It means P(X=x)=2. / 说明 P(X=x)=2
+C. It means the distribution cannot be normalised. / 说明分布无法归一化
+D. No; interval probability is obtained by integration. / 不一定，区间积分才是概率</p>
+<h2>Q18 · For a row-stochastic matrix P and row distribution x, what is the next distribution?</h2>
+<p>使用行随机矩阵 P 和行向量 x，下一步分布为？</p>
+<p>A. x+P / x+P
+B. P⁻¹x / P⁻¹x
+C. xP / xP
+D. Px / Px</p>
+<h2>Q19 · How should lotteries be compared under a risk-averse utility function?</h2>
+<p>风险厌恶效用下，比较彩票应该用什么？</p>
+<p>A. Compare only the probability of winning. / 只比较中奖概率
+B. Compare E[U(X)]. / E[U(X)]
+C. U(E[X]) is always equivalent. / U(E[X]) 必然等价
+D. Compare only the largest possible payoff. / 仅比较最大可能收益</p>
+<h2>Q20 · Every step pays 3 forever and γ=.5. What is the return?</h2>
+<p>γ=.5，每步奖励 3，永不终止，回报是多少？</p>
+<p>A. 6 / 6
+B. 3 / 3
+C. Infinite. / 无限大
+D. 1.5 / 1.5</p>
+<h2>Q21 · What must a solution subtree retain at an AND action node?</h2>
+<p>AND-OR 解子树对 AND 动作节点的要求是？</p>
+<p>A. Only the most probable outcome. / 只保留概率最大的结果
+B. Only one outcome leading to a goal. / 只保留一条到目标的结果
+C. Every available action must be executed. / 全部动作都要执行
+D. Every possible outcome branch, with each outcome solvable. / 保留所有可能结果并都可解决</p>
+<h2>Q22 · An action can reach G or unrecoverable DEAD. Can it be solved in a strong plan?</h2>
+<p>某动作可能到 G 或不可恢复 DEAD，强计划中该动作怎样？</p>
+<p>A. Ignore DEAD if its probability is small. / DEAD 概率小就忽略
+B. Label it solved first and repair it later. / 先设 solved 再补救
+C. No; it cannot guarantee success for every outcome. / 不能作为保证成功的 solved 动作
+D. Yes, because one outcome is G. / 有一个结果到 G 就 solved</p>
+<h2>Q23 · How is a chance node normally evaluated in a stochastic MDP?</h2>
+<p>随机 MDP 的机会节点一般如何求值？</p>
+<p>A. Use any one sample as the exact expectation. / 任选一个样本当精确期望
+B. Take a probability-weighted sum. / 按转移概率加权求和
+C. Take the maximum. / 取最大值
+D. Always take the minimum. / 一律取最小值</p>
+<h2>Q24 · Is “retry until success” necessarily a finite-step strong plan?</h2>
+<p>“不断重试直到成功”一定是有限步强计划吗？</p>
+<p>A. No; it needs a stated success criterion and additional assumptions. / 不是，需要额外成功定义和假设
+B. Yes, whenever a success exit exists. / 是，因为存在成功出口
+C. Yes, every loop is automatically solved. / 是，因为循环自动 solved
+D. No, because every cyclic plan is invalid. / 不是，因为所有循环都无效</p>
+<h2>Q25 · How does a conditional plan differ from a fixed action sequence?</h2>
+<p>条件计划与固定动作序列主要差异是什么？</p>
+<p>A. It must randomise at every step. / 必须随机选择每一步动作
+B. It must contain every available action. / 一定包含全部可选动作
+C. It does not need a goal condition. / 不需要目标条件
+D. Later actions depend on observed outcomes. / 后续动作依赖观察到的结果</p>
+<h2>Q26 · Which operations produce V<em>(s) and π</em>(s), respectively?</h2>
+<p>V<em>(s) 与 π</em>(s) 的正确对应是什么？</p>
+<p>A. Both equal the immediate reward R. / 都等于即时奖励 R
+B. Both return a scalar probability. / 都返回概率标量
+C. max Q and argmax Q. / max Q 与 argmax Q
+D. argmax Q and max Q. / argmax Q 与 max Q</p>
+<h2>Q27 · Which values are used throughout one synchronous VI sweep?</h2>
+<p>同步 VI 的同一轮更新使用什么？</p>
+<p>A. An inverse directly solves the max equations. / 直接求逆解决 max 方程
+B. Only values from the previous sweep. / 全部使用上一轮价值
+C. The values most recently updated in the current sweep. / 每次使用刚更新的价值
+D. Only the current policy action. / 只使用当前策略动作</p>
+<h2>Q28 · Why can fixed-policy Bellman evaluation be solved using linear algebra?</h2>
+<p>已固定策略的 Bellman 方程为何可用线性代数求解？</p>
+<p>A. Fixing the actions removes the maximisation over actions. / 动作固定后没有跨动作 max
+B. All transition probabilities become 1. / 转移概率都变成 1
+C. The discount factor must be zero. / 折扣因子必须为 0
+D. Every reward is identical. / 奖励都相同</p>
+<h2>Q29 · At the upper-left corner, Up with probability .8 and Left with probability .1 hit walls; Right with probability .1 succeeds. What is the self-loop probability?</h2>
+<p>左上角 Up .8、Left .1 都撞墙，Right .1 正常，留原地概率为？</p>
+<p>A. .8 / .8
+B. .1 / .1
+C. 0 / 0
+D. .9 / .9</p>
+<h2>Q30 · A coloured cell pays 10 on exit, then enters a zero-reward absorbing state. What are their values?</h2>
+<p>若彩色格执行 exit 得 10，再到奖励为 0 的吸收态，其价值是？</p>
+<p>A. Both have value 10/(1−γ). / 两者都是 10/(1−γ)
+B. Both have value 0. / 两者都是 0
+C. The coloured cell has value 10 and the absorbing state has value 0. / 彩色格 10，吸收态 0
+D. The coloured cell has value 0 and the absorbing state has value 10. / 彩色格 0，吸收态 10</p>
+<h2>Q31 · What is the usual order of MCTS phases?</h2>
+<p>MCTS 正确的四阶段顺序是？</p>
+<p>A. Only simulation is required on every iteration. / 每次只需 simulation
+B. Selection → Expansion → Simulation → Backpropagation. / Selection → Expansion → Simulation → Backpropagation
+C. Simulation → Selection → Backpropagation → Expansion. / Simulation → Selection → Backpropagation → Expansion
+D. Expansion → Backpropagation → Selection → Simulation. / Expansion → Backpropagation → Selection → Simulation</p>
+<h2>Q32 · What is the usual effect of a smaller n(s, a) in UCT?</h2>
+<p>UCT 中计数 n(s,a) 更小时，一般有什么效果？</p>
+<p>A. A larger exploration bonus. / 探索 bonus 更大
+B. A necessarily larger empirical mean. / 利用均值自动更大
+C. The action must be worse. / 该动作必然更差
+D. The action cannot be visited again. / 不允许再访问</p>
+<h2>Q33 · An edge has N=4 and mean 2. A new return is 7. What is its new mean?</h2>
+<p>一条边 N=4、均值 2，新回报 7，均值更新为？</p>
+<p>A. 3.25 / 3.25
+B. 7 / 7
+C. 2.5 / 2.5
+D. 3 / 3</p>
+<h2>Q34 · What does MCTS being anytime mean?</h2>
+<p>MCTS 的 anytime 性质表示什么？</p>
+<p>A. Rollouts are unnecessary. / 不用做 rollout
+B. It applies only to deterministic games. / 只适用于无随机性的游戏
+C. It can return its current action recommendation when the budget ends. / 预算中断后可返回当前动作建议
+D. Every computational budget guarantees an optimal answer. / 任何预算都保证最优</p>
+<h2>Q35 · How does RTDP typically differ from a full VI sweep?</h2>
+<p>RTDP 与全扫 VI 的典型差异是？</p>
+<p>A. VI can handle only deterministic transitions. / VI 只能处理确定转移
+B. It concentrates backups on states visited along simulated trajectories. / RTDP 沿模拟轨迹集中更新访问到的状态
+C. It never uses a model. / RTDP 不使用模型
+D. It never performs a Bellman backup. / RTDP 不执行 Bellman backup</p>
+<h2>Q36 · There are four actions, one uniquely greedy action, and ε=.2. What is its epsilon-greedy selection probability?</h2>
+<p>4 个动作，唯一贪心动作，ε=.2，其被选概率是多少？</p>
+<p>A. .85 / .85
+B. .8 / .8
+C. .95 / .95
+D. .2 / .2</p>
+<h2>Q37 · What happens as softmax temperature tends to infinity?</h2>
+<p>Softmax 温度趋于无穷时通常怎样？</p>
+<p>A. Only the largest Q is selected. / 只选最大 Q
+B. Only the smallest Q is selected. / 只选最小 Q
+C. The probabilities sum to infinity. / 概率总和趋于无穷
+D. Selection approaches a uniform distribution over actions. / 接近对所有动作均匀选择</p>
+<h2>Q38 · How do outside constant c and inside constant C correspond in equivalent UCB formulas?</h2>
+<p>两个 UCB 写法外部常数 c 与内部常数 C 如何对应？</p>
+<p>A. C=√c / C=√c
+B. The formulas can never be equivalent. / 无论参数如何都不等价
+C. C=c² / C=c²
+D. C=c / C=c</p>
+<h2>Q39 · What learning rate gives incremental sample averaging on observation N?</h2>
+<p>样本平均的第 N 次更新学习率是？</p>
+<p>A. γ/N / γ/N
+B. 1/N / 1/N
+C. N / N
+D. A fixed rate of 1. / 固定 1</p>
+<h2>Q40 · Does rapid exponential epsilon decay automatically ensure infinite exploration for Q-learning?</h2>
+<p>快速指数衰减 ε 是否自动保证 Q-learning 无限探索？</p>
+<p>A. No. / 不保证
+B. Yes, provided epsilon initially equals 1. / 保证，只要 ε 初始为1
+C. Yes, provided γ&lt;1. / 保证，只要 γ&lt;1
+D. Yes, provided the action set is finite. / 保证，只要动作数有限</p>
+<h2>Q41 · What is the key target difference between Q-learning and SARSA?</h2>
+<p>Q-learning 与 SARSA 的 target 关键差异是什么？</p>
+<p>A. Current reward versus next reward. / 当前奖励与下一奖励
+B. There is no difference. / 两者没有差别
+C. One uses states and the other does not. / 一个用状态，另一个不用状态
+D. The maximum next-action Q versus the Q of the actual next action. / max 下一动作 Q 与实际下一动作 Q</p>
+<h2>Q42 · The successor is terminal, r=−2, old Q=4 and α=.5. What is the new Q?</h2>
+<p>下一状态终止，r=−2，当前 Q=4，α=.5，新 Q 为？</p>
+<p>A. −2 / −2
+B. 3 / 3
+C. 1 / 1
+D. 2 / 2</p>
+<h2>Q43 · Which method normally does not bootstrap?</h2>
+<p>哪种方法通常不 bootstrap？</p>
+<p>A. SARSA. / SARSA
+B. Monte Carlo policy evaluation. / Monte Carlo policy evaluation
+C. TD(0). / TD(0)
+D. Q-learning. / Q-learning</p>
+<h2>Q44 · What does off-policy learning mean?</h2>
+<p>off-policy 的准确含义是什么？</p>
+<p>A. The target policy may differ from the behaviour policy that generates data. / 学习的目标策略可以不同于产生数据的行为策略
+B. It must use an offline data file. / 一定使用离线数据文件
+C. It cannot interact with an environment. / 不与环境交互
+D. Every action must be random. / 每步都必须随机行动</p>
+<h2>Q45 · Is one sampled Monte Carlo return G equal to the true value Vπ?</h2>
+<p>MC 的一个采样回报 G 是真实价值 Vπ 吗？</p>
+<p>A. Yes, every trajectory equals its expectation. / 是，每条轨迹都等于期望
+B. Yes, but only when γ=1. / 只有 γ=1 时是
+C. Yes, all states have the same value at termination. / 只有终止时所有状态都相等
+D. Not necessarily; it is a random sample whose conditional expectation is Vπ. / 不是，它是 Vπ 的随机样本</p>
+<h2>Q46 · How should all weights be updated in one linear Q-learning step?</h2>
+<p>线性近似 Q=w·f，一次更新中所有权重应该怎样更新？</p>
+<p>A. Update only the largest feature. / 仅更新最大的特征
+B. Set every weight directly to the return. / 直接把每个权重设成回报
+C. Compute one TD error from old weights, then update all components with it. / 先用旧权重算一次 δ，再更新各项
+D. Recompute the TD error after changing each weight. / 每改一项就重算 δ</p>
+<h2>Q47 · If feature fᵢ(s, a)=0, what is the direct effect of this linear update on wᵢ?</h2>
+<p>若某特征 fᵢ(s,a)=0，这次线性更新对 wᵢ 的直接影响是？</p>
+<p>A. It becomes zero. / 变为零
+B. It is unchanged. / 不变
+C. It must increase. / 一定增大
+D. It must decrease. / 一定减小</p>
+<h2>Q48 · Why can function approximation evaluate an unvisited state?</h2>
+<p>函数逼近能评价未访问状态主要因为？</p>
+<p>A. States share features and parameters. / 不同状态共享特征和参数
+B. Every state has already been visited. / 已见过所有状态
+C. All random states have the same value. / 随机状态价值总相同
+D. It no longer depends on data. / 不再依赖数据</p>
+<h2>Q49 · What is the representational restriction of a linear value approximator?</h2>
+<p>线性价值函数的真正表达限制是什么？</p>
+<p>A. All immediate rewards must be positive. / 即时奖励一定要是正数
+B. The environment cannot be stochastic. / 环境不能随机
+C. States must be one-dimensional. / 状态必须是一维
+D. It represents a linear combination of the chosen features. / 在给定特征上只能表示线性组合</p>
+<h2>Q50 · What are the exact updated weights in the Pacman example?</h2>
+<p>Pacman 算例精确新权重为？</p>
+<p>A. (4,−501) / (4,−501)
+B. (2.998,3.004) / (2.998,3.004)
+C. (2.998,−3.004) / (2.998,−3.004)
+D. (3,3) / (3,3)</p>
+<h2>Q51 · What is the usual input/output layout of a finite-action DQN for CartPole?</h2>
+<p>CartPole 标准有限动作 DQN 一般如何输入输出？</p>
+<p>A. The input must be an image. / 输入只能是图片
+B. Four continuous state inputs and two real-valued Q outputs. / 4 维连续状态输入，2 个实数 Q 输出
+C. Two continuous action inputs and four label outputs. / 2 个连续动作输入，4 个标签输出
+D. One Q output that must be an integer. / 只输出一个必须为整数的 Q</p>
+<h2>Q52 · What is the main role of experience replay?</h2>
+<p>Experience replay 的主要作用是什么？</p>
+<p>A. Reuse experience and reduce serial correlation between training samples. / 复用样本并降低连续数据的相关性
+B. Ensure complete independence of all samples. / 确保所有样本完全独立
+C. Guarantee training never diverges. / 保证永不发散
+D. Replace every role of the target network. / 替代目标网络的所有作用</p>
+<h2>Q53 · What is the main role of a target network?</h2>
+<p>Target network 的主要作用是什么？</p>
+<p>A. Increase the number of actions. / 增加动作数量
+B. Fix every reward to 1. / 让奖励固定为1
+C. Generate all real environment experience. / 直接负责生成全部真实数据
+D. Slow rapid changes in the bootstrapped TD target. / 减缓 TD target 随在线网络剧烈变化</p>
+<h2>Q54 · If every neural-network layer lacks a nonlinear activation, what can the composition represent?</h2>
+<p>所有神经网络层都无非线性时，整体表示是什么？</p>
+<p>A. Necessarily a softmax function. / 必然是 softmax
+B. Only a constant. / 只能表示常数
+C. Still a linear/affine transformation. / 仍为线性/仿射变换
+D. An arbitrary nonlinear function. / 任意非线性函数</p>
+<h2>Q55 · Why is continuous joystick control difficult for a standard finite-output DQN?</h2>
+<p>普通 DQN 的有限动作输出面对连续摇杆时有什么局限？</p>
+<p>A. Rewards must be changed to discrete values. / 必须把奖励改成离散值
+B. It cannot directly enumerate infinitely many actions; a continuous policy is an alternative. / 无法直接枚举无限动作，可考虑连续策略方法
+C. Q values cannot have fractional parts. / Q 值不能是小数
+D. The state cannot be continuous. / 状态不能连续</p>
+<h2>Q56 · When can alpha-beta prune the remaining children of a node?</h2>
+<p>α–β 何时可以剪掉当前剩余分支？</p>
+<p>A. When α≥β. / α≥β
+B. When α&lt;β. / α&lt;β
+C. Whenever the current leaf is negative. / 当前叶值为负
+D. Immediately on first entering every MAX node. / MAX 节点首次访问时</p>
+<h2>Q57 · How does alpha-beta compare with full minimax on the same cutoff tree?</h2>
+<p>α–β 与完整 minimax 在同一截断树上关系如何？</p>
+<p>A. Alpha-beta necessarily returns a larger root value. / α–β 的根值必然更高
+B. Pruning changes the definition of the opponent utility. / 剪枝会改变对手效用定义
+C. They agree only when no branch is pruned. / 结果只在没有剪枝时相同
+D. They return the same root minimax value. / 根 minimax 值相同</p>
+<h2>Q58 · Is a cutoff subtree score always its exact minimax value?</h2>
+<p>剪枝子树回传的分数一定是该子树真实 minimax 值吗？</p>
+<p>A. Only positive scores are exact. / 只有正数时才是
+B. Only MIN-node scores are exact. / 只有 MIN 节点才精确
+C. No; it may be only a lower or upper bound. / 不一定，可能只是上界或下界
+D. Yes, because all leaves were examined. / 一定，因为所有叶都看过</p>
+<h2>Q59 · What is the ideal-ordering time bound commonly associated with alpha-beta?</h2>
+<p>α–β 最好动作排序下的典型时间量级是？</p>
+<p>A. Always O(1). / 始终 O(1)
+B. O(b^(d/2)) / O(b^(d/2))
+C. O(d) / O(d)
+D. O(log b) / O(log b)</p>
+<h2>Q60 · With an inaccurate depth-cutoff evaluation function, what does alpha-beta guarantee?</h2>
+<p>截断树用不准确评价函数时，α–β 保证什么？</p>
+<p>A. It preserves the result of that truncated minimax search. / 保持该截断 minimax 的结果
+B. It guarantees optimal play in the full game. / 保证实际游戏最优
+C. It turns the heuristic into true utility. / 保证评价函数成为真实效用
+D. It eliminates every horizon effect. / 保证无 horizon effect</p>
+<h2>Q61 · What is the defining test for a Nash equilibrium?</h2>
+<p>Nash equilibrium 的核心检验是什么？</p>
+<p>A. No joint change can increase total utility. / 双方同时变策略不能提高总收益
+B. Every player must receive the same payoff. / 每人收益相同
+C. Every player must have a dominant strategy. / 每人都用 dominant strategy
+D. No player can gain from a unilateral deviation with others fixed. / 其他人策略固定时，单人偏离不能提高收益</p>
+<h2>Q62 · What existence result holds for every finite game?</h2>
+<p>有限博弈的均衡存在性保证是什么？</p>
+<p>A. Exactly one equilibrium must exist. / 一定只有一个均衡
+B. Every equilibrium is socially optimal. / 所有均衡都社会最优
+C. At least one Nash equilibrium exists when mixed strategies are allowed. / 至少有一个允许混合策略的 Nash 均衡
+D. A pure-strategy equilibrium must exist. / 一定有纯策略均衡</p>
+<h2>Q63 · In a fully mixed 2×2 equilibrium, whose actions does the row mixture make indifferent?</h2>
+<p>求完全混合 2×2 均衡时，行玩家的混合概率应使谁无差异？</p>
+<p>A. Both players' largest possible cell payoffs. / 两人都获最大可能单格收益
+B. The column player's actions in its support. / 列玩家在其支持动作间无差异
+C. The row player's own rows. / 行玩家自己在行之间无差异
+D. Both players' utilities in every cell. / 所有格子的两个收益相同</p>
+<h2>Q64 · What can happen under iterated deletion of weakly dominated strategies?</h2>
+<p>迭代删除弱被支配策略可能怎样？</p>
+<p>A. The result may depend on deletion order and some equilibria may be removed. / 依赖删除顺序并可能丢失某些均衡
+B. Every original equilibrium is always preserved. / 总保留全部均衡
+C. A unique equilibrium is always found. / 总得到唯一均衡
+D. It is identical in every respect to strict-dominance deletion. / 与删除严格支配策略毫无区别</p>
+<h2>Q65 · What is the equilibrium goal probability in the lecture penalty-kick example?</h2>
+<p>讲义点球均衡的进球概率是多少？</p>
+<p>A. .4 / .4
+B. .3 / .3
+C. .9 / .9
+D. .48 / .48</p>
+<h2>Q66 · Why can healthcare expenditure be a biased proxy for healthcare need?</h2>
+<p>医疗花费作为医疗需求标签的风险是什么？</p>
+<p>A. The model cannot perform addition. / 模型无法做加法
+B. High overall accuracy eliminates the risk. / 只要总体准确率高就无风险
+C. Historically low access/spending can be mistaken for low need. / 历史资源不足可能被模型误当需求少
+D. Spending data cannot contain decimal numbers. / 花费数据一定不精确到小数</p>
+<h2>Q67 · What does co-design require?</h2>
+<p>Co-design 应该怎样做？</p>
+<p>A. Only the buyer needs to be consulted. / 只咨询采购方
+B. Affected groups participate in defining, designing, testing and revising the system. / 让受影响群体参与问题定义、设计、测试与改进
+C. A satisfaction survey after deployment is sufficient. / 上线后才发满意度问卷即可
+D. Developers should infer needs alone. / 只由开发者想象需求</p>
+<h2>Q68 · Does high engagement establish that an AI system benefits its users?</h2>
+<p>参与度很高是否足以证明系统对用户有益？</p>
+<p>A. No; wellbeing, harms and social impacts also need evaluation. / 不足，还需评价福祉、伤害与社会影响
+B. Yes, more clicks always mean greater satisfaction. / 足够，因为点击多就是满意
+C. Yes, provided model accuracy is high. / 足够，只要模型准确
+D. Only commercial systems require other measures. / 只有商业系统才不够</p>
+<h2>Q69 · What is the strongest foundation for trust in an AI system?</h2>
+<p>建立信任最扎实的做法是什么？</p>
+<p>A. Only giving the robot a friendly expression. / 只把机器人表情做得亲切
+B. Hiding uncertainty. / 隐藏不确定性
+C. Replacing review with the most complex model. / 用最复杂模型替代复核
+D. Demonstrated reliability, disclosed limitations, accountability and governance. / 展示可靠性、限制、问责与有效治理</p>
+<h2>Q70 · Which recommendation is strongest in a responsible-AI short answer?</h2>
+<p>简答题中哪种改进建议最有说服力？</p>
+<p>A. Only write “collect more data”. / 只写“增加数据量”
+B. Only write “use AI ethics”. / 只写“使用 AI 伦理”
+C. Connect a specific harm to concrete interventions, measures and responsibility mechanisms. / 针对具体伤害提出措施、指标和责任机制
+D. Only write “increase transparency”. / 只写“提高透明度”</p>
+<h2>Q71 · Which formula is equivalent to p→q?</h2>
+<p>p→q 与什么等价？</p>
+<p>A. ¬p∧q / ¬p∧q
+B. ¬p∨q / ¬p∨q
+C. p∨¬q / p∨¬q
+D. p∧q / p∧q</p>
+<h2>Q72 · How can KB⊨α be tested by satisfiability?</h2>
+<p>检验 KB⊨α 可转成什么问题？</p>
+<p>A. Check that KB∧¬α is unsatisfiable. / 检查 KB∧¬α 是否不可满足
+B. Check that KB∨α is satisfiable. / 检查 KB∨α 是否可满足
+C. Check that α has one model. / 检查 α 是否有一个模型
+D. Check that KB contains the text α. / 检查 KB 是否含有 α 字符串</p>
+<h2>Q73 · What is the CNF of p→(q∧r)?</h2>
+<p>p→(q∧r) 的 CNF 是？</p>
+<p>A. (¬p∧q)∨r / (¬p∧q)∨r
+B. p∧q∧r / p∧q∧r
+C. (p∨q)∧r / (p∨q)∧r
+D. (¬p∨q)∧(¬p∨r) / (¬p∨q)∧(¬p∨r)</p>
+<h2>Q74 · How do validity and satisfiability differ?</h2>
+<p>Satisfiable 与 valid 的关系是什么？</p>
+<p>A. Satisfiability requires truth under all assignments. / satisfiable 要所有赋值为真
+B. A valid formula may be false under every assignment. / valid 允许所有赋值为假
+C. Validity requires truth under all assignments; satisfiability requires at least one. / valid 要所有赋值为真，satisfiable 只需一个
+D. They mean exactly the same thing. / 二者完全同义</p>
+<h2>Q75 · Why is logic labelled supplementary in this package?</h2>
+<p>本包为何把逻辑单列为补充？</p>
+<p>A. Propositional logic is unrelated to AI. / 命题逻辑不是 AI 的一部分
+B. The weekly plan mentions it, but complete supporting slides and final scope were not found. / 周计划提到逻辑，但未找到对应完整讲义，考试范围待确认
+C. The lecturer confirmed that logic is excluded. / 老师已确认逻辑不考
+D. Logic accounts for half the final exam. / 逻辑占期末一半</p>
+<h1>Multiple-choice explanations / 选择题解析</h1>
+<p><strong>Q01 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Rationality concerns informed expected performance, not guaranteed outcomes; it also permits bounded computation.</p>
+<p><strong>中文对照</strong></p>
+<p>理性与结果保证不同，也允许有限算力。</p>
+<p><strong>Q02 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Knowing the present state does not make the next state uniquely determined by an action.</p>
+<p><strong>中文对照</strong></p>
+<p>能观察当前状态，不代表下一状态由动作唯一确定。</p>
+<p><strong>Q03 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A state must retain the information needed to predict future consequences.</p>
+<p><strong>中文对照</strong></p>
+<p>状态应保留预测未来所需的信息。</p>
+<p><strong>Q04 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A search tree distinguishes paths; a state graph can merge repeated states.</p>
+<p><strong>中文对照</strong></p>
+<p>搜索树区分路径，状态图可合并重复状态。</p>
+<p><strong>Q05 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>MCTS with a simulator is an example of model-based online planning.</p>
+<p><strong>中文对照</strong></p>
+<p>MCTS 是可用模型模拟器的在线规划例子。</p>
+<p><strong>Q06 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>BFS orders by depth rather than accumulated edge cost.</p>
+<p><strong>中文对照</strong></p>
+<p>BFS 按深度，不按边权和排序。</p>
+<p><strong>Q07 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Accepting a goal when it is removed with minimum g supports the optimality argument.</p>
+<p><strong>中文对照</strong></p>
+<p>只有最低 g 目标出队时才能据排序论证最优。</p>
+<p><strong>Q08 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Consistency makes f nondecreasing along paths, so expanded states need not be reopened.</p>
+<p><strong>中文对照</strong></p>
+<p>一致性使 f 沿路径不减，已扩展状态无需重新打开。</p>
+<p><strong>Q09 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>The maximum is still bounded by the true remaining cost; adding heuristics may double-count cost.</p>
+<p><strong>中文对照</strong></p>
+<p>max 仍不超过真实成本，求和可能重复计数。</p>
+<p><strong>Q10 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>f_new=f_old+5. Apply the shift to goals too and compare otherwise identical correct implementations.</p>
+<p><strong>中文对照</strong></p>
+<p>f_new=f_old+5；要对目标也同样加，且比较相同实现。</p>
+<p><strong>Q11 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>The quantifiers are ∀x∃y; the supporting y may depend on x.</p>
+<p><strong>中文对照</strong></p>
+<p>量词为 ∀x∃y。</p>
+<p><strong>Q12 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A value of Z may have depended on a supporting X value that was just removed.</p>
+<p><strong>中文对照</strong></p>
+<p>Z 的支持可能正是刚删掉的 X 值。</p>
+<p><strong>Q13 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A two-colour triangle is arc-consistent but globally unsatisfiable.</p>
+<p><strong>中文对照</strong></p>
+<p>两色三角形是 arc-consistent 但无解的反例。</p>
+<p><strong>Q14 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>MRV chooses a variable with the fewest legal values; LCV tries a value that least restricts neighbours.</p>
+<p><strong>中文对照</strong></p>
+<p>MRV 选最少剩余值变量；LCV 选最少限制邻居的值。</p>
+<p><strong>Q15 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Here e counts arcs/constraints in order of magnitude and d is the maximum domain size.</p>
+<p><strong>中文对照</strong></p>
+<p>e 为弧/约束数量量级，d 为最大域大小。</p>
+<p><strong>Q16 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Independence is not mutual exclusivity: independent events can occur together.</p>
+<p><strong>中文对照</strong></p>
+<p>独立不等于互斥，联合可以非零。</p>
+<p><strong>Q17 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A uniform density on [0,.5] has height 2 and total area 1.</p>
+<p><strong>中文对照</strong></p>
+<p>例如 [0,.5] 上均匀密度为 2。</p>
+<p><strong>Q18 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Rows identify current states and columns identify next states.</p>
+<p><strong>中文对照</strong></p>
+<p>当前状态为行，下一状态为列。</p>
+<p><strong>Q19 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Map each outcome to utility first, then take its probability-weighted expectation.</p>
+<p><strong>中文对照</strong></p>
+<p>先把每种结果映射为效用，再按概率加权。</p>
+<p><strong>Q20 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>The geometric sum is 3/(1−.5)=6.</p>
+<p><strong>中文对照</strong></p>
+<p>等比级数 3/(1−.5)=6。</p>
+<p><strong>Q21 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>OR nodes choose actions; AND nodes cover the possible results chosen by the environment.</p>
+<p><strong>中文对照</strong></p>
+<p>OR 选动作，AND 覆盖环境结果。</p>
+<p><strong>Q22 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Every outcome requires a successful continuation in a strong plan.</p>
+<p><strong>中文对照</strong></p>
+<p>强计划要求每个结果都有通向目标的后续方案。</p>
+<p><strong>Q23 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Maximisation, minimisation and expectation correspond to different decision models.</p>
+<p><strong>中文对照</strong></p>
+<p>max/min 对应不同的决策/对手假设。</p>
+<p><strong>Q24 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Almost-sure success need not imply finite termination on every possible outcome sequence.</p>
+<p><strong>中文对照</strong></p>
+<p>可能几乎必然成功，但不保证每一结果序列都有限结束。</p>
+<p><strong>Q25 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Uncertain outcomes can require different successful continuations.</p>
+<p><strong>中文对照</strong></p>
+<p>不确定动作结果使分支策略成为必要。</p>
+<p><strong>Q26 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A value is a number; a deterministic policy returns an action.</p>
+<p><strong>中文对照</strong></p>
+<p>价值是数，确定策略返回动作。</p>
+<p><strong>Q27 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Using newly updated values within the sweep gives an in-place variant and different intermediate results.</p>
+<p><strong>中文对照</strong></p>
+<p>原地 VI 是另一种更新方案，手算结果不同。</p>
+<p><strong>Q28 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>The fixed-policy system is (I−γPπ)Vπ=rπ.</p>
+<p><strong>中文对照</strong></p>
+<p>(I−γPπ)Vπ=rπ。</p>
+<p><strong>Q29 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Probabilities of different outcomes reaching the same successor must be added.</p>
+<p><strong>中文对照</strong></p>
+<p>合并到同一后继状态的概率必须相加。</p>
+<p><strong>Q30 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Do not mix exit-reward and entry-reward conventions.</p>
+<p><strong>中文对照</strong></p>
+<p>exit 发奖模型不能当成进入格子发奖模型。</p>
+<p><strong>Q31 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Select through the existing tree, expand, run a rollout, then back up its statistics.</p>
+<p><strong>中文对照</strong></p>
+<p>先在已有树选择，再扩展，再 rollout，最后更新路径统计。</p>
+<p><strong>Q32 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>The bonus is proportional to 1/√n for fixed parent count.</p>
+<p><strong>中文对照</strong></p>
+<p>bonus 与 1/√n 成比例。</p>
+<p><strong>Q33 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>The new mean is (4×2+7)/5=3.</p>
+<p><strong>中文对照</strong></p>
+<p>(4×2+7)/5=3。</p>
+<p><strong>Q34 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Anytime operation does not eliminate finite-sampling error.</p>
+<p><strong>中文对照</strong></p>
+<p>有限采样有误差，不能从 anytime 推出最优保证。</p>
+<p><strong>Q35 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>RTDP focuses computation while still being able to use a model and Bellman expectations.</p>
+<p><strong>中文对照</strong></p>
+<p>RTDP 聚焦当前相关区域，仍可使用模型与 Bellman 期望。</p>
+<p><strong>Q36 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>It receives .8 from exploitation plus .2/4=.05 from exploration.</p>
+<p><strong>中文对照</strong></p>
+<p>利用 .8，加探索抽到它 .2/4=.05。</p>
+<p><strong>Q37 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Every Q/τ approaches zero, so the exponentials approach 1.</p>
+<p><strong>中文对照</strong></p>
+<p>Q/τ 趋于 0，各指数项接近 1。</p>
+<p><strong>Q38 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>c√x=√(c²x); the same numerical constant cannot simply be moved inside the root.</p>
+<p><strong>中文对照</strong></p>
+<p>c√x=√(c²x)，同数值常数不能直接互换。</p>
+<p><strong>Q39 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Q_N=Q_(N−1)+(r_N−Q_(N−1))/N.</p>
+<p><strong>中文对照</strong></p>
+<p>Q_N=Q_(N−1)+(r_N−Q_(N−1))/N。</p>
+<p><strong>Q40 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Visitation conditions still require checking; the total probability of future exploration may be finite.</p>
+<p><strong>中文对照</strong></p>
+<p>需要检查访问覆盖，探索概率总量可能有限。</p>
+<p><strong>Q41 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Their behaviour policies can be identical while their learning targets differ.</p>
+<p><strong>中文对照</strong></p>
+<p>行为策略可以相同，但学习目标不同。</p>
+<p><strong>Q42 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>There is no future term: 4+.5(−2−4)=1.</p>
+<p><strong>中文对照</strong></p>
+<p>4+.5(−2−4)=1；终止后无未来项。</p>
+<p><strong>Q43 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>MC uses the sampled return through the end of an episode rather than a successor-value estimate.</p>
+<p><strong>中文对照</strong></p>
+<p>MC 使用实际采样到幕末的回报。</p>
+<p><strong>Q44 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>The relationship between policies is separate from when data are collected.</p>
+<p><strong>中文对照</strong></p>
+<p>策略关系和数据采集时机是不同维度。</p>
+<p><strong>Q45 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Vπ is an expected return conditioned on the starting state.</p>
+<p><strong>中文对照</strong></p>
+<p>Vπ 是给定状态的期望回报。</p>
+<p><strong>Q46 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>The update is one semi-gradient step using a common pre-update TD error.</p>
+<p><strong>中文对照</strong></p>
+<p>这是同一次半梯度更新的定义。</p>
+<p><strong>Q47 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Δwᵢ=αδfᵢ=0.</p>
+<p><strong>中文对照</strong></p>
+<p>Δwᵢ=αδfᵢ=0。</p>
+<p><strong>Q48 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Shared parameters generalise experience, although the generalisation can be wrong.</p>
+<p><strong>中文对照</strong></p>
+<p>参数学习能泛化，但泛化也可能错误。</p>
+<p><strong>Q49 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>The question is whether the chosen features can express Q or V, not whether rewards are always positive or transitions deterministic.</p>
+<p><strong>中文对照</strong></p>
+<p>奖励非线性不等于一定无法学习；关键是 Q/V 能否由特征表示。</p>
+<p><strong>Q50 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Use δ=−501, α=.004 and features (.5,1); the reference solution rounds to (3,−3).</p>
+<p><strong>中文对照</strong></p>
+<p>δ=−501、α=.004、特征(.5,1)。参考答案约成(3,−3)。</p>
+<p><strong>Q51 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Discrete actions do not imply discrete Q values.</p>
+<p><strong>中文对照</strong></p>
+<p>动作离散，不代表 Q 数值离散。</p>
+<p><strong>Q52 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Random mini-batches reduce correlation without guaranteeing independence or universal stability.</p>
+<p><strong>中文对照</strong></p>
+<p>随机 mini-batches 减少相关性，但并非绝对独立保证。</p>
+<p><strong>Q53 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A frozen or slowly updated target makes the learning target more stable.</p>
+<p><strong>中文对照</strong></p>
+<p>冻结/慢更新目标有助稳定 bootstrap。</p>
+<p><strong>Q54 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Compositions of affine transformations remain affine.</p>
+<p><strong>中文对照</strong></p>
+<p>仿射变换的复合仍是仿射。</p>
+<p><strong>Q55 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Discretising actions is another approximation, but the finite-action output format is the direct limitation.</p>
+<p><strong>中文对照</strong></p>
+<p>可以离散化动作或使用适合连续动作的方法，但存在近似代价。</p>
+<p><strong>Q56 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Crossing bounds show that the remaining branch cannot change the ancestor decision.</p>
+<p><strong>中文对照</strong></p>
+<p>上下界交叉说明无法改变祖先选择。</p>
+<p><strong>Q57 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Alpha-beta skips branches that cannot affect the final root decision.</p>
+<p><strong>中文对照</strong></p>
+<p>剪枝跳过对最终根决策无影响的分支。</p>
+<p><strong>Q58 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A MIN branch cut off after seeing 2 might have an unseen leaf 1; the root needs only the upper bound.</p>
+<p><strong>中文对照</strong></p>
+<p>例如 B 首叶2即剪，真实 min 可能为1。</p>
+<p><strong>Q59 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Ideal ordering can approximately halve the effective depth exponent; the worst case remains O(bᵈ).</p>
+<p><strong>中文对照</strong></p>
+<p>最好近似平方根级减枝，最坏仍 O(bᵈ)。</p>
+<p><strong>Q60 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Correct pruning and accurate full-game evaluation are different issues.</p>
+<p><strong>中文对照</strong></p>
+<p>搜索内部正确性和外部评价精度是两层问题。</p>
+<p><strong>Q61 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A dominant-strategy equilibrium is stronger; a Nash equilibrium need not use dominant strategies.</p>
+<p><strong>中文对照</strong></p>
+<p>DSE 比 NE 要求更强，NE 不要求占优策略。</p>
+<p><strong>Q62 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Allowing mixtures is essential to the general existence statement.</p>
+<p><strong>中文对照</strong></p>
+<p>混合策略扩展使存在性成立。</p>
+<p><strong>Q63 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>The row probability p controls the column player's expected payoffs; q controls the row player's.</p>
+<p><strong>中文对照</strong></p>
+<p>p 控制列玩家面对行混合时的收益，q 控制行玩家收益。</p>
+<p><strong>Q64 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Handle weak dominance carefully when asked to find every equilibrium.</p>
+<p><strong>中文对照</strong></p>
+<p>若要求全部 NE，须谨慎处理弱支配。</p>
+<p><strong>Q65 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>At p_k(right)=.4 and p_g(right)=.3, each supported pure action has goal probability .48.</p>
+<p><strong>中文对照</strong></p>
+<p>p_k右=.4，p_g右=.3，各纯选择在均衡下均为.48。</p>
+<p><strong>Q66 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A proxy label can encode and amplify structural inequality.</p>
+<p><strong>中文对照</strong></p>
+<p>代理标签可能编码并放大系统性不平等。</p>
+<p><strong>Q67 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Participation should span the process and distinguish direct users from other affected people.</p>
+<p><strong>中文对照</strong></p>
+<p>参与需要贯穿过程，且区分使用者和受影响者。</p>
+<p><strong>Q68 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Optimising a proxy objective can encourage dependence or undermine autonomy.</p>
+<p><strong>中文对照</strong></p>
+<p>优化代理目标可能造成上瘾或损害自主性。</p>
+<p><strong>Q69 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>The goal is warranted trust in a trustworthy system, not merely persuading people to believe it.</p>
+<p><strong>中文对照</strong></p>
+<p>应让系统值得信任，而非只使用户愿意相信。</p>
+<p><strong>Q70 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Explain how the intervention interrupts the causal mechanism and how its impact will be evaluated.</p>
+<p><strong>中文对照</strong></p>
+<p>解释措施如何切断风险的因果链，并说明怎么评价效果。</p>
+<p><strong>Q71 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>An implication is false only when p is true and q is false.</p>
+<p><strong>中文对照</strong></p>
+<p>蕴涵仅在 p 真且 q 假时为假。</p>
+<p><strong>Q72 · A</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A model satisfying KB but falsifying α would be a counterexample to entailment.</p>
+<p><strong>中文对照</strong></p>
+<p>如果存在满足 KB 但不满足 α 的模型，蕴涵就不成立。</p>
+<p><strong>Q73 · D</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>Eliminate implication, then distribute disjunction over conjunction.</p>
+<p><strong>中文对照</strong></p>
+<p>先消去蕴涵，再分配析取。</p>
+<p><strong>Q74 · C</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>One satisfying assignment does not establish validity.</p>
+<p><strong>中文对照</strong></p>
+<p>不要把找到一个满足赋值当成逻辑有效。</p>
+<p><strong>Q75 · B</strong></p>
+<p><strong>ENGLISH</strong></p>
+<p>A gap in the available files cannot be converted into a definite claim about exam inclusion.</p>
+<p><strong>中文对照</strong></p>
+<p>资料缺口不能转成对考试范围的肯定判断。</p>
+<h1>Written practice / 手算与简答 · 24 questions</h1>
+<p>10 marks per question. Attempt the answer in English before reading the solution. / 每题10分，先用英文作答。</p>
+<h2>W01 · Modelling delivery and battery state / 建模：配送与电量 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A robot delivers packages inside a building. Battery capacity constrains its routes and the lift has random delays. Specify S, A, T, Z, U and distinguish sensing uncertainty from effect uncertainty.</p>
+<p><strong>中文对照</strong></p>
+<p>配送机器人在楼内送包裹，电量限制路径，电梯会随机延迟。写出 S、A、T、Z、U，并区分观测和效果不确定性。</p>
+<h2>W02 · The danger of generation-time goal testing / 不同目标时机的陷阱 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Edges are S→A:1, S→G:10 and A→G:1. What would UCS return if it stopped as soon as G was generated? Explain the correct minimum-cost search.</p>
+<p><strong>中文对照</strong></p>
+<p>S→A 成本1，S→G成本10，A→G成本1。UCS 若生成 G 就停止会返回多少？正确方式如何得到最优？</p>
+<h2>W03 · Admissible but inconsistent / 可采纳但不一致 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Edges are S→A:2, S→B:1, B→A:.5 and A→G:2. Let h(S)=3, h(A)=0, h(B)=2, h(G)=0. Test admissibility/consistency and explain the risk of never reopening expanded states.</p>
+<p><strong>中文对照</strong></p>
+<p>S→A成本2，S→B成本1，B→A成本.5，A→G成本2。h(S)=3,h(A)=0,h(B)=2,h(G)=0。检验启发式，说明不重开图搜索的风险。</p>
+<h2>W04 · 8-puzzle parity and lower bounds / 8-puzzle 与下界 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>The goal is 12345678_ and the start is 12345687_. Test solvability. Explain whether Manhattan distance includes the blank and whether two admissible heuristics may always be added.</p>
+<p><strong>中文对照</strong></p>
+<p>目标 12345678_，起点 12345687_。判可解性。另说明 Manhattan 是否应计空格，以及两个可采纳启发式能否直接相加。</p>
+<h2>W05 · Arc consistency without a global solution / AC-3 与全局失败 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A, B, C each have domain {red, blue}; every pair must have different colours. Is the CSP arc-consistent? Is it satisfiable?</p>
+<p><strong>中文对照</strong></p>
+<p>A、B、C 域都是{红,蓝}，三者两两不等。检查 arc consistency；是否存在解？</p>
+<h2>W06 · Deriving a tutorial schedule / 排班题推导 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Times are 1–6 and all tutors have different times. Constraints: A&gt;3, D<a, a="" f∈{5,6},="">F, B even, E∉{1,6},|E−C|=1,|A−B|=2. Give the unary-consistent domains and one complete solution.</a,></p>
+<p><strong>中文对照</strong></p>
+<p>重做 Tutorial 4.5：A&gt;3，D<a，f∈{5,6}，a>F，B偶数，E∉{1,6}，|E−C|=1，|A−B|=2，所有人时间1至6且互异。先给一元域，再给一个解。</a，f∈{5,6}，a></p>
+<h2>W07 · Bayes with a new prior / Bayes 新参数 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>P(H)=.2, P(E|H)=.9, P(E|¬H)=.1. Calculate P(E) and P(H|E). Explain why the posterior is not .9.</p>
+<p><strong>中文对照</strong></p>
+<p>P(H)=.2，P(E|H)=.9，P(E|¬H)=.1。求 P(E) 与 P(H|E)，解释为何不等于 .9。</p>
+<h2>W08 · A Markov chain and a periodic counterexample / Markov 链与周期 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>P=[[.8,.2],[.4,.6]], x₀=[1,0]. Find x₂ and the stationary distribution. Why does [[0,1],[1,0]] not converge from [1,0]?</p>
+<p><strong>中文对照</strong></p>
+<p>P=[[.8,.2],[.4,.6]]，x0=[1,0]。求 x2、平稳分布。说明 [[0,1],[1,0]] 为什么不能从 [1,0] 收敛。</p>
+<h2>W09 · Utility is not money / 效用不等于金额 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Compare a certain 16 with a lottery paying 0 or 36 equally likely when U(x)=√x. Also calculate the return of rewards [1,2,4] for γ=.5.</p>
+<p><strong>中文对照</strong></p>
+<p>确定得到16，与等概率得到0或36比较，U(x)=√x。再计算奖励[1,2,4]在γ=.5下的回报。</p>
+<h2>W10 · Proving every conditional-plan branch / 条件计划的全分支证明 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>At S choose a→{G, D} or b→{A, B}. D is a dead end, while A and B each have an action to G. Label solved/closed nodes and give a strong conditional plan.</p>
+<p><strong>中文对照</strong></p>
+<p>S可选 a→{G,D} 或 b→{A,B}，D死路，A→G，B→G。画/描述 solved 标记并给强条件计划。</p>
+<h2>W11 · Three synchronous VI sweeps / 三轮同步 VI (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A can move to B for reward 0 or exit for 3. B can only exit for 8. E is absorbing with reward 0. Let γ=.5, V₀=0. Find V₁, V₂, V₃ and the optimal actions.</p>
+<p><strong>中文对照</strong></p>
+<p>A可去B奖励0或exit奖励3；B只可exit奖励8；E吸收奖励0。γ=.5，V0=0。求V1,V2,V3和最优动作。</p>
+<h2>W12 · Policy evaluation and improvement / 策略评估与改进 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>At X, stay pays 2 and remains at X; exit pays 15 and terminates. Let γ=.9. Evaluate the always-stay policy and improve it. What changes if exit instead pays 25?</p>
+<p><strong>中文对照</strong></p>
+<p>状态 X 的 stay 每步奖励2并留X；exit 得15到终止。γ=.9。先评估总选 stay 的策略，再改进；将 exit 奖励改成25后如何？</p>
+<h2>W13 · Discounting an exit reward / 退出奖励的折扣 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>C can only exit for 10; N moves deterministically to C for reward 0; γ=.8; E is zero-reward absorbing. Find V(C), V(N), V(E). What if entering C immediately pays 10 and C is terminal?</p>
+<p><strong>中文对照</strong></p>
+<p>C仅exit得10；N确定移动到C奖励0；γ=.8；退出后E吸收0。求V(C),V(N),V(E)。若改成进入C立即奖励10且C为终止状态，值如何变化？</p>
+<h2>W14 · UCT selection and incremental means / UCT 与均值 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Parent count N=20. A has mean .6, count10; B has mean .5, count2. Use Q+√(2lnN/n). Which action is selected? If B then returns 1, update its statistics.</p>
+<p><strong>中文对照</strong></p>
+<p>父访问N=20；A均值.6,n=10；B均值.5,n=2。用 Q+√(2lnN/n) 选谁？随后B回报1，更新均值。</p>
+<h2>W15 · Epsilon-greedy ties and softmax / ε 与 softmax (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Three actions have Q=[1,1,0]. Let ε=.3 and break greedy ties uniformly. Find epsilon-greedy probabilities, then softmax probabilities for τ=1.</p>
+<p><strong>中文对照</strong></p>
+<p>3个动作Q=[1,1,0]，ε=.3，贪心平局均匀。求ε-greedy概率；再求τ=1时softmax概率。</p>
+<h2>W16 · Tutorial 8 UCB constants / Tutorial 8 UCB (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Using the tutorial's six rewards, compute both sample means and UCB scores with C=5 inside the square root. Would putting the same number 5 outside the root give an equivalent formula?</p>
+<p><strong>中文对照</strong></p>
+<p>给定教程六次回报，先求两个均值，再按C=5在根号内算UCB。若把相同数字5放到根号外是否相同？</p>
+<h2>W17 · MC and TD on the same trajectory / 同轨迹 MC 与 TD (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Trajectory A --1→ B --3→ terminal; γ=.5, V(A)=2, V(B)=4,α=.25. Calculate one MC update and one TD(0) update to A, both from the original values.</p>
+<p><strong>中文对照</strong></p>
+<p>A --1→ B --3→ terminal；γ=.5；V(A)=2,V(B)=4；α=.25。求A的一次MC更新与TD(0)更新，均从原始V出发。</p>
+<h2>W18 · Sequential Q-learning updates / 顺序 Q 更新 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>X has actions L/R. All Q values start at 0,γ=.9,α=.5. Replay (X, R,2, Y), (Y, L,4, terminal), (X, R,2, Y) in order. Show each update.</p>
+<p><strong>中文对照</strong></p>
+<p>X两个动作L/R，所有Q=0，γ=.9,α=.5；依次经历(X,R,2,Y)、(Y,L,4,terminal)、(X,R,2,Y)。求每步更新。</p>
+<h2>W19 · Separate behaviour from the target / 行为与目标分离 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Old Q=5, r=−1,γ=.8,α=.2. At s′, Q=[7,2] and the behaviour selects the action valued 2. Calculate Q-learning and SARSA updates. What if s′ is terminal?</p>
+<p><strong>中文对照</strong></p>
+<p>当前Q=5，r=−1，γ=.8,α=.2；s′的动作Q=[7,2]，行为选择Q=2的动作。算Q-learning与SARSA；若s′终止呢？</p>
+<h2>W20 · A new linear-feature calculation / 线性特征的新数值 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>w=[1,2,−1], f(s, a)=[1,.5,2], r=3,γ=.5, max next Q=4,α=.1. Compute old Q,δ, new w and new Q at the same features.</p>
+<p><strong>中文对照</strong></p>
+<p>w=[1,2,−1]，f(s,a)=[1,.5,2]，r=3，γ=.5，下一状态最大Q=4，α=.1。计算旧Q、δ、新w、新Q。</p>
+<h2>W21 · DQN targets and loss / DQN target 与 loss (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>The current network outputs [2,4] at s and the experience chose the first action. Let r=1,γ=.8 and target-network outputs at s′ be [3,5]. Find nonterminal/terminal targets and squared errors. Which output is directly supervised?</p>
+<p><strong>中文对照</strong></p>
+<p>当前网络对s输出[2,4]，经验动作是第一个，r=1,γ=.8；目标网络对s′输出[3,5]。求非终止和终止的target、平方误差，解释哪个输出被直接监督。</p>
+<h2>W22 · Cutoff bounds versus exact minimax values / α–β 界与真实子树值 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A MAX root has MIN children A=[5,7], B=[4,1], C=[6,9] in left-to-right order. Apply alpha-beta. Which action is chosen? Which leaves are pruned, and is B's cutoff score its exact value?</p>
+<p><strong>中文对照</strong></p>
+<p>根MAX左到右有MIN子树A=[5,7]、B=[4,1]、C=[6,9]。执行α–β，根选谁？哪些叶可剪？B的返回界是否等于真实值？</p>
+<h2>W23 · An asymmetric zero-sum mixed equilibrium / 非对称零和混合 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>The row-payoff matrix is [[3,0],[1,2]]. Is there a pure saddle point? Find p=P(first row), q=P(first column), and the equilibrium value.</p>
+<p><strong>中文对照</strong></p>
+<p>行收益矩阵[[3,0],[1,2]]。有纯鞍点吗？求行选第一行概率p、列选第一列概率q、均衡价值。</p>
+<h2>W24 · Biased proxy labels in hiring / 招聘代理标签偏差 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A hiring system uses historical “was hired” labels. Overall accuracy is high but one group has a high rejection rate. Give a responsible-AI improvement plan using the course framework.</p>
+<p><strong>中文对照</strong></p>
+<p>招聘系统用过往“被录用”作为成功标签，总体准确率高但某群体拒绝率高。用课程框架写一段改进方案。</p>
+<h1>Written solutions / 书面题参考答案</h1>
+<h2>W01 · Modelling delivery and battery state / 建模：配送与电量</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Include position, battery charge and delivery/package status in S; include time if it changes the transition model. A contains legal movement, lift use, charging and delivery. T describes successor states and probabilities, including energy use. Z specifies what sensors reveal. Exact position/battery readings can coexist with random delays, so full observability does not imply deterministic effects. Define utility, for example negative travel time plus failure penalties, and state safety and battery constraints.</p>
+<p><strong>中文对照</strong></p>
+<p>S 应至少包括位置、电量、已完成配送/携带包裹状态；如时段影响模型也需加入时间。A 为合法移动、搭电梯、充电、交付；T 给每个动作的后继与概率，电量消耗也更新。Z 根据传感器说明能观察的部分；若位置/电量精确而延迟随机，则可完全可观测但随机。U 可是负时间和失败惩罚的折扣累计，需说明安全/电量约束。</p>
+<ul>
+<li>3 marks: State contains information needed to predict the future. / 状态足以预测未来</li>
+<li>2 marks: Actions and stochastic transitions. / 动作与随机转移</li>
+<li>2 marks: Observation model and justified classifications. / 观测及环境维度依据</li>
+<li>3 marks: A consistent objective, costs and constraints. / 目标、成本和约束自洽</li>
+</ul>
+<h2>W02 · The danger of generation-time goal testing / 不同目标时机的陷阱</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Expanding S generates G with cost 10, but this is not a valid reason to stop. UCS removes A with g=1 first, improves the G record to g=2, and then removes G. The optimal path is S-A-G with cost 2. Premature stopping returns cost 10.</p>
+<p><strong>中文对照</strong></p>
+<p>生成 S 的后继时会看到 G=10，但不能立即接受。优先队列先弹 A(g=1)，把 G 的最优记录更新为2，再弹 G=2。返回 S-A-G，成本2；过早停止返回10。</p>
+<ul>
+<li>3 marks: Identify the premature cost 10. / 指出过早结果10</li>
+<li>3 marks: Show A removal and the improved G record. / 给出 A 和更新 G 的顺序</li>
+<li>2 marks: Give path S-A-G and cost 2. / 最优路径成本2</li>
+<li>2 marks: Explain removal-time goal acceptance. / 说明目标出队判定</li>
+</ul>
+<h2>W03 · Admissible but inconsistent / 可采纳但不一致</h2>
+<p><strong>ENGLISH</strong></p>
+<p>True remaining costs are h<em>(A)=2, h</em>(B)=2.5, h<em>(S)=3.5, so every estimate is a nonnegative lower bound. Consistency fails on S→A because 3&gt;2+0 and B→A because 2&gt;.5+0. A</em> first expands A at g=2 and generates G at 4. Expanding B later finds A at g=1.5. Without reopening A it returns 4; reopening A generates G at 3.5 and returns the optimal S-B-A-G path.</p>
+<p><strong>中文对照</strong></p>
+<p>真实剩余成本 h<em>(A)=2,h</em>(B)=2.5,h<em>(S)=3.5，所以所有 h 都非负且不高估，可采纳。S→A 上 3&gt;2+0，B→A 上2&gt;.5+0，因此不一致。A</em> 先以 f=2 扩展 A，生成 G=4；后扩展 B(f=3)，发现更好 A(g=1.5)。若不重新打开 A，会返回4而不是最优3.5。重新打开后生成 G=3.5，返回最优。</p>
+<ul>
+<li>3 marks: Check admissibility at every state. / 逐点可采纳判断</li>
+<li>2 marks: Show at least one violated consistency inequality. / 至少一条一致性违反</li>
+<li>3 marks: Trace the suboptimal closed-state result. / 展示关闭 A 造成次优</li>
+<li>2 marks: Reopen A and recover cost 3.5. / 重开恢复3.5</li>
+</ul>
+<h2>W04 · 8-puzzle parity and lower bounds / 8-puzzle 与下界</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Ignoring the blank, (8,7) is the only inversion, so start parity is odd and goal parity even; the 3×3 puzzle is unsolvable. Standard Manhattan distance excludes the blank to avoid counting one tile move twice. A sum of admissible heuristics may double-count cost; max is safe, while summation needs a justified non-overlapping cost decomposition.</p>
+<p><strong>中文对照</strong></p>
+<p>忽略空格只有逆序对(8,7)，起点奇，目标偶，3×3 下不可达。Manhattan 不计空格，以免一次移动同时算两项而高估。一般不可直接相加，因重复计算同一成本；max 可采纳，求和需证明不重叠的成本分解。</p>
+<ul>
+<li>4 marks: Parity calculation and unsolvability. / 奇偶性及不可解</li>
+<li>3 marks: Exclude the blank and justify it. / 不计空格和原因</li>
+<li>3 marks: Explain the sum risk and max construction. / 相加风险与 max</li>
+</ul>
+<h2>W05 · Arc consistency without a global solution / AC-3 与全局失败</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Every red value is supported by blue in each neighbour, and every blue by red, so AC-3 deletes nothing. A triangle needs three distinct colours and cannot be coloured with two. Pairwise supports may come from mutually incompatible assignments and need not form a complete solution.</p>
+<p><strong>中文对照</strong></p>
+<p>每个变量的红值都有邻居蓝支持，每个蓝值都有红支持，所有有向弧都一致，AC-3 不删值。三角形需要至少3种颜色，只有两色无解。说明局部支持对不同约束可来自不兼容的不同赋值，不构成整体解。</p>
+<ul>
+<li>4 marks: Correct arc-consistency assessment. / 正确判弧一致</li>
+<li>3 marks: Correct unsatisfiability conclusion. / 正确判无解</li>
+<li>3 marks: Explain local support versus global consistency. / 解释局部不蕴含全局</li>
+</ul>
+<h2>W06 · Deriving a tutorial schedule / 排班题推导</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Unary domains are A={4,5,6}, B={2,4,6}, C=D={1,2,3,4,5,6}, E={2,3,4,5}, F={5,6}. A&gt;F forces A=6, F=5; the distance and evenness conditions force B=4. One solution is (A, B, C, D, E, F)=(6,4,1,3,2,5). Other solutions are (6,4,3,1,2,5) and (6,4,2,1,3,5); do not claim uniqueness.</p>
+<p><strong>中文对照</strong></p>
+<p>一元域：A={4,5,6},B={2,4,6},C={1,2,3,4,5,6},D={1,2,3,4,5,6},E={2,3,4,5},F={5,6}。A&gt;F 强制 A=6,F=5，距离条件和互异得 B=4。可取 E=2,C=1,D=3，解为(6,4,1,3,2,5)。另有 E=2,C=3,D=1 或 E=3,C=2,D=1，别把一个解误当唯一解。</p>
+<ul>
+<li>4 marks: List all unary-consistent domains. / 一元域完整</li>
+<li>3 marks: Derive A, F and B. / A/F/B 推导</li>
+<li>3 marks: Give a complete legal assignment and recognise non-uniqueness. / 合法完整解与非唯一性</li>
+</ul>
+<h2>W07 · Bayes with a new prior / Bayes 新参数</h2>
+<p><strong>ENGLISH</strong></p>
+<p>P(E)=.9×.2+.1×.8=.26. P(H|E)=.18/.26=9/13≈.6923. The likelihood .9 conditions on H; the posterior additionally accounts for the prior and evidence produced when H is false.</p>
+<p><strong>中文对照</strong></p>
+<p>P(E)=.9×.2+.1×.8=.26。P(H|E)=.18/.26=9/13≈.6923。.9 是在 H 成立条件下看见 E 的似然；后验还需考虑先验及 ¬H 也能产生 E。</p>
+<ul>
+<li>3 marks: Use total probability in the denominator. / 全概率分母</li>
+<li>4 marks: Calculate posterior 9/13. / 后验9/13</li>
+<li>3 marks: Distinguish likelihood from posterior. / 似然与后验区别</li>
+</ul>
+<h2>W08 · A Markov chain and a periodic counterexample / Markov 链与周期</h2>
+<p><strong>ENGLISH</strong></p>
+<p>x₁=[.8,.2], x₂=[.72,.28]. Write stationary mass as [a,1−a]; a=.8a+.4(1−a) gives a=2/3, so the distribution is [2/3,1/3]. The second chain alternates [1,0] and [0,1]. It has stationary distribution [.5,.5] but the specified initial distribution does not converge.</p>
+<p><strong>中文对照</strong></p>
+<p>x1=[.8,.2]，x2=[.72,.28]。设稳态[a,1−a]，a=.8a+.4(1−a)，得 a=2/3，分布[2/3,1/3]。第二条链每步在两点间轮流，x0Pk 交替[1,0]/[0,1]；虽有稳态[.5,.5]，给定起点分布不收敛。</p>
+<ul>
+<li>3 marks: Compute x₁ and x₂. / x1/x2</li>
+<li>4 marks: Solve the stationary equations. / 平稳分布方程与解</li>
+<li>3 marks: Explain periodic oscillation despite existence of a stationary distribution. / 周期链解释</li>
+</ul>
+<h2>W09 · Utility is not money / 效用不等于金额</h2>
+<p><strong>ENGLISH</strong></p>
+<p>The certain payoff has utility 4; the lottery has EU=.5×0+.5×6=3. Choose the certain payoff even though the lottery has higher expected money, 18. The discounted return is 1+.5×2+.25×4=3.</p>
+<p><strong>中文对照</strong></p>
+<p>确定方案效用4；彩票EU=.5×0+.5×6=3，所以按该效用选确定16，尽管彩票期望金额18更高。回报1+.5×2+.25×4=3。</p>
+<ul>
+<li>3 marks: Compute both expected utilities. / 两方案EU</li>
+<li>3 marks: Choose and explain the risk preference. / 选择与风险解释</li>
+<li>4 marks: Compute discounted return 3. / 折扣回报3</li>
+</ul>
+<h2>W10 · Proving every conditional-plan branch / 条件计划的全分支证明</h2>
+<p><strong>ENGLISH</strong></p>
+<p>G is solved and D is closed, so a is closed. A and B are solved; consequently b and S are solved. Execute b, then take the action from whichever state, A or B, is observed to G. Both outcome branches of b must remain in the solution subtree.</p>
+<p><strong>中文对照</strong></p>
+<p>G solved、D closed，因此 a closed。A 与 B 都 solved，故 b solved，S solved。计划先做 b；观察到 A 时执行 A 的到 G 动作，观察到 B 时执行 B 的到 G 动作。保留 b 的两条环境结果，不能只选一条。</p>
+<ul>
+<li>3 marks: Label leaves and action a. / 叶和 a 标记</li>
+<li>3 marks: Prove b and S solved. / b 与 S 的证明</li>
+<li>4 marks: Give the full conditional plan. / 完整条件计划</li>
+</ul>
+<h2>W11 · Three synchronous VI sweeps / 三轮同步 VI</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Using state order (A, B, E): V₁=(3,8,0), V₂=(4,8,0), V₃=(4,8,0). At A, moving to B gives 0+.5×8=4&gt;3, so move to B; at B, exit. The first sweep cannot use B's newly computed 8 when updating A.</p>
+<p><strong>中文对照</strong></p>
+<p>V1=(A3,B8,E0)；V2=(A4,B8,E0)；V3同V2。A比较去B的0+.5×8=4与exit3，选去B；B exit。注意第一轮 A 不能提前使用 B 本轮新值8。</p>
+<ul>
+<li>4 marks: All sweep values. / 各轮数值</li>
+<li>3 marks: Compare actions and state the policy. / 动作比较</li>
+<li>3 marks: Explain use of previous-sweep values. / 同步旧值解释</li>
+</ul>
+<h2>W12 · Policy evaluation and improvement / 策略评估与改进</h2>
+<p><strong>ENGLISH</strong></p>
+<p>V_stay=2+.9V_stay=20. Exit at 15 is worse, so retain stay. If exit pays 25, switch to exit and re-evaluate to V=25. Under this new value, taking stay once then exiting gives 2+.9×25=24.5&lt;25, so the exit policy is stable.</p>
+<p><strong>中文对照</strong></p>
+<p>Vstay=2+.9Vstay=20；Qexit=15，原策略保持stay。若 exit=25，Qexit=25&gt;20，改为exit，价值25。新策略评估下 Qstay=2+.9×25=24.5&lt;25，故稳定。</p>
+<ul>
+<li>3 marks: Evaluation equation and value 20. / 线性方程与20</li>
+<li>2 marks: Retain stay when exit pays 15. / 15时保持</li>
+<li>3 marks: Improve and evaluate when exit pays 25. / 25时改进</li>
+<li>2 marks: Check stability. / 再检验稳定</li>
+</ul>
+<h2>W13 · Discounting an exit reward / 退出奖励的折扣</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Under exit rewards, V(E)=0, V(C)=10, V(N)=.8×10=8. Under entry rewards, V(C)=0 after termination and V(N)=10. Reward timing differs by one step; do not simultaneously assign C value 10 and pay 10 immediately on entering it.</p>
+<p><strong>中文对照</strong></p>
+<p>exit发奖：V(E)=0,V(C)=10,V(N)=.8×10=8。进入发奖：V(C)=0（已终止），V(N)=10。两套模型时间差一步，不能把C值10和N立即10同时使用。</p>
+<ul>
+<li>4 marks: The three exit-model values. / 退出模型三值</li>
+<li>3 marks: The entry-model values. / 进入模型数值</li>
+<li>3 marks: Explain the timing difference. / 解释奖励时点</li>
+</ul>
+<h2>W14 · UCT selection and incremental means / UCT 与均值</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A=.6+√(.2ln20)≈1.3740; B=.5+√(ln20)≈2.2308, so select B. Then n_B=3 and Q_B=(2×.5+1)/3=2/3≈.6667; the parent count becomes 21. Increment each relevant count once, not twice.</p>
+<p><strong>中文对照</strong></p>
+<p>A=.6+√(.2ln20)≈1.3740；B=.5+√(ln20)≈2.2308，选B。更新nB=3,QB=(2×.5+1)/3=2/3≈.6667，父N变21。先增加一次，均值分母不可再多加。</p>
+<ul>
+<li>4 marks: Both UCB scores and selection B. / UCB分数与B</li>
+<li>4 marks: New counts and mean. / 计数和均值</li>
+<li>2 marks: Explain the exploration bonus. / 说明探索原因</li>
+</ul>
+<h2>W15 · Epsilon-greedy ties and softmax / ε 与 softmax</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Each of the two greedy actions has .7/2+.3/3=.45; the third has .1. Softmax has denominator 2e+1, giving each of the first two e/(2e+1)≈.4223 and the third 1/(2e+1)≈.1554. Each distribution sums to 1 but uses a different selection mechanism.</p>
+<p><strong>中文对照</strong></p>
+<p>两个最大动作各 .7/2+.3/3=.45，第三个 .1。Softmax 分母2e+1，前两项 e/(2e+1)≈.4223，第三1/(2e+1)≈.1554。两者都和为1但机制不同。</p>
+<ul>
+<li>4 marks: Account for tied exploitation and random exploration. / 平局ε概率</li>
+<li>4 marks: Give softmax formula and probabilities. / softmax公式数值</li>
+<li>2 marks: Check normalisation. / 归一化检查</li>
+</ul>
+<h2>W16 · Tutorial 8 UCB constants / Tutorial 8 UCB</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A₁ has mean 9.43/4=2.3575; A₂ has mean 3.59/2=1.795. The scores are approximately 3.8541 and 3.9115, so choose A₂. The equivalent outside coefficient is √5, not 5.</p>
+<p><strong>中文对照</strong></p>
+<p>A1=9.43/4=2.3575，A2=3.59/2=1.795。UCB分别约3.8541、3.9115，选A2。相同5换到外面不等价；等价外系数应√5。</p>
+<ul>
+<li>4 marks: Sample means. / 均值</li>
+<li>4 marks: UCB scores and action. / UCB与选择</li>
+<li>2 marks: Correct constant transformation. / 常数变换</li>
+</ul>
+<h2>W17 · MC and TD on the same trajectory / 同轨迹 MC 与 TD</h2>
+<p><strong>ENGLISH</strong></p>
+<p>MC target=1+.5×3=2.5, so V_new(A)=2+.25(2.5−2)=2.125. TD target=1+.5×4=3, so V_new(A)=2+.25(3−2)=2.25. Compare both from the same original table, rather than feeding one method's result into the other.</p>
+<p><strong>中文对照</strong></p>
+<p>MC target=1+.5×3=2.5，Anew=2+.25(.5)=2.125。TD target=1+.5×4=3，Anew=2+.25(1)=2.25。两者基于相同起点；不能先做MC再把其结果喂给TD。</p>
+<ul>
+<li>4 marks: MC target and new value. / MC target与新值</li>
+<li>4 marks: TD target and new value. / TD target与新值</li>
+<li>2 marks: Explain sampled return versus bootstrap. / 采样回报与bootstrap解释</li>
+</ul>
+<h2>W18 · Sequential Q-learning updates / 顺序 Q 更新</h2>
+<p><strong>ENGLISH</strong></p>
+<p>First Q(X, R)=.5×2=1. Next Q(Y, L)=.5×4=2, with no terminal bootstrap. Finally target=2+.9max(2,0)=3.8 and Q(X, R)=1+.5(3.8−1)=2.4. Unexecuted entries remain zero.</p>
+<p><strong>中文对照</strong></p>
+<p>第一步Q(X,R)=0+.5(2+.9×0)=1。第二步Q(Y,L)=2。第三步target=2+.9×max(2,0)=3.8，Q(X,R)=1+.5(3.8−1)=2.4。未执行的Q保持0。</p>
+<ul>
+<li>3 marks: First update equals 1. / 第1步1</li>
+<li>3 marks: Second update equals 2 with terminal handling. / 第2步2与终止处理</li>
+<li>3 marks: Third update equals 2.4. / 第3步2.4</li>
+<li>1 marks: Unvisited entries remain unchanged. / 未访问项保持</li>
+</ul>
+<h2>W19 · Separate behaviour from the target / 行为与目标分离</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Q-learning target=−1+.8×7=4.6, giving new Q=4.92. SARSA target=−1+.8×2=.6, giving new Q=4.12. If terminal, target=−1 and both update to 5+.2(−1−5)=3.8.</p>
+<p><strong>中文对照</strong></p>
+<p>QL target=−1+.8×7=4.6，新Q=5+.2(−.4)=4.92；SARSA target=−1+.8×2=.6，新Q=5+.2(−4.4)=4.12；终止target=−1，两者新Q=5+.2(−6)=3.8。</p>
+<ul>
+<li>3 marks: Q-learning value 4.92. / QL4.92</li>
+<li>3 marks: SARSA value 4.12. / SARSA4.12</li>
+<li>2 marks: Terminal value 3.8. / 终止3.8</li>
+<li>2 marks: Explain max versus actual next action. / max与实际动作解释</li>
+</ul>
+<h2>W20 · A new linear-feature calculation / 线性特征的新数值</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Old Q=1+2×.5−1×2=0. The target is 3+.5×4=5, so δ=5. Add .1×5×f to the weights, giving [1.5,2.25,0]. The new Q is 1.5+2.25×.5=2.625. Use the same old δ for every component.</p>
+<p><strong>中文对照</strong></p>
+<p>旧Q=1+2×.5−1×2=0。target=3+.5×4=5，δ=5。各权重加.5×特征，得[1.5,2.25,0]，新Q=1.5+2.25×.5=2.625。所有权重使用同一个旧δ。</p>
+<ul>
+<li>2 marks: Old Q and target. / 旧Q与target</li>
+<li>2 marks: TD error. / δ</li>
+<li>4 marks: All new weights. / 新权重</li>
+<li>2 marks: New Q and common-error explanation. / 新Q与同时更新</li>
+</ul>
+<h2>W21 · DQN targets and loss / DQN target 与 loss</h2>
+<p><strong>ENGLISH</strong></p>
+<p>If nonterminal, y=1+.8×5=5 and loss=(5−2)²=9. If terminal, y=1 and loss=(1−2)²=1. Only the chosen first action is directly given this TD target. The second output may still change because network weights are shared.</p>
+<p><strong>中文对照</strong></p>
+<p>非终止y=1+.8×5=5，loss=(5−2)²=9。终止y=1，loss=(1−2)²=1。仅该经验选择的第一个动作输出直接使用新TD target；第二个输出并非直接监督目标，但共享参数变化仍可改变它。</p>
+<ul>
+<li>3 marks: Nonterminal computation. / 非终止计算</li>
+<li>3 marks: Terminal computation. / 终止计算</li>
+<li>4 marks: Chosen-action supervision and parameter sharing. / 选中动作与参数共享</li>
+</ul>
+<h2>W22 · Cutoff bounds versus exact minimax values / α–β 界与真实子树值</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A returns 5 and sets root α=5. At B the first leaf 4 sets β=4≤5, pruning leaf1. This proves B≤4, while its exact value is 1. C returns min(6,9)=6; choose C with root value 6. Five leaves are examined and one pruned.</p>
+<p><strong>中文对照</strong></p>
+<p>A值5，根α=5。B首叶4使β=4≤5，剪掉1，返回≤4的上界信息，真实B值1。C两叶最小6，根选C值6。共看5个叶，剪1个；B的界4不等于真实min1。</p>
+<ul>
+<li>3 marks: A value and B cutoff. / A与B剪枝</li>
+<li>3 marks: C and root value 6. / C与根值6</li>
+<li>2 marks: Leaf count. / 叶数</li>
+<li>2 marks: Distinguish the bound4 from exact value 1. / 界与真实值</li>
+</ul>
+<h2>W23 · An asymmetric zero-sum mixed equilibrium / 非对称零和混合</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Row minima are 0,1, so pure maximin=1. Column maxima are 3,2, so pure minimax=2; no pure saddle point exists. Column indifference gives 3p+1(1−p)=2(1−p), so p=.25. Row indifference gives 3q=q+2(1−q), so q=.5. The value is 1.5.</p>
+<p><strong>中文对照</strong></p>
+<p>各行最小0、1，maximin=1；各列最大3、2，minimax=2，不同所以无纯鞍点。令列无差异：3p+1(1−p)=0p+2(1−p)，得p=.25。令行无差异3q=1q+2(1−q)，得q=.5。价值3×.5=1.5。</p>
+<ul>
+<li>3 marks: Pure security levels. / 纯安全值</li>
+<li>3 marks: Solve p=.25. / p=.25</li>
+<li>3 marks: Solve q=.5 and value 1.5. / q=.5与价值1.5</li>
+<li>1 marks: State which direction each probability refers to. / 概率方向说明</li>
+</ul>
+<h2>W24 · Biased proxy labels in hiring / 招聘代理标签偏差</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Past hiring decisions may encode discrimination or unequal access, so imitating them can reproduce bias. Co-design with applicants and recruiters to define fair, relevant and accessible criteria. Audit labels, coverage and proxies and validate more direct measures of job capability/performance. Evaluate false rejection, opportunity and real employment outcomes by group while protecting privacy. Assign responsibility, provide human review and appeal, and monitor after deployment. Overall accuracy alone does not establish fairness.</p>
+<p><strong>中文对照</strong></p>
+<p>历史录用决定可能反映歧视或资源差异，模型把过去决定当目标会复制偏差。先与申请者和招聘人员共同明确公平、能力和可访问性需求；审查标签、数据覆盖和代理特征，采用经验证的能力/工作表现指标；分群比较错误拒绝率、机会与实际就业影响，兼顾隐私；明确人工复核和申诉路径，记录责任与持续监测。不能仅凭总体准确率宣布可靠公平。</p>
+<ul>
+<li>3 marks: Explain the specific bias mechanism. / 偏差具体因果链</li>
+<li>2 marks: Needs and co-design. / 需求与共创</li>
+<li>3 marks: Concrete interventions and group/wellbeing measures. / 措施与分群/福祉指标</li>
+<li>2 marks: Review, appeal and accountability. / 复核、申诉和问责</li>
+</ul>
+<h1>Comprehensive Mock A / 综合模拟 A · 100 marks</h1>
+<p>Original training paper; suggested 120 minutes, not an official exam rule. / 自编训练卷；120分钟仅为练习设置。</p>
+<h2>1 · Search and heuristics / 1 · 搜索与启发式 (16 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Directed edges: S→A:2, S→B:1, A→C:2, A→G:9, B→C:2, B→D:6, C→G:3, D→G:1. h(S, A, B, C, D, G)=(5,5,4,3,1,0). Use listed successor order, insertion-order priority ties and removal-time goal tests. BFS marks on generation; UCS/A* retain minimum g. Give removal orders, paths and costs for BFS, UCS, A*, then test consistency.</p>
+<p><strong>中文对照</strong></p>
+<p>有向图：S→A:2,S→B:1,A→C:2,A→G:9,B→C:2,B→D:6,C→G:3,D→G:1。h(S,A,B,C,D,G)=(5,5,4,3,1,0)。后继按所列顺序、同分按入队顺序、目标出队判断；BFS生成时去重，UCS/A<em>保留最小g。分别给BFS、UCS、A</em>的取点顺序/路径/成本；检验h的一致性。</p>
+<h2>2 · CSP propagation / 2 · CSP (12 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>D(A)=D(B)=D(C)={1,2,3}, with A&lt;B and B&lt;C. Start with arcs A→B, B→A, B→C, C→B and reinsert affected arcs as required. Show deletions and final domains. Explain why AC does not generally establish global satisfiability.</p>
+<p><strong>中文对照</strong></p>
+<p>D(A)=D(B)=D(C)={1,2,3}，约束A&lt;B,B&lt;C。按A→B,B→A,B→C,C→B开始，后续重入队按需要处理，写删值过程、最终域，并说明为什么AC一般不保证全局有解。</p>
+<h2>3 · Probability and utility / 3 · 概率与效用 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>P(H)=.1, P(E|H)=.8, P(E|¬H)=.2. Find the posterior. Separately compare certain 16 with an equally likely 0/36 lottery under U(x)=√x.</p>
+<p><strong>中文对照</strong></p>
+<p>P(H)=.1,P(E|H)=.8,P(E|¬H)=.2，求后验。另比较确定16与等概率0/36，效用√x。</p>
+<h2>4 · MDP and value iteration / 4 · MDP 与 VI (18 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A moves to B for 0 or exits for 4; B only exits for 10; E absorbs with 0 reward. γ=.9, V₀=0. Compute synchronous V₁, V₂, V₃ and the policy. Also calculate Q for an action reaching X with probability .8, reward 2, V(X)=5, or Y with probability .2, reward −1, V(Y)=1. Explain entry versus exit rewards.</p>
+<p><strong>中文对照</strong></p>
+<p>A去B奖励0，或exit得4；B只exit得10；E吸收0；γ=.9,V0=0。算同步V1,V2,V3和策略。再考虑A的某动作以.8到X奖励2，V(X)=5，以.2到Y奖励−1，V(Y)=1，算Q。说明进入终点发奖与exit发奖区别。</p>
+<h2>5 · Bandits and MCTS / 5 · Bandit 与 MCTS (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Two arms have means 2.3575/1.795, counts 4/2, total N=6. Select using Q+√(5lnN/n). Name the four MCTS phases. An edge with old N=3, Q=2 receives return 6; update its mean.</p>
+<p><strong>中文对照</strong></p>
+<p>两个臂均值2.3575/1.795，次数4/2，总N6，用Q+√(5lnN/n)选择。写MCTS四步；某边旧N3,Q2，新回报6，算新均值。</p>
+<h2>6 · Reinforcement learning / 6 · RL (14 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Q(s, a)=3, r=2,γ=.9,α=.5. Successor Q=[8,1] and behaviour selects the second action. Compute Q-learning and SARSA updates, including a terminal-successor variant. Give the MC return of rewards [2,0,10] and explain bootstrapping/on-policy/off-policy.</p>
+<p><strong>中文对照</strong></p>
+<p>Q(s,a)=3,r=2,γ=.9,α=.5，下一状态Q=[8,1]且行为选第二个。分别算QL/SARSA；若终止呢？再对奖励[2,0,10]给MC回报，解释bootstrap和on/off-policy。</p>
+<h2>7 · Adversarial search and mixed equilibrium / 7 · 对抗与混合均衡 (14 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A MAX root has MIN subtrees A=[3,5,6], B=[2,9,1], C=[4,7,8]. Apply left-to-right alpha-beta; give root value, chosen action, pruned leaves and justification. For penalty kicks with matrix[[.6,.2],[.3,.9]], find both players' right-action probabilities and goal probability.</p>
+<p><strong>中文对照</strong></p>
+<p>根MAX，三个MIN子树A=[3,5,6],B=[2,9,1],C=[4,7,8]，左至右α–β。给根值、动作、剪枝及理由。再求点球[[.6,.2],[.3,.9]]中双方选右概率与进球率。</p>
+<h2>8 · Responsible AI / 8 · Responsible AI (6 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A care-allocation AI uses past healthcare expenditure to estimate need, allocating less care to one group. Explain the risk and propose two measurable improvements using the course framework.</p>
+<p><strong>中文对照</strong></p>
+<p>一个护理AI用历史医疗花费判断需求，某群体得到较少资源。用课程框架解释风险并提出两项可评估的改进。</p>
+<h1>Mock A solutions / 模拟卷A答案</h1>
+<h2>1 · Search and heuristics</h2>
+<p><strong>ENGLISH</strong></p>
+<p>BFS: S, A, B, C, G; path S-A-G, cost 11. UCS: S, B, A, C, G; path S-B-C-G, cost 6. A*: S, B, C, G; same path and cost 6. All edge inequalities hold: 5≤2+5,5≤1+4,5≤2+3,5≤9+0,4≤2+3,4≤6+1,3≤3+0,1≤1+0. Thus h is consistent. A fewest-edge path need not be cheapest.</p>
+<p><strong>中文对照</strong></p>
+<p>BFS取S,A,B,C,G，路径S-A-G成本11；UCS取S,B,A,C,G，路径S-B-C-G成本6；A*取S,B,C,G，路径同UCS成本6。逐边：5≤2+5、5≤1+4、5≤2+3、5≤9+0、4≤2+3、4≤6+1、3≤3+0、1≤1+0，所以一致。BFS较少边不代表成本较小。</p>
+<ul>
+<li>4 marks: BFS trace, path and cost. / BFS过程路径成本</li>
+<li>4 marks: UCS trace, path and cost. / UCS过程路径成本</li>
+<li>4 marks: A* trace, path and cost. / A*过程路径成本</li>
+<li>4 marks: Consistency inequalities and explanation. / 逐边一致性与解释</li>
+</ul>
+<h2>2 · CSP propagation</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A→B deletes A3; B→A deletes B1; B→C deletes B3 and requires A→B again; C→B deletes C1,2; A→B deletes A2. Final domains are A{1}, B{2}, C{3}. Pairwise supports can conflict globally; a two-colour triangle is a counterexample.</p>
+<p><strong>中文对照</strong></p>
+<p>A→B删A3；B→A删B1；B→C删B3并重查A→B；C→B删C1,2；A→B删A2。最终A1,B2,C3。一般局部支持可来自互不兼容的赋值，两色三角形弧一致却无解。</p>
+<ul>
+<li>6 marks: Deletion and reinsertion trace. / 删除及重入队过程</li>
+<li>3 marks: Final domains. / 最终域</li>
+<li>3 marks: Counterexample and explanation. / 反例与原因</li>
+</ul>
+<h2>3 · Probability and utility</h2>
+<p><strong>ENGLISH</strong></p>
+<p>P(E)=.26 and P(H|E)=.08/.26=4/13. Certain utility is 4; lottery EU is 3, so choose 16 even though the lottery has expected monetary payoff 18.</p>
+<p><strong>中文对照</strong></p>
+<p>P(E)=.26，后验.08/.26=4/13。确定效用4，彩票EU3，选确定16；彩票金额期望18更高不改变该效用下的选择。</p>
+<ul>
+<li>5 marks: Total-probability denominator and posterior. / 分母、后验</li>
+<li>3 marks: Utilities and decision. / 两种效用与选择</li>
+<li>2 marks: Distinguish expected money from expected utility. / 期望金钱区别</li>
+</ul>
+<h2>4 · MDP and value iteration</h2>
+<p><strong>ENGLISH</strong></p>
+<p>V₁=(4,10,0), V₂=V₃=(9,10,0); A moves to B and B exits. Q=.8(2+.9×5)+.2(−1+.9×1)=5.18. With exit rewards the coloured cell has its exit value and the final absorbing state has value 0; a neighbouring move introduces another discount. Entry rewards pay on the preceding transition and leave terminal future value 0.</p>
+<p><strong>中文对照</strong></p>
+<p>V1=(4,10,0)，V2=V3=(9,10,0)，最优A去B、B exit。Q=.8(2+.9×5)+.2(−1+.9×1)=5.18。exit模型彩色格V等于其退出奖励、真正吸收态V0，邻格到彩色格会多折扣一次；进入奖励模型终点V0、前一步直接收奖励。</p>
+<ul>
+<li>6 marks: VI sweeps. / VI各轮</li>
+<li>3 marks: Policy comparison. / 策略比较</li>
+<li>5 marks: Probability-weighted Q calculation. / Q分支计算</li>
+<li>4 marks: Reward-timing distinction. / 奖励时点</li>
+</ul>
+<h2>5 · Bandits and MCTS</h2>
+<p><strong>ENGLISH</strong></p>
+<p>UCB scores are approximately 3.8541/3.9115, so choose the second arm. The phases are selection, expansion, simulation and backpropagation. The new edge count is 4 and mean is(3×2+6)/4=3.</p>
+<p><strong>中文对照</strong></p>
+<p>UCB约3.8541/3.9115，选第二臂。Selection,Expansion,Simulation,Backpropagation。新N4，均值(3×2+6)/4=3。</p>
+<ul>
+<li>4 marks: UCB calculation and selection. / UCB计算选择</li>
+<li>3 marks: Four phases. / 四步</li>
+<li>3 marks: Mean and count update. / 均值与计数</li>
+</ul>
+<h2>6 · Reinforcement learning</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Q-learning target 9.2, new Q=6.1. SARSA target 2.9, new Q=2.95. If terminal, target 2, new Q=2.5 for both. MC return 10.1; MC does not bootstrap. TD uses a successor estimate. Q-learning can learn a greedy target differing from behaviour; SARSA learns the behaviour policy.</p>
+<p><strong>中文对照</strong></p>
+<p>QL target9.2，新6.1；SARSA target2.9，新2.95。终止target2，新2.5。MC回报10.1，不bootstrap。TD类目标含下一估计；QL学贪心目标、可与行为不同；SARSA学行为策略。</p>
+<ul>
+<li>4 marks: Q-learning. / QL</li>
+<li>4 marks: SARSA. / SARSA</li>
+<li>2 marks: Terminal handling. / 终止</li>
+<li>2 marks: MC return. / MC</li>
+<li>2 marks: Conceptual comparison. / 概念对比</li>
+</ul>
+<h2>7 · Adversarial search and mixed equilibrium</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A returns 3, setting root α=3. B's first 2 gives β=2≤3, so prune 9 and 1. C returns 4; choose C, value 4. Goalkeeper-column indifference gives kicker-right probability .4; kicker-row indifference gives goalkeeper-right probability .3. The goal probability is .48.</p>
+<p><strong>中文对照</strong></p>
+<p>Amin3后根α3；B首2令β2≤α3，剪9和1；Cmin4，根选C值4。点球守门员两列无差异得p_k右=.4；踢球者两行无差异得p_g右=.3；进球率.48。</p>
+<ul>
+<li>6 marks: Minimax, cutoffs and justification. / minimax剪枝与理由</li>
+<li>3 marks: Equation and kicker-right probability .4. / p_k方程与.4</li>
+<li>3 marks: Equation and goalkeeper-right probability .3. / p_g方程与.3</li>
+<li>2 marks: Equilibrium value .48. / 价值.48</li>
+</ul>
+<h2>8 · Responsible AI</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Expenditure encodes historical under-access, causing underestimated need and further under-allocation. Validate a more direct need label and co-design with patients and clinicians. Evaluate errors, allocation and health outcomes by group, and provide human review, appeal, monitoring and accountable ownership.</p>
+<p><strong>中文对照</strong></p>
+<p>花费代理标签含历史资源不足，导致需求被低估并进一步少分配。改用更直接经验证需求标签，与患者/医护共同设计；分群检查低估与分配结果和健康福祉，设置人工复核、申诉、持续监测与责任人。</p>
+<ul>
+<li>2 marks: Causal mechanism. / 因果机制</li>
+<li>2 marks: Specific interventions. / 具体措施</li>
+<li>2 marks: Measures and governance. / 指标与治理</li>
+</ul>
+<h1>Transfer Practice Mock B / 迁移模拟 B · 100 marks</h1>
+<p>Original training paper; suggested 120 minutes, not an official exam rule. / 自编训练卷；120分钟仅为练习设置。</p>
+<h2>1 · An A* counterexample / 1 · A* 反例 (14 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Use edges S→A:2, S→B:1, B→A:.5, A→G:2 and h(S, A, B, G)=(3,0,2,0). Prove admissibility but not consistency. Trace the suboptimal result without reopening and give the correction.</p>
+<p><strong>中文对照</strong></p>
+<p>使用W03的图与h：S→A2,S→B1,B→A.5,A→G2；h=(S3,A0,B2,G0)。证明可采纳但不一致；展示不重开导致次优，并给修正。</p>
+<h2>2 · CSP and ordering heuristics / 2 · CSP 与启发式 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Why does AC delete nothing from a two-colour triangle despite unsatisfiability? Contrast forward checking with AC and explain MRV/LCV.</p>
+<p><strong>中文对照</strong></p>
+<p>两色三角形CSP为何AC不删值却无解？解释forward checking和AC的区别；MRV/LCV分别如何选择？</p>
+<h2>3 · Markov chains and discounting / 3 · Markov 与折扣 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>P=[[.8,.2],[.4,.6]], x₀=[1,0]. Find x₂ and the stationary distribution. Find infinite return for reward 2 per step and γ=.8. What changes at γ=1?</p>
+<p><strong>中文对照</strong></p>
+<p>P=[[.8,.2],[.4,.6]],x0=[1,0]。求x2和平稳分布。每步奖励2、γ=.8的无限回报多少？说明γ=1时该循环。</p>
+<h2>4 · AND-OR planning / 4 · AND-OR (6 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>S has actions a→{G, DEAD} and b→{A, B}; A/B both have an action to G. Give a strong conditional plan. Can a self-loop be labelled solved unconditionally?</p>
+<p><strong>中文对照</strong></p>
+<p>S有a→{G,DEAD}和b→{A,B}，A/B均可到G。给强条件计划，并解释自环是否能无条件判solved。</p>
+<h2>5 · PI and online planning / 5 · PI 与在线规划 (14 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>At X, stay gives 2 and returns to X; exit gives 25 and terminates; γ=.9. Start with always-stay. Evaluate, improve, re-evaluate and check stability. Compare computation scope and model requirements of VI, PI, RTDP and MCTS.</p>
+<p><strong>中文对照</strong></p>
+<p>X的stay奖励2留X，exit奖励25终止，γ=.9。初始总选stay：求V、一次改进、重新评估并检查稳定。比较VI、PI、RTDP/MCTS的计算范围与模型需求。</p>
+<h2>6 · RL and function approximation / 6 · RL 与函数逼近 (16 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Old Q=5, r=−1,γ=.8,α=.2; successor Q=[7,2] and behaviour chooses2. Compute Q-learning and SARSA. Separately w=[1,2,−1], f=[1,.5,2], r=3,γ=.5, max next Q=4,α=.1: find δ and new weights.</p>
+<p><strong>中文对照</strong></p>
+<p>Q=5,r=−1,γ=.8,α=.2，下一Q=[7,2]行为选2。算QL和SARSA。另w=[1,2,−1],f=[1,.5,2],r=3,γ=.5,next maxQ=4,α=.1，算δ与新w。</p>
+<h2>7 · DQN: concepts and numbers / 7 · DQN 概念和数值 (10 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>The selected action has current Q=2, r=1,γ=.8 and next target outputs [3,5]. Compute nonterminal/terminal targets and losses. Explain replay and target networks. Why is a continuous joystick difficult for standard DQN?</p>
+<p><strong>中文对照</strong></p>
+<p>当前动作Q2，r1,γ.8,next target outputs[3,5]。算非终止target/loss与终止情况；解释replay和target network；连续摇杆为何挑战普通DQN？</p>
+<h2>8 · Adversarial search and a general-sum game / 8 · 对抗与一般和博弈 (14 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A MAX root has MIN children A=[5,7], B=[4,1], C=[6,9]. Apply left-to-right alpha-beta. Then find all pure and interior mixed Nash equilibria of (U, L)=(3,3),(U, R)=(0,2),(D, L)=(2,0),(D, R)=(1,1).</p>
+<p><strong>中文对照</strong></p>
+<p>根MAX的MIN子树A=[5,7],B=[4,1],C=[6,9]，左至右剪枝。另一般和矩阵(U,L)=(3,3),(U,R)=(0,2),(D,L)=(2,0),(D,R)=(1,1)，求所有纯NE及内部混合NE。</p>
+<h2>9 · Human-centred design and warranted trust / 9 · 人本设计与信任 (6 marks)</h2>
+<p><strong>ENGLISH</strong></p>
+<p>A team evaluates an older-adult companion robot by conversation duration. Explain the metric's limitations and propose co-design, wellbeing evaluation and trustworthy governance.</p>
+<p><strong>中文对照</strong></p>
+<p>团队用聊天参与时长评价老人陪伴机器人。说明这一指标的局限，并写出共创、福祉评价与可信赖治理方案。</p>
+<h1>Mock B solutions / 模拟卷B答案</h1>
+<h2>1 · An A* counterexample</h2>
+<p><strong>ENGLISH</strong></p>
+<p>True remaining costs are A=2, B=2.5, S=3.5, so h never overestimates. S→A and B→A violate consistency. A is expanded first and generates G4; B later finds A with g=1.5. Closing A permanently returns 4. Reopening gives optimal S-B-A-G at 3.5.</p>
+<p><strong>中文对照</strong></p>
+<p>真剩余A2,B2.5,S3.5，h不高估。S→A和B→A违反一致性。先扩展A生成G4，再B发现A g1.5；不重开返回4，重开得最优S-B-A-G3.5。</p>
+<ul>
+<li>4 marks: Admissibility. / 可采纳</li>
+<li>3 marks: Inconsistency. / 不一致</li>
+<li>4 marks: Suboptimal trace. / 次优过程</li>
+<li>3 marks: Reopening and optimal cost 3.5. / 修正与最优3.5</li>
+</ul>
+<h2>2 · CSP and ordering heuristics</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Each colour has the opposite colour as pairwise support, but three pairwise-distinct vertices cannot use only two colours. Forward checking propagates from a new assignment to neighbours; AC continues propagating support losses between unassigned variables. MRV chooses the smallest remaining domain; LCV tries the least restrictive value.</p>
+<p><strong>中文对照</strong></p>
+<p>每色在每个邻居都有另一色支持，但三个顶点不能仅两色互异。FC从新赋值向邻居删值，AC继续传播未赋值变量间支持丢失。MRV先选剩余域最少的变量，LCV优先少限制邻居的值。</p>
+<ul>
+<li>4 marks: Local supports and global failure. / 局部支持与无解</li>
+<li>3 marks: Forward checking versus AC. / FC与AC</li>
+<li>3 marks: MRV and LCV. / MRV/LCV</li>
+</ul>
+<h2>3 · Markov chains and discounting</h2>
+<p><strong>ENGLISH</strong></p>
+<p>x₁=[.8,.2], x₂=[.72,.28]; stationary distribution [2/3,1/3]. Return=2/(1−.8)=10. At γ=1 the infinite positive-reward sum diverges, so the discounted result does not apply.</p>
+<p><strong>中文对照</strong></p>
+<p>x1=[.8,.2],x2=[.72,.28]；稳态[2/3,1/3]。回报2/(1−.8)=10；γ1时不断正奖励使和发散，不可直接用折扣定理。</p>
+<ul>
+<li>3 marks: x₂. / x2</li>
+<li>3 marks: Stationary distribution. / 稳态</li>
+<li>2 marks: Return10. / 回报10</li>
+<li>2 marks: Limitation at γ=1. / γ1限制</li>
+</ul>
+<h2>4 · AND-OR planning</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Action a fails the strong condition because of DEAD. Choose b and then take the appropriate action from the observed A or B to G. A loop requires a specified strong/strong-cyclic success criterion and assumptions such as fairness; it is not automatically solved.</p>
+<p><strong>中文对照</strong></p>
+<p>a因DEAD失败；b所有结果均可达G，选b再按观察A/B分别走到G。自环要看强/强循环成功定义和公平性等条件，不能无条件solved。</p>
+<ul>
+<li>4 marks: Full-branch conditional plan. / 全分支计划</li>
+<li>2 marks: Conditions on loops. / 循环条件</li>
+</ul>
+<h2>5 · PI and online planning</h2>
+<p><strong>ENGLISH</strong></p>
+<p>V_stay=20; exit 25 improves it. New V=25; one stay then exit gives 24.5&lt;25, so the policy is stable. VI/PI typically solve over all states offline using a model: VI sweeps max backups, PI alternates fixed-policy evaluation and improvement. RTDP backs up visited trajectory states; MCTS spends simulation budget on the current decision. Neither online planner is automatically model-free.</p>
+<p><strong>中文对照</strong></p>
+<p>Vstay20，exit25&gt;20，改exit，V25，stay one-step值24.5&lt;25，稳定。VI/PI通常全状态离线并需要模型；VI跨动作Bellman sweep，PI固定评估后改进。RTDP访问轨迹状态执行backup；MCTS基于模拟器在当前状态分配搜索预算，均不能简单当model-free。</p>
+<ul>
+<li>4 marks: Initial value 20. / 初评20</li>
+<li>3 marks: Improvement and stability. / 改进及稳定</li>
+<li>3 marks: VI versus PI. / VI/PI比较</li>
+<li>4 marks: RTDP/MCTS scope and model. / RTDP/MCTS与模型</li>
+</ul>
+<h2>6 · RL and function approximation</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Q-learning gives 4.92 and SARSA 4.12. For the linear case, old Q=0, target 5,δ=5, new weights [1.5,2.25,0]. All components use the same pre-update error.</p>
+<p><strong>中文对照</strong></p>
+<p>QL4.92，SARSA4.12。线性旧Q0，target5，δ5，新w=[1.5,2.25,0]；所有权重均用旧δ，不能逐个重算。</p>
+<ul>
+<li>4 marks: Q-learning. / QL</li>
+<li>4 marks: SARSA. / SARSA</li>
+<li>3 marks: Old Q, target and error. / 旧Q/target/δ</li>
+<li>4 marks: New weights. / 新权重</li>
+<li>1 marks: Common error. / 同时更新</li>
+</ul>
+<h2>7 · DQN: concepts and numbers</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Nonterminal target 5, loss9; terminal target 1, loss1. Replay reduces sequential correlation and reuses samples; a target network slows target movement. Finite outputs enumerate discrete actions, not a continuous joystick. A continuous policy-gradient method or suitable action discretisation is an alternative.</p>
+<p><strong>中文对照</strong></p>
+<p>非终止target5,loss9；终止target1,loss1。replay减少连续经验相关并复用；target网络减缓目标移动。有限输出对应离散动作，连续摇杆无法直接枚举，可用连续策略梯度或适当离散化。</p>
+<ul>
+<li>3 marks: Nonterminal calculation. / 非终止</li>
+<li>2 marks: Terminal calculation. / 终止</li>
+<li>3 marks: Two stabilisation mechanisms. / 两个技巧</li>
+<li>2 marks: Continuous-action limitation. / 连续动作</li>
+</ul>
+<h2>8 · Adversarial search and a general-sum game</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Choose C with value 6; B's first 4≤α=5 permits pruning 1; five leaves are visited. Pure equilibria are(U, L),(D, R). Let p=P(U), q=P(L). Row indifference3q=2q+1−q givesq=.5; column indifference3p=2p+1−p givesp=.5. Supported actions are best responses.</p>
+<p><strong>中文对照</strong></p>
+<p>根选C值6，B首4≤α5后剪1，共看5叶。纯NE=(U,L),(D,R)。设p=P(U),q=P(L)，行无差异3q=2q+1−q得q.5；列无差异3p=2p+1−p得p.5。检查支持均为最佳回应。</p>
+<ul>
+<li>5 marks: Cutoff trace and root. / 剪枝过程与根</li>
+<li>3 marks: Both pure equilibria. / 两纯NE</li>
+<li>4 marks: Mixed equations and solution. / 混合方程与解</li>
+<li>2 marks: Best-response explanation. / 最佳回应解释</li>
+</ul>
+<h2>9 · Human-centred design and warranted trust</h2>
+<p><strong>ENGLISH</strong></p>
+<p>Long use may reflect dependence or manipulation rather than benefit. Co-design with older adults and caregivers to identify needs. Evaluate autonomy, loneliness, relationships, burden and adverse impacts. Disclose limitations, assign responsibility, allow stopping/review/feedback and monitor after deployment.</p>
+<p><strong>中文对照</strong></p>
+<p>长时间使用可能源于依赖或设计诱导，不等于福祉改善。与老人和照护者共同定义需求，评价自主性、孤独感、关系、负担及不良影响；说明限制，记录责任，提供停止/复核/反馈机制，持续审查。</p>
+<ul>
+<li>2 marks: Risk of the proxy metric. / 代理指标风险</li>
+<li>2 marks: Co-design and wellbeing measures. / 共创及福祉指标</li>
+<li>2 marks: Trustworthy governance. / 可信赖治理</li>
+</ul></main></body></html>

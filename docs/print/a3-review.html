@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>A3 Reinforcement learning practice / A3 强化学习实践</title><link href="../styles.css" rel="stylesheet"/><link href="../graphite.css" media="screen" rel="stylesheet"/></head><body class="print-document"><main class="prose"><p><a href="../index.html#assignments">← A1 / A2 / A3 作业复盘</a></p><h1>A3 Reinforcement learning practice / A3 强化学习实践</h1><section class="parallel-block"><div class="lang-en" lang="en"><h2>Start with the preserved learning package</h2>
+<p>The files below are a copy of the previously prepared learning package, not a fresh report submission. Start with the rewrite route, run the reference solver, then close it and implement your own solution from <code>solution_starter.py</code>. The original package remains in <code>a3/learning_template</code> outside this study folder.</p>
+<p>The copied package retains the Word workbook, Markdown notes, raw CSV files, JSON summaries, feature weights and plots. Git metadata, caches and installed plotting dependencies are omitted. The copied README's reference to its original <code>.git</code> directory applies only to the original package.</p></div><div class="lang-zh" lang="zh-CN"><h2>从已有学习包开始</h2>
+<p>下面是上一轮已完成学习包的副本，不是新的正式提交。先读重写路线、运行参考代码，再关掉参考实现，从 <code>solution_starter.py</code> 自己重写。原始包仍保留在本学习目录外的 <code>a3/learning_template</code>。</p>
+<p>副本保留 Word 工作稿、Markdown、原始 CSV、JSON 汇总、特征权重和图表；不复制 Git 元数据、缓存或绘图库安装目录。原 README 中对 <code>.git</code> 的描述仅适用于原包。</p></div></section><section class="parallel-block"><div class="lang-en" lang="en"><h2>Read the training episode</h2>
+<p>Follow <code>ql_initialise()</code>, <code>ql_train_episode()</code> and <code>ql_select_action()</code>. The reference starts each episode at <code>get_init_state()</code>, chooses only legal actions, obtains the actual reward through <code>perform_action()</code> and updates its table. Its public evaluation method is deterministic and does not update learned values.</p>
+<p>For a nonterminal transition the target in this implementation is <code>reward + gamma * max_next_Q</code>; for a true terminal successor it is <code>reward</code>. Trace a single numeric update and check that a time or reward cutoff does not accidentally make an ordinary successor into an absorbing state.</p></div><div class="lang-zh" lang="zh-CN"><h2>按一次训练episode读代码</h2>
+<p>顺着 <code>ql_initialise()</code>、<code>ql_train_episode()</code>、<code>ql_select_action()</code> 读。参考实现从 <code>get_init_state()</code> 开始一幕，只选合法动作，通过 <code>perform_action()</code> 取得真实奖励，再更新表格。公开的评估选择方法是确定性的，不更新已学习的数值。</p>
+<p>这份实现对非终止转移使用目标 <code>reward + gamma * max_next_Q</code>，对真正终止的后继只使用 <code>reward</code>。自己手算一次更新，检查步数或回报截断有没有被误写成普通后继的吸收终止。</p></div></section><section class="parallel-block"><div class="lang-en" lang="en"><h2>Inspect the 21 feature coordinates</h2>
+<p><code>FEATURE_NAMES</code> defines a fixed order. <code>fq_get_features()</code> returns action-type and direction indicators, map-distance descriptors, nearby terrain and collection-status descriptors. The entire vector is divided by <code>max(1, L2 norm)</code>. <code>fq_weights</code> starts at zero and is changed only during training; a Q-value is the dot product of the weights and the feature vector.</p>
+<p>For the report parts that allow AI only with explicit verification, reproduce several feature values from the map and record what you actually checked. Keep the feature definitions, normalisation and recorded weights aligned with the version of code you finally use.</p></div><div class="lang-zh" lang="zh-CN"><h2>核对21个特征坐标</h2>
+<p><code>FEATURE_NAMES</code> 规定固定顺序。<code>fq_get_features()</code> 输出动作类型与方向、地图距离、邻近地形和收集进度描述，整条向量除以 <code>max(1, L2范数)</code>。<code>fq_weights</code> 从全零开始，只在训练中修改；Q 值是权重与特征的点积。</p>
+<p>报告中标记“允许 AI 但需明确验证”的小问，要根据地图重算几个特征值，并记录自己实际检查了什么。最终代码的特征定义、归一化方法和报告中的权重表必须对应同一版本。</p></div></section><section class="parallel-block"><div class="lang-en" lang="en"><h2>Use the three recorded experiments</h2>
+<p><code>baseline</code> contains eight runs: QL and FQ for L1–L4 using each algorithm's official budget. <code>learning_rates</code> contains three L1 QL runs with fixed alpha values 0.1, 0.2 and 0.4. <code>comparison</code> contains four runs, with the same training-budget limits, learning threshold and evaluation protocol for QL and FQ on L1 and L3.</p>
+<p>The training plots show a moving mean over 50 episodes, including exploration. Greedy checkpoints use 50 separate evaluation trials. Final summaries record 1000 evaluation trials. A missing threshold-crossing value means not reached; it is not the final training step. The tables below reproduce recorded numbers without supplying the report's restricted interpretations.</p></div><div class="lang-zh" lang="zh-CN"><h2>使用三组已有实验</h2>
+<p><code>baseline</code> 有八组：L1–L4 的 QL/FQ，分别使用各自官方预算。<code>learning_rates</code> 有三组 L1 QL，固定学习率为 0.1、0.2、0.4。<code>comparison</code> 有四组：L1/L3 的 QL/FQ 使用相同的训练预算限制、学习阈值和评估流程。</p>
+<p>训练曲线是含探索行为的最近50幕回报平均；贪心 checkpoint 使用另外50次评估；最终汇总记录1000次评估。达标数据缺失表示未达到阈值，不能用最后训练步数替代。下方按原记录展示数值，不代写报告中禁止 AI 的结果解读。</p></div></section><section class="parallel-block"><div class="lang-en" lang="en"><h2>Run the study copy</h2>
+<p>Open PowerShell in <code>study/assignments/a3</code>:</p>
+<pre><code class="language-powershell">.
+un_study.ps1 verify
+.
+un_study.ps1 baseline
+.
+un_study.ps1 rates
+.
+un_study.ps1 compare
+</code></pre>
+<p>The solver itself uses only the standard library. Plotting requires Matplotlib (<code>python -m pip install matplotlib</code>). Initialisation must not train, the constructor must stay lightweight, and the solver must not catch the training-budget exception or inspect private environment parameters. Feature vectors must have a fixed length of at most 256 finite numbers, with initial learned weights all zero or all one.</p></div><div class="lang-zh" lang="zh-CN"><h2>运行study中的副本</h2>
+<p>在 <code>study/assignments/a3</code> 打开 PowerShell：</p>
+<pre><code class="language-powershell">.
+un_study.ps1 verify
+.
+un_study.ps1 baseline
+.
+un_study.ps1 rates
+.
+un_study.ps1 compare
+</code></pre>
+<p>求解器本身只使用标准库。重跑绘图需要 Matplotlib，可用 <code>python -m pip install matplotlib</code> 安装。初始化不能训练，构造函数应轻量；求解器不能捕获训练预算异常或读取环境私有参数。特征长度固定、最多256个有限数，待学习权重从全零或全一开始。</p></div></section><section class="parallel-block"><div class="lang-en" lang="en"><h2>Keep independent report answers independent</h2>
+<p>The existing workbook leaves Q1(a,b), Q2(c), Q3(c) and Q4(b,c) blank because the assignment prohibits AI for those answers. Q2(a) and Q3(a) require explicit verification when AI is used. Q2(b), Q3(b) and Q4(a) allow AI assistance. This integration retains those boundaries and adds no answers to the restricted questions.</p>
+<p>Use the official course report template for submission; the included workbook is a practice document. Disclose actual AI use and your actual checks. The archived runs are examples from one seed per map, not a guarantee of hidden-test performance or independent repeated-run statistics.</p></div><div class="lang-zh" lang="zh-CN"><h2>保留需要独立完成的报告部分</h2>
+<p>现有工作稿中 Q1(a,b)、Q2(c)、Q3(c)、Q4(b,c) 仍留空，因为题目禁止使用 AI 作答。Q2(a)、Q3(a) 使用 AI 时要明确验证；Q2(b)、Q3(b)、Q4(a) 允许 AI 协助。本次整合保留这些边界，没有补写受限小问的答案。</p>
+<p>正式提交使用课程官方模板，随包工作稿仅用于练习。声明真实 AI 用途和自己实际做过的检查。已有实验每张地图只展示一个种子，不是隐藏测试表现保证，也不是多次独立运行的统计结论。</p></div></section><h2>Materials / 资料</h2><ul><li><a href="../publication.html">Assignment brief / 作业说明</a></li><li><a href="../assignments/a3/README.md">Study package README / 学习包说明</a></li><li><a href="../assignments/a3/code/solution.py">Reference solver / 带注释参考实现</a></li><li><a href="../assignments/a3/code/solution_starter.py">Original blank starter / 官方空白 starter</a></li><li><a href="../assignments/a3/明天自己重写.md">Independent rewrite route / 独立重写路线</a></li><li><a href="../print/a3-workbook.html">Workbook in browser / 浏览器阅读报告学习稿</a></li><li><a href="../publication.html">Editable workbook / 可编辑报告学习稿</a></li><li><a href="../assignments/a3/报告学习工作稿.md">Workbook Markdown / 报告工作稿 Markdown</a></li><li><a href="../assignments/a3/run_experiments.py">Experiment runner / 实验脚本</a></li><li><a href="../assignments/a3/verify_protocol.py">Protocol checker / 协议检查脚本</a></li><li><a href="../publication.html">PowerShell launcher / PowerShell运行入口</a></li><li><a href="../assignments/a3/验证记录.md">Recorded verification / 此前验证记录</a></li></ul></main></body></html>

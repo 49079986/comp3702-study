@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>A1 中英面试复习稿</title><link href="../styles.css" rel="stylesheet"/><link href="../graphite.css" media="screen" rel="stylesheet"/></head><body class="print-document"><main class="prose"><p><a href="../index.html#assignments">← A1 / A2 / A3 作业复盘</a></p><h1>A1 中英面试复习稿</h1><h1>COMP3702 A1 Interview Prep - Bilingual / 中英文对照</h1>
+<p>Sources used / 参考材料:</p>
+<ul>
+<li><code>lecture/COMP3702_Module-0_IntroToAI.pdf</code>: agent design components and environment dimensions.</li>
+<li><code>lecture/COMP3702_Module-1_Search.pdf</code>: search graphs, frontier, UCS, A*, admissible and consistent heuristics.</li>
+<li><code>lecture/Demo_UQMapSearch_UCS.pdf</code>: priority queue examples using <code>f(n)</code>.</li>
+<li><code>lecture/Demo_2DMaze_DFS_UCS_GBFS_wFringe.pdf</code>: frontier/expanded-node intuition and Manhattan heuristic example.</li>
+<li><code>a1/2026-Assignment-1-Support-Code/solution.py</code>: submitted solver.</li>
+<li><code>a1/a1-COMP3702-student-id.pdf</code>: submitted report.</li>
+</ul>
+<p>Use this as a practice guide, not a script to read from. The interview checks whether you can explain the submitted work independently.</p>
+<p>这份文档是复习提纲，不是面试时照读的稿子。Interview 的核心是验证你能不能独立解释自己提交的代码。</p>
+<h2>1. One-Minute Overview / 一分钟总览</h2>
+<p>English:</p>
+<p>My solution formulates CrystalRover as a deterministic weighted search problem over a state graph. Each vertex is a <code>GameState</code>, and each edge is a valid game action with an associated cost. I implemented UCS and A<em>. UCS uses a priority queue ordered by <code>f(n)=g(n)</code>, so it always expands the lowest path-cost node first. A</em> uses <code>f(n)=g(n)+h(n)</code>, where <code>h(n)</code> is my relaxed-problem heuristic estimating the remaining cost to collect enough crystals and reach a launch site. The heuristic ignores rocks, craters, and jump restrictions to stay optimistic, but still uses storm-adjusted action costs and crystal/launch positions.</p>
+<p>中文：</p>
+<p>我的解法把 CrystalRover 建模成一个确定性的带权搜索问题，也就是在 state graph 上搜索。每个 vertex/node 是一个 <code>GameState</code>，每条 edge 是一个合法 action，并且有对应 cost。我实现了 UCS 和 A<em>。UCS 用 priority queue，优先级是 <code>f(n)=g(n)</code>，也就是优先扩展当前 path cost 最低的 node。A</em> 用 <code>f(n)=g(n)+h(n)</code>，其中 <code>h(n)</code> 是我设计的 relaxed-problem heuristic，用来估计还需要收集足够 crystals 并到达 launch site 的剩余 cost。这个 heuristic 忽略 rocks、craters 和 jump 限制来保持 optimistic，但仍然考虑 storm-adjusted action costs、crystal 位置和 launch 位置。</p>
+<h2>2. Lecture Terms To Use / 建议使用的课内术语</h2>
+<p>English:</p>
+<ul>
+<li>Agent design components: action space, state space, transition function, utility/path-cost function, initial state, goal test.</li>
+<li>State graph: vertices are states, edges are actions/transitions with costs.</li>
+<li>Search tree: generated paths during search; can contain repeated states.</li>
+<li>Frontier: nodes waiting to be expanded.</li>
+<li>Visited/reached dictionary: records the best known cost to reach each state.</li>
+<li>UCS: priority queue ordered by <code>g(n)</code>.</li>
+<li>A*: priority queue ordered by <code>g(n)+h(n)</code>.</li>
+<li>Heuristic <code>h(n)</code>: estimate of shortest remaining cost from node <code>n</code> to a goal.</li>
+<li>Admissible heuristic: never overestimates the true cost-to-goal.</li>
+<li>Consistent heuristic: satisfies triangle inequality, <code>h(n) &lt;= c(n,a,n') + h(n')</code>.</li>
+</ul>
+<p>中文：</p>
+<ul>
+<li>Agent design components：action space、state space、transition function、utility/path-cost function、initial state、goal test。</li>
+<li>State graph：vertex/node 表示 state，edge 表示 action/transition 和 cost。</li>
+<li>Search tree：搜索过程中生成的路径结构；同一个 state 可能重复出现。</li>
+<li>Frontier：已经生成但还没有 expanded 的 nodes。</li>
+<li>Visited/reached dictionary：记录到达每个 state 的当前最低 cost。</li>
+<li>UCS：priority queue 按 <code>g(n)</code> 排序。</li>
+<li>A*：priority queue 按 <code>g(n)+h(n)</code> 排序。</li>
+<li>Heuristic <code>h(n)</code>：从当前 node 到 goal 的剩余最短 cost 的估计。</li>
+<li>Admissible heuristic：不会高估真实 remaining cost。</li>
+<li>Consistent heuristic：满足三角不等式，<code>h(n) &lt;= c(n,a,n') + h(n')</code>。</li>
+</ul>
+<h2>3. Agent Design Components / 智能体设计组件</h2>
+<p>English:</p>
+<p>Action space:</p>
+<ul>
+<li><code>GameEnv.ACTIONS</code> has 12 actions: 4 walks, 4 boosts, and 4 jumps.</li>
+<li>Walk moves one tile.</li>
+<li>Boost moves two tiles, but checks rocks and may fall into a crater.</li>
+<li>Jump is only valid from a crater and consumes one rocket jump.</li>
+</ul>
+<p>State space:</p>
+<ul>
+<li><code>GameState(row, col, crystal_status, rocket_jumps_left)</code>.</li>
+<li><code>row</code>, <code>col</code>: rover position.</li>
+<li><code>crystal_status</code>: tuple recording whether each crystal is collected.</li>
+<li><code>rocket_jumps_left</code>: remaining rocket jumps.</li>
+<li>This is a factored state representation because the state is described by meaningful variables, not by one flat label.</li>
+</ul>
+<p>Transition function:</p>
+<ul>
+<li><code>GameEnv.perform_action(state, action)</code> is the transition model.</li>
+<li>It checks validity, computes the next position, updates crystal collection, and decrements jumps after jump actions.</li>
+<li>It is deterministic: the same state-action pair always returns the same successor.</li>
+</ul>
+<p>Path cost / utility:</p>
+<ul>
+<li>The search objective is to minimise path cost.</li>
+<li>Path cost is the sum of <code>GameEnv.ACTION_COST[action]</code>.</li>
+<li>Base costs are modified by storm direction.</li>
+</ul>
+<p>Goal test:</p>
+<ul>
+<li><code>GameEnv.is_solved(state)</code> requires the rover to be on a launch site after collecting at least <code>min_samples</code> crystals.</li>
+</ul>
+<p>中文：</p>
+<p>Action space：</p>
+<ul>
+<li><code>GameEnv.ACTIONS</code> 一共有 12 个动作：4 个 walk、4 个 boost、4 个 jump。</li>
+<li>Walk 移动一格。</li>
+<li>Boost 移动两格，但会检查 rock，也可能掉进 crater。</li>
+<li>Jump 只能在 crater 里使用，并且消耗一个 rocket jump。</li>
+</ul>
+<p>State space：</p>
+<ul>
+<li><code>GameState(row, col, crystal_status, rocket_jumps_left)</code>。</li>
+<li><code>row</code>, <code>col</code>：rover 当前坐标。</li>
+<li><code>crystal_status</code>：tuple，记录每个 crystal 是否已经收集。</li>
+<li><code>rocket_jumps_left</code>：剩余 rocket jumps。</li>
+<li>这是 factored state representation，因为 state 是由有意义的变量组成，而不是一个没有结构的标签。</li>
+</ul>
+<p>Transition function：</p>
+<ul>
+<li><code>GameEnv.perform_action(state, action)</code> 就是 transition model。</li>
+<li>它检查 action 是否合法，计算 next position，更新 crystal collection，并在 jump 后减少 jumps。</li>
+<li>它是 deterministic 的：同一个 state-action pair 总是得到同一个 successor。</li>
+</ul>
+<p>Path cost / utility：</p>
+<ul>
+<li>搜索目标是 minimise path cost。</li>
+<li>Path cost 是所有 <code>GameEnv.ACTION_COST[action]</code> 的和。</li>
+<li>Base costs 会根据 storm direction 被调整。</li>
+</ul>
+<p>Goal test：</p>
+<ul>
+<li><code>GameEnv.is_solved(state)</code> 要求 rover 在 launch site 上，并且已经收集至少 <code>min_samples</code> 个 crystals。</li>
+</ul>
+<h2>4. Environment Classification / 环境分类</h2>
+<p>English:</p>
+<p>How I classify CrystalRover using lecture terminology:</p>
+<ul>
+<li>Discrete: grid positions, actions, crystal statuses, and jump counts are finite/discrete.</li>
+<li>Fully observable: the solver knows the full map, storm direction, action costs, crystals, launch sites, and current state.</li>
+<li>Deterministic: each valid state-action pair has one fixed next state.</li>
+<li>Single agent: only the rover chooses actions.</li>
+<li>Static/offline: the environment does not change while the solver plans; the full path is computed before execution.</li>
+<li>Resource-bounded: the theoretical search space can be large, so time and memory limits matter.</li>
+<li>No learning: the solver uses the provided model rather than learning from experience.</li>
+</ul>
+<p>中文：</p>
+<p>按照 lecture 的术语，CrystalRover 可以这样分类：</p>
+<ul>
+<li>Discrete：grid positions、actions、crystal statuses、jump counts 都是有限/离散的。</li>
+<li>Fully observable：solver 知道完整地图、storm direction、action costs、crystals、launch sites 和当前 state。</li>
+<li>Deterministic：每个合法的 state-action pair 只有一个确定的 next state。</li>
+<li>Single agent：只有 rover 在选择 actions。</li>
+<li>Static/offline：solver 思考时环境不会自己变化；完整 path 可以先计划好再执行。</li>
+<li>Resource-bounded：理论 state space 很大，所以 time 和 memory limits 很重要。</li>
+<li>No learning：solver 使用给定模型，不是通过经验学习。</li>
+</ul>
+<h2>5. UCS Explanation / UCS 解释</h2>
+<p>Relevant code: <code>solution.py</code>, lines 52-96.</p>
+<p>English:</p>
+<p>UCS is a best-first search where the priority function is <code>f(n)=g(n)</code>. In my code, <code>g(n)</code> is the accumulated action cost from the initial state to the current state. I keep a priority queue called <code>frontier</code>, and each entry stores the current cost, a tie-breaking counter, the state, and the path. I also keep <code>visited_cost</code>, a dictionary mapping each state to the cheapest known cost for reaching it.</p>
+<p>When I pop a state from the frontier, it is the currently lowest-cost frontier node. If it is a goal, I can return the path because UCS with positive edge costs is optimal. If the popped cost is worse than the recorded best cost, I skip it as a stale heap entry. Otherwise, I generate successors by trying each action through <code>perform_action</code>, skip invalid or game-over results, compute the new cost, and push the successor if it is new or cheaper than before.</p>
+<p>中文：</p>
+<p>UCS 是一种 best-first search，它的 priority function 是 <code>f(n)=g(n)</code>。在我的代码里，<code>g(n)</code> 是从 initial state 到 current state 的累计 action cost。我用 priority queue 作为 <code>frontier</code>，每个 entry 存 current cost、tie-breaking counter、state 和 path。我还用 <code>visited_cost</code> dictionary 记录到达每个 state 的当前最低 cost。</p>
+<p>每次从 frontier pop 出来的 state，都是当前 frontier 里 cost 最低的 node。如果它已经是 goal，就可以返回 path，因为在所有 edge costs 都为正的情况下，UCS 是 optimal 的。如果 pop 出来的 cost 比 <code>visited_cost</code> 里记录的更差，就说明这是旧的 heap entry，可以跳过。否则我尝试每个 action，用 <code>perform_action</code> 生成 successor，跳过 invalid 或 game-over 的结果，计算 new cost。如果 successor 没见过，或者这条 path 更便宜，就更新 dictionary 并放回 frontier。</p>
+<p>Key interview sentence / 面试句：</p>
+<p>English: "My UCS matches the lecture structure: frontier is a priority queue ordered by path cost <code>g(n)</code>, and the reached dictionary stores the best known <code>g(n)</code> for each state."</p>
+<p>中文：“我的 UCS 和 lecture 里的结构一致：frontier 是按 path cost <code>g(n)</code> 排序的 priority queue，reached/visited dictionary 存每个 state 当前已知的最小 <code>g(n)</code>。”</p>
+<h2>6. A* Explanation / A* 解释</h2>
+<p>Relevant code: <code>solution.py</code>, lines 129-172.</p>
+<p>English:</p>
+<p>A* is also best-first search, but it uses <code>f(n)=g(n)+h(n)</code>. The <code>g(n)</code> part is the real cost already paid, like UCS. The <code>h(n)</code> part is the heuristic estimate of the remaining cost to reach a goal. In my code, the frontier heap stores <code>(f, counter, g, state)</code>. I use <code>visited_cost</code> to record the best <code>g(n)</code> for each state, and <code>parent</code> to reconstruct the final action sequence.</p>
+<p>Compared with UCS, A* is more goal-directed. It still considers path cost so far, but also prefers states that look closer to completing the mission under the heuristic. This is why it explores far fewer states on the supplied tests.</p>
+<p>中文：</p>
+<p>A* 也是 best-first search，但它使用 <code>f(n)=g(n)+h(n)</code>。<code>g(n)</code> 是已经真实付出的 cost，和 UCS 一样。<code>h(n)</code> 是 heuristic，对从当前 node 到 goal 的 remaining cost 的估计。在我的代码里，frontier heap 存 <code>(f, counter, g, state)</code>。我用 <code>visited_cost</code> 记录每个 state 的最佳 <code>g(n)</code>，用 <code>parent</code> 回溯最终 action sequence。</p>
+<p>和 UCS 相比，A* 更有方向感。它不仅看目前已经花了多少 cost，也会优先考虑 heuristic 下看起来更接近完成任务的 states。所以在提供的 tests 上，它 explored states 少很多。</p>
+<p>Key interview sentence / 面试句：</p>
+<p>English: "UCS only uses cost-so-far, while A* uses cost-so-far plus an estimated cost-to-goal."</p>
+<p>中文：“UCS 只看 cost-so-far，而 A* 看 cost-so-far 加上 estimated cost-to-goal。”</p>
+<h2>7. Heuristic Design / Heuristic 设计</h2>
+<p>Relevant code: <code>solution.py</code>, lines 106-127 and 182-232.</p>
+<p>English:</p>
+<p>My heuristic is based on solving a simpler, less constrained version of the problem, which matches the lecture advice for generating heuristics. It estimates the relaxed cost to:</p>
+<ol>
+<li>collect enough remaining crystals, then</li>
+<li>travel to the nearest launch site.</li>
+</ol>
+<p>The relaxation:</p>
+<ul>
+<li>ignores rocks,</li>
+<li>ignores craters,</li>
+<li>ignores rocket-jump restrictions,</li>
+<li>ignores exact boost collision geometry,</li>
+<li>but keeps crystal positions, launch positions, the number of samples still needed, and storm-adjusted directional costs.</li>
+</ul>
+<p>If the state already has enough crystals, <code>compute_heuristic</code> returns the relaxed distance to the nearest launch site. Otherwise, it tries each uncollected crystal as the next crystal, adds the relaxed distance to reach it, and recursively chooses the cheapest remaining relaxed sequence until enough samples are collected.</p>
+<p>中文：</p>
+<p>我的 heuristic 是通过 solving a simpler, less constrained version of the problem 得到的，这和 lecture 里 “solve relaxed problem” 的方法一致。它估计一个 relaxed cost：</p>
+<ol>
+<li>先收集足够数量的 remaining crystals，</li>
+<li>然后到最近的 launch site。</li>
+</ol>
+<p>这个 relaxation：</p>
+<ul>
+<li>忽略 rocks，</li>
+<li>忽略 craters，</li>
+<li>忽略 rocket-jump 限制，</li>
+<li>忽略 boost 的精确 collision geometry，</li>
+<li>但保留 crystal positions、launch positions、还需要的 sample 数量，以及 storm-adjusted directional costs。</li>
+</ul>
+<p>如果当前 state 已经收集够 crystals，<code>compute_heuristic</code> 返回到最近 launch site 的 relaxed distance。否则，它会尝试每一个未收集的 crystal 作为 next crystal，加上到它的 relaxed distance，然后递归选择剩余 crystals 中最便宜的 relaxed sequence，直到收集够 samples。</p>
+<h2>8. Relaxed Distance / 放松距离</h2>
+<p>English:</p>
+<p><code>_relaxed_distance(start, goal)</code> splits the distance into vertical and horizontal components. For each axis, <code>_line_distance</code> chooses the cheaper of:</p>
+<ul>
+<li>walking every tile, or</li>
+<li>using as many boosts as possible plus one walk if the distance is odd.</li>
+</ul>
+<p>This is not exact real game distance because it ignores obstacles and special terrain, but it is cheap to compute and optimistic. It also uses the actual <code>ACTION_COST</code>, so moving with or against the storm is reflected.</p>
+<p>中文：</p>
+<p><code>_relaxed_distance(start, goal)</code> 把距离分成 vertical 和 horizontal 两个方向。对每个 axis，<code>_line_distance</code> 选择更便宜的方式：</p>
+<ul>
+<li>每一格都 walk，</li>
+<li>或者尽可能用 boost，两格两格走，如果距离是奇数再补一个 walk。</li>
+</ul>
+<p>这不是游戏里的真实最短距离，因为它忽略了障碍物和特殊地形，但它计算快，而且是 optimistic。它也使用真实的 <code>ACTION_COST</code>，所以顺风/逆风的影响会被考虑进去。</p>
+<h2>9. Admissibility And Consistency / 可采纳性与一致性</h2>
+<p>English:</p>
+<p>Admissibility means the heuristic never overestimates the true shortest remaining cost. My heuristic should be admissible because it removes constraints from the real game. Removing rocks, craters, and jump restrictions can only make the problem easier, not harder. Therefore the relaxed solution should be a lower bound on the real solution cost.</p>
+<p>I did not rely on a separate formal consistency proof. A consistent heuristic must satisfy <code>h(n) &lt;= c(n,a,n') + h(n')</code>. My A* implementation is robust because it records best <code>g(n)</code> values and reinserts a state if a cheaper path is found. This protects correctness even if a rare inconsistency existed, though it may mean extra work.</p>
+<p>中文：</p>
+<p>Admissibility 的意思是 heuristic 不会高估真实的最短 remaining cost。我的 heuristic 应该是 admissible，因为它从真实游戏中移除了限制。去掉 rocks、craters 和 jump restrictions 只会让问题变容易，不会变更难。所以 relaxed solution 应该是真实 solution cost 的 lower bound。</p>
+<p>我没有依赖一个单独的 formal consistency proof。Consistent heuristic 需要满足 <code>h(n) &lt;= c(n,a,n') + h(n')</code>。我的 A* 实现比较稳，因为它记录每个 state 的最佳 <code>g(n)</code>，如果发现更便宜的 path，会重新插入这个 state。即使出现少数 inconsistent 的情况，也能保持正确性，只是可能多做一些搜索。</p>
+<p>Good answer if asked / 如果被问可以这样说：</p>
+<p>English: "I am confident about admissibility because the heuristic solves a relaxed problem. I would be more careful about claiming consistency, so my implementation allows state re-opening through the best-cost dictionary."</p>
+<p>中文：“我对 admissibility 比较有信心，因为 heuristic 解的是 relaxed problem。对于 consistency 我会更谨慎，所以我的实现通过 best-cost dictionary 允许更便宜路径重新打开 state。”</p>
+<h2>10. Why The State Needs All Fields / 为什么 state 需要这些字段</h2>
+<p>English:</p>
+<p>The same grid cell is not necessarily the same search state. Being at <code>(r,c)</code> with different crystals collected changes whether the goal can be completed. Being at <code>(r,c)</code> with different rocket jumps left changes future valid actions, especially around craters. Therefore <code>row</code>, <code>col</code>, <code>crystal_status</code>, and <code>rocket_jumps_left</code> are all necessary.</p>
+<p>中文：</p>
+<p>同一个 grid cell 不一定是同一个 search state。在 <code>(r,c)</code> 但收集了不同 crystals，会影响是否已经满足 goal 条件。在 <code>(r,c)</code> 但剩余 rocket jumps 不同，会影响之后哪些 actions 合法，尤其是 crater 附近。所以 <code>row</code>、<code>col</code>、<code>crystal_status</code> 和 <code>rocket_jumps_left</code> 都是必要的。</p>
+<h2>11. Frontier, Expanded, Visited / Frontier、Expanded、Visited</h2>
+<p>English:</p>
+<p>Lecture distinction:</p>
+<ul>
+<li>Frontier: generated but not yet expanded nodes.</li>
+<li>Expanded node: a node popped from frontier whose successors are generated.</li>
+<li>Visited/reached dictionary: remembers states already reached, usually with their best path cost.</li>
+</ul>
+<p>In my code:</p>
+<ul>
+<li><code>frontier</code> is the heap.</li>
+<li>A state is expanded after it is popped and passes the stale-cost check.</li>
+<li><code>visited_cost</code> is the reached dictionary storing best known <code>g(n)</code>.</li>
+</ul>
+<p>中文：</p>
+<p>Lecture 里的区分：</p>
+<ul>
+<li>Frontier：已经生成但还没 expanded 的 nodes。</li>
+<li>Expanded node：从 frontier pop 出来并生成 successors 的 node。</li>
+<li>Visited/reached dictionary：记录已经到达过的 states，通常还记录 best path cost。</li>
+</ul>
+<p>在我的代码里：</p>
+<ul>
+<li><code>frontier</code> 是 heap。</li>
+<li>一个 state 被 pop 出来并通过 stale-cost check 后，才算 expanded。</li>
+<li><code>visited_cost</code> 是 reached dictionary，存每个 state 的 best known <code>g(n)</code>。</li>
+</ul>
+<h2>12. Why Use <code>counter</code> In The Heap / 为什么 heap 里要用 counter</h2>
+<p>English:</p>
+<p>Python heap compares tuple elements from left to right. If two entries have the same priority, Python may try to compare <code>GameState</code> objects, which are not orderable. The counter is a numeric tie-breaker, so heap entries remain comparable and deterministic.</p>
+<p>中文：</p>
+<p>Python heap 会从 tuple 的第一个元素开始比较。如果两个 entry 的 priority 一样，Python 可能会继续比较 <code>GameState</code> objects，但它们没有定义大小顺序。<code>counter</code> 是一个数字 tie-breaker，让 heap entries 总是可以比较，也更稳定。</p>
+<h2>13. Why Use <code>visited_cost</code> Instead Of A Set / 为什么不用普通 visited set</h2>
+<p>English:</p>
+<p>Because this is weighted graph search. The same state can be reached through different paths with different costs. A normal visited set would only remember whether the state was seen, but not whether the new path is cheaper. <code>visited_cost</code> lets the algorithm update a state when a lower-cost path is found.</p>
+<p>中文：</p>
+<p>因为这是 weighted graph search。同一个 state 可能通过不同 paths 到达，而且 costs 不同。普通 visited set 只能记录见没见过，不能判断新的 path 是否更便宜。<code>visited_cost</code> 可以在发现 lower-cost path 时更新这个 state。</p>
+<h2>14. Code Walkthrough: How I Wrote It / 代码串讲：我是怎么写出来的</h2>
+<p>This section is for when the interviewer opens <code>solution.py</code> and asks you to explain your own code.</p>
+<p>这一节用于面试官打开 <code>solution.py</code> 让你讲代码时使用。</p>
+<h3>14.1 Imports And Solver Setup / imports 和 Solver 初始化</h3>
+<p>Code:</p>
+<pre><code class="language-python">import heapq
+from functools import lru_cache
+from itertools import count
+
+from game_env import GameEnv
+from game_state import GameState
+</code></pre>
+<p>English:</p>
+<p>I started from the lecture structure of best-first search. Since both UCS and A* need a priority queue, I used Python's <code>heapq</code>. I used <code>count</code> as a tie-breaker in the heap, because if two nodes have the same priority, Python should compare a number instead of trying to compare <code>GameState</code> objects. I used <code>lru_cache</code> for the heuristic helper functions because A* calls them many times with repeated inputs.</p>
+<p>中文：</p>
+<p>我是从 lecture 里的 best-first search 结构开始写的。因为 UCS 和 A* 都需要 priority queue，所以我用了 Python 的 <code>heapq</code>。我用 <code>count</code> 做 heap 的 tie-breaker，因为如果两个 nodes priority 相同，Python 应该比较一个数字，而不是尝试比较 <code>GameState</code> objects。我用 <code>lru_cache</code> 是因为 A* 会大量重复调用 heuristic helper functions，缓存可以减少重复计算。</p>
+<p>Code:</p>
+<pre><code class="language-python">def __init__(self, game_env):
+    self.game_env = game_env
+    self.crystals = game_env.crystal_positions
+    self.launches = game_env.launch_positions
+    self.min_action_cost = min(game_env.ACTION_COST.values())
+    self.action_order = [
+        GameEnv.WALK_LEFT, GameEnv.WALK_RIGHT, GameEnv.WALK_UP, GameEnv.WALK_DOWN,
+        GameEnv.BOOST_LEFT, GameEnv.BOOST_RIGHT, GameEnv.BOOST_UP, GameEnv.BOOST_DOWN,
+        GameEnv.JUMP_LEFT, GameEnv.JUMP_RIGHT, GameEnv.JUMP_UP, GameEnv.JUMP_DOWN,
+    ]
+</code></pre>
+<p>English:</p>
+<p>I stored <code>game_env</code> because the solver needs the environment's transition function, goal test, costs, crystal positions, and launch positions. I copied <code>crystals</code> and <code>launches</code> into shorter fields because the heuristic uses them repeatedly. I also made an explicit <code>action_order</code> instead of relying on the unordered <code>GameEnv.ACTIONS</code> set. This makes the search behaviour more reproducible.</p>
+<p>中文：</p>
+<p>我保存 <code>game_env</code>，因为 solver 需要环境里的 transition function、goal test、costs、crystal positions 和 launch positions。我把 <code>crystals</code> 和 <code>launches</code> 存成短一点的 field，因为 heuristic 会反复用它们。我还写了一个固定的 <code>action_order</code>，而不是直接依赖无序的 <code>GameEnv.ACTIONS</code> set。这样 search 的行为更稳定、更可复现。</p>
+<p>First-person answer / 第一人称说法：</p>
+<p>English: "I first identified what information the solver repeatedly needs from the environment, then cached those references in <code>__init__</code>. The explicit action order was mainly for reproducibility."</p>
+<p>中文：“我先找出 solver 会反复从 environment 里用到的信息，然后在 <code>__init__</code> 里保存引用。固定 action order 主要是为了让结果更可复现。”</p>
+<h3>14.2 UCS: From Lecture Pseudocode To Code / UCS：从课件伪代码到实现</h3>
+<p>Code:</p>
+<pre><code class="language-python">init_state = self.game_env.get_init_state()
+
+frontier = []
+counter = count()
+heapq.heappush(frontier, (0, next(counter), init_state, []))
+
+visited_cost = {init_state: 0}
+</code></pre>
+<p>English:</p>
+<p>This directly follows the lecture's generic search algorithm: put the initial node in the frontier and create a reached/visited dictionary. The priority is <code>0</code> because the path cost at the initial state is zero. The path is initially an empty list because no actions have been taken yet.</p>
+<p>中文：</p>
+<p>这部分直接对应 lecture 的 generic search algorithm：把 initial node 放进 frontier，并创建 reached/visited dictionary。priority 是 <code>0</code>，因为 initial state 的 path cost 是 0。path 一开始是 empty list，因为还没有执行任何 actions。</p>
+<p>Code:</p>
+<pre><code class="language-python">while frontier:
+    cost, _, current_state, path = heapq.heappop(frontier)
+    if self.game_env.is_solved(current_state):
+        return path
+
+    if cost &gt; visited_cost[current_state]:
+        continue
+</code></pre>
+<p>English:</p>
+<p>Each loop expands the currently cheapest frontier node. I check the goal after popping, which is the correct UCS style from the lecture: for UCS, a generated goal is not necessarily optimal until it is selected from the priority queue. The stale-cost check handles old heap entries after a cheaper route to the same state has been found.</p>
+<p>中文：</p>
+<p>每次循环扩展当前 frontier 里 cost 最低的 node。我在 pop 之后检查 goal，这和 lecture 里 UCS 的做法一致：对 UCS 来说，一个刚生成的 goal 不一定已经 optimal，必须等它从 priority queue 里被选出来。<code>cost &gt; visited_cost[current_state]</code> 这个检查用于跳过旧的 heap entry，因为同一个 state 可能后来被更便宜的 path 到达。</p>
+<p>Code:</p>
+<pre><code class="language-python">for action in self.action_order:
+    next_state, success, error_msg = self.game_env.perform_action(current_state, action)
+    if not success:
+        continue
+
+    if self.game_env.is_game_over(next_state):
+        continue
+
+    new_cost = cost + self.game_env.ACTION_COST[action]
+
+    if next_state not in visited_cost or new_cost &lt; visited_cost[next_state]:
+        visited_cost[next_state] = new_cost
+        new_path = path + [action]
+        heapq.heappush(frontier, (new_cost, next(counter), next_state, new_path))
+</code></pre>
+<p>English:</p>
+<p>This is my successor generation. I did not reimplement the game rules inside the solver; I used <code>perform_action</code>, because the support code already defines the transition function. I skip invalid actions and game-over states. Then I apply the weighted-search rule: update the reached dictionary only if this state is new or the new path cost is lower.</p>
+<p>中文：</p>
+<p>这是我的 successor generation。我没有在 solver 里面重新实现游戏规则，而是调用 <code>perform_action</code>，因为 support code 已经定义了 transition function。我跳过 invalid actions 和 game-over states。然后按照 weighted search 的规则：只有当这个 state 没见过，或者新的 path cost 更低时，才更新 reached dictionary。</p>
+<p>First-person answer / 第一人称说法：</p>
+<p>English: "I wrote UCS first because it is the baseline algorithm. Once I had <code>frontier</code>, <code>visited_cost</code>, successor generation, and cost updates working, I could reuse the same structure for A*."</p>
+<p>中文：“我先写 UCS，因为它是 baseline algorithm。当 <code>frontier</code>、<code>visited_cost</code>、successor generation 和 cost update 都跑通后，我就能复用这个结构写 A*。”</p>
+<h3>14.3 A<em>: Reusing UCS Structure With <code>g+h</code> / A</em>：复用 UCS 结构并加入 <code>g+h</code></h3>
+<p>Code:</p>
+<pre><code class="language-python">start_h = self.compute_heuristic(init_state)
+heapq.heappush(frontier, (start_h, next(counter), 0, init_state))
+
+visited_cost = {init_state: 0}
+parent = {init_state: (None, None)}
+</code></pre>
+<p>English:</p>
+<p>For A<em>, the start state's priority is <code>0 + h(start)</code>, so I compute the heuristic before pushing the first node. I also changed path storage. In UCS I stored the whole path in each heap item, which is simple. In A</em>, I used a <code>parent</code> dictionary, because it is more memory efficient: each state stores only its predecessor and the action used to reach it.</p>
+<p>中文：</p>
+<p>对 A* 来说，start state 的 priority 是 <code>0 + h(start)</code>，所以我先计算 heuristic 再 push 第一个 node。我也改变了 path 的存储方式。UCS 里我在每个 heap item 里存完整 path，这样写最直观。A* 里我用了 <code>parent</code> dictionary，因为它更省内存：每个 state 只存 predecessor 和到达它的 action。</p>
+<p>Code:</p>
+<pre><code class="language-python">new_cost = cost + self.game_env.ACTION_COST[action]
+
+if next_state not in visited_cost or new_cost &lt; visited_cost[next_state]:
+    visited_cost[next_state] = new_cost
+    parent[next_state] = (current_state, action)
+    h = self.compute_heuristic(next_state)
+    f = new_cost + h
+    heapq.heappush(frontier, (f, next(counter), new_cost, next_state))
+</code></pre>
+<p>English:</p>
+<p>This is the main difference from UCS. <code>new_cost</code> is <code>g(n)</code>. I compute <code>h(n)</code> using <code>compute_heuristic</code>, then push the state with priority <code>f(n)=g(n)+h(n)</code>. The update rule is still based on <code>g(n)</code>, not <code>f(n)</code>, because <code>visited_cost</code> should record the real best cost to reach the state.</p>
+<p>中文：</p>
+<p>这是和 UCS 最主要的区别。<code>new_cost</code> 是 <code>g(n)</code>。我用 <code>compute_heuristic</code> 计算 <code>h(n)</code>，然后用 <code>f(n)=g(n)+h(n)</code> 作为 priority push 进 frontier。注意 update rule 仍然基于 <code>g(n)</code>，不是 <code>f(n)</code>，因为 <code>visited_cost</code> 应该记录到达 state 的真实最低 cost。</p>
+<p>Code:</p>
+<pre><code class="language-python">def _reconstruct_path(self, parent, state):
+    path = []
+    while parent[state][0] is not None:
+        state, action = parent[state]
+        path.append(action)
+    path.reverse()
+    return path
+</code></pre>
+<p>English:</p>
+<p>When A* finds a goal, I reconstruct the path by following parent pointers backward from the goal to the initial state. Since that gives actions in reverse order, I reverse the list at the end.</p>
+<p>中文：</p>
+<p>当 A* 找到 goal 后，我通过 parent pointers 从 goal 往 initial state 回溯路径。因为这样得到的 action order 是反的，所以最后要 <code>reverse()</code>。</p>
+<p>First-person answer / 第一人称说法：</p>
+<p>English: "After UCS worked, I kept the same successor logic and changed only the priority from <code>g</code> to <code>g+h</code>. I also switched to parent pointers because A* may push many states and storing full paths everywhere wastes memory."</p>
+<p>中文：“UCS 跑通以后，我保留了同样的 successor logic，只把 priority 从 <code>g</code> 改成 <code>g+h</code>。我也改用了 parent pointers，因为 A* 可能 push 很多 states，在每个 heap item 里存完整 path 会浪费内存。”</p>
+<h3>14.4 Heuristic: How I Designed It / Heuristic：我是怎么设计的</h3>
+<p>Code:</p>
+<pre><code class="language-python">collected = sum(state.crystal_status)
+current = (state.row, state.col)
+samples_needed = self.game_env.min_samples - collected
+
+if samples_needed &lt;= 0:
+    return self._nearest_launch_distance(current)
+</code></pre>
+<p>English:</p>
+<p>I first ask: from this state, what is still missing? If enough crystals have already been collected, the only remaining task is to reach a launch site, so the heuristic becomes the relaxed distance to the nearest launch.</p>
+<p>中文：</p>
+<p>我先问：从当前 state 看，还缺什么？如果 crystals 已经收集够了，剩下的任务只有到 launch site，所以 heuristic 就变成到最近 launch 的 relaxed distance。</p>
+<p>Code:</p>
+<pre><code class="language-python">remaining_indexes = tuple(
+    i for i, got in enumerate(state.crystal_status) if not got
+)
+
+return min(
+    self._relaxed_distance(current, self.crystals[i])
+    + self._crystal_tail_distance(i, tuple(j for j in remaining_indexes if j != i), samples_needed - 1)
+    for i in remaining_indexes
+)
+</code></pre>
+<p>English:</p>
+<p>If more crystals are needed, I consider every uncollected crystal as a possible next target. For each option, I add the relaxed distance to that crystal plus the best relaxed cost after collecting it. Taking the minimum means the heuristic chooses the cheapest relaxed crystal order.</p>
+<p>中文：</p>
+<p>如果还需要更多 crystals，我把每个未收集的 crystal 都当作可能的 next target。对每个选择，我加上到这个 crystal 的 relaxed distance，再加上收集它之后的最佳 relaxed 剩余 cost。取 <code>min</code> 表示 heuristic 会选择最便宜的 relaxed crystal order。</p>
+<p>Code:</p>
+<pre><code class="language-python">@lru_cache(maxsize=None)
+def _crystal_tail_distance(self, current_index, remaining_indexes, samples_needed):
+    current = self.crystals[current_index]
+    if samples_needed &lt;= 0:
+        return self._nearest_launch_distance(current)
+
+    return min(
+        self._relaxed_distance(current, self.crystals[i])
+        + self._crystal_tail_distance(
+            i,
+            tuple(j for j in remaining_indexes if j != i),
+            samples_needed - 1,
+        )
+        for i in remaining_indexes
+    )
+</code></pre>
+<p>English:</p>
+<p>This helper is the recursive part of the relaxed travelling-salesperson-style estimate. It does not necessarily collect every crystal; it only collects as many as still required by <code>min_samples</code>. I cached it because many A* states share the same remaining-crystal subproblems.</p>
+<p>中文：</p>
+<p>这个 helper 是 relaxed travelling-salesperson-style estimate 的递归部分。它不一定收集所有 crystals，只收集 <code>min_samples</code> 还需要的数量。我给它加 cache，因为很多 A* states 会共享相同的 remaining-crystal subproblems。</p>
+<p>Code:</p>
+<pre><code class="language-python">@lru_cache(maxsize=None)
+def _relaxed_distance(self, start, goal):
+    row_distance = abs(start[0] - goal[0])
+    col_distance = abs(start[1] - goal[1])
+
+    vertical_action = GameEnv.WALK_DOWN if goal[0] &gt;= start[0] else GameEnv.WALK_UP
+    horizontal_action = GameEnv.WALK_RIGHT if goal[1] &gt;= start[1] else GameEnv.WALK_LEFT
+
+    return (
+        self._line_distance(row_distance, vertical_action)
+        + self._line_distance(col_distance, horizontal_action)
+    )
+</code></pre>
+<p>English:</p>
+<p>This is similar in spirit to Manhattan distance from the lecture, but adapted to this game. Instead of counting grid steps only, I estimate the cheapest relaxed cost along the row and column directions, using the actual storm-adjusted action costs.</p>
+<p>中文：</p>
+<p>这和 lecture 里的 Manhattan distance 思路相似，但我把它适配到了这个游戏。它不是只数 grid steps，而是沿 row 和 column 方向估计 cheapest relaxed cost，并且使用真实的 storm-adjusted action costs。</p>
+<p>Code:</p>
+<pre><code class="language-python">walk_only = distance * walk_cost
+boost_and_walk = (distance // 2) * boost_cost + (distance % 2) * walk_cost
+return min(walk_only, boost_and_walk)
+</code></pre>
+<p>English:</p>
+<p>For movement along one axis, I compare walking all the way with using as many boosts as possible. I take the cheaper option because in the relaxed problem I am allowing the rover to move directly without obstacle restrictions.</p>
+<p>中文：</p>
+<p>对一个方向上的移动，我比较全程 walk 和尽可能使用 boost 哪个更便宜。取更便宜的那个，因为在 relaxed problem 里，我允许 rover 不受障碍限制地直接移动。</p>
+<p>First-person answer / 第一人称说法：</p>
+<p>English: "I designed the heuristic by asking what information should still guide the search without risking overestimation. I kept crystals, launch sites, required sample count, and storm-adjusted costs, but removed rocks and crater restrictions. That gave me a useful relaxed lower bound."</p>
+<p>中文：“我设计 heuristic 时先想：哪些信息能指导搜索，同时不会导致高估？我保留 crystals、launch sites、required sample count 和 storm-adjusted costs，但移除 rocks 和 crater restrictions。这样得到一个有用的 relaxed lower bound。”</p>
+<h3>14.5 Development Story / 我是怎么一步步写出来的</h3>
+<p>English:</p>
+<ol>
+<li>I first read <code>game_env.py</code> and <code>game_state.py</code> to identify the agent design components from the lecture: states, actions, transition function, costs, and goal test.</li>
+<li>I implemented UCS first because it is the simplest correct baseline for weighted search.</li>
+<li>I tested UCS on the supplied levels to make sure successor generation and cost updates were correct.</li>
+<li>Then I implemented A* by reusing the UCS structure and changing the heap priority from <code>g(n)</code> to <code>g(n)+h(n)</code>.</li>
+<li>I designed the heuristic from a relaxed problem, following the lecture idea that good heuristics can come from simpler versions of the original problem.</li>
+<li>I added caching after noticing the heuristic repeatedly asks for similar distances and crystal-order subproblems.</li>
+<li>Finally, I compared UCS and A* results. Since A* found the same costs but explored much less, the heuristic was useful on the supplied tests.</li>
+</ol>
+<p>中文：</p>
+<ol>
+<li>我先读了 <code>game_env.py</code> 和 <code>game_state.py</code>，根据 lecture 里的 agent design components 找出 states、actions、transition function、costs 和 goal test。</li>
+<li>我先实现 UCS，因为它是 weighted search 里最直接、正确的 baseline。</li>
+<li>我用提供的 levels 测试 UCS，确认 successor generation 和 cost updates 是正确的。</li>
+<li>然后我复用 UCS 的结构实现 A*，主要把 heap priority 从 <code>g(n)</code> 改成 <code>g(n)+h(n)</code>。</li>
+<li>我根据 relaxed problem 设计 heuristic，这对应 lecture 里说的：heuristics 可以来自 simpler versions of the original problem。</li>
+<li>我加了 caching，因为 heuristic 会反复查询类似的 distances 和 crystal-order subproblems。</li>
+<li>最后我比较 UCS 和 A<em>。A</em> 找到相同 costs，但 explored states 少很多，说明这个 heuristic 在提供的 tests 上是有用的。</li>
+</ol>
+<p>Short version to memorise / 可背的短版：</p>
+<p>English: "I wrote UCS first from the lecture's priority-queue search pattern. Then I reused that search loop for A*, replacing the priority with <code>g+h</code>. The heuristic came from a relaxed version of CrystalRover: ignore obstacles and crater restrictions, but keep the important mission structure of collecting enough crystals and reaching launch."</p>
+<p>中文：“我先按 lecture 的 priority-queue search pattern 写出 UCS。然后复用这个 search loop 写 A*，把 priority 换成 <code>g+h</code>。Heuristic 是从 CrystalRover 的 relaxed version 来的：忽略障碍和 crater 限制，但保留收集足够 crystals 并到达 launch 的任务结构。”</p>
+<h2>15. Performance Discussion / 性能讨论</h2>
+<p>Current local run / 当前本地运行：</p>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th style="text-align: right;">UCS cost</th>
+<th style="text-align: right;">A* cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">10.5</td>
+</tr>
+<tr>
+<td>L2</td>
+<td style="text-align: right;">13.5</td>
+<td style="text-align: right;">13.5</td>
+</tr>
+<tr>
+<td>L3</td>
+<td style="text-align: right;">26.0</td>
+<td style="text-align: right;">26.0</td>
+</tr>
+<tr>
+<td>L4</td>
+<td style="text-align: right;">21.5</td>
+<td style="text-align: right;">21.5</td>
+</tr>
+</tbody>
+</table>
+<p>English:</p>
+<p>The solution costs match between UCS and A* on the supplied tests. This is good evidence that A* is preserving optimality on these cases while reducing search effort. The runtime varies by machine, but A* was much faster locally because the heuristic gave useful direction and avoided exploring many irrelevant low-cost states.</p>
+<p>中文：</p>
+<p>在提供的 tests 上，UCS 和 A* 的 solution costs 一致。这说明在这些 cases 上，A* 保持了 optimality，同时减少了 search effort。Runtime 会随机器变化，但本地 A* 明显更快，因为 heuristic 给了搜索方向，避免扩展很多低 cost 但不相关的 states。</p>
+<h2>16. Limitations / 局限性</h2>
+<p>English:</p>
+<p>The main limitation is that the heuristic ignores obstacles and crater constraints. On maps where rocks force large detours, or where crater/jump management is the main challenge, the heuristic may be loose. A loose heuristic is still safe if admissible, but it gives weaker guidance, so A* may expand more states.</p>
+<p>中文：</p>
+<p>主要局限是 heuristic 忽略了 obstacles 和 crater constraints。如果地图里 rocks 导致很长绕路，或者 crater/jump 管理是主要难点，这个 heuristic 可能会比较 loose。Loose heuristic 如果 admissible 仍然安全，但 guidance 较弱，所以 A* 可能扩展更多 states。</p>
+<h2>17. AI Usage Explanation / AI 使用说明</h2>
+<p>English:</p>
+<p>I used Codex/ChatGPT as an assistant during preparation. It helped with drafting and polishing report wording, generating local experiment tables from my solver output, and checking whether explanations matched the code. I reviewed the final code and report, and I can explain the algorithms, state representation, heuristic, and limitations myself.</p>
+<p>中文：</p>
+<p>我在准备过程中使用了 Codex/ChatGPT 作为辅助工具。它帮助我润色 report 表达、根据 solver 输出整理本地实验表格，并检查解释是否和代码一致。最终代码和报告我自己 review 过，我能独立解释 algorithms、state representation、heuristic 和 limitations。</p>
+<p>If asked whether AI wrote the assignment / 如果被问是不是 AI 写的：</p>
+<p>English:</p>
+<p>I used AI support, but I did not treat it as a black box. I studied and verified the final implementation. The important parts I understand are how UCS expands by path cost, how A* uses <code>g+h</code>, how <code>visited_cost</code> handles repeated states, how the heuristic is computed from a relaxed problem, and where the heuristic is limited.</p>
+<p>中文：</p>
+<p>我使用了 AI 辅助，但没有把它当黑箱。我学习并验证了最终实现。我理解的关键部分包括：UCS 如何按 path cost 扩展，A* 如何使用 <code>g+h</code>，<code>visited_cost</code> 如何处理 repeated states，heuristic 如何来自 relaxed problem，以及这个 heuristic 的局限在哪里。</p>
+<h2>18. GitHub Commit History / GitHub 提交记录怎么解释</h2>
+<p>Repository / 仓库:</p>
+<ul>
+<li>Local repo: <code>a1/2026-Assignment-1-Support-Code</code></li>
+<li>Remote: <code>https://github.com/49079986/2026-Assignment-1-Support-Code.git</code></li>
+<li>Branch: <code>main</code></li>
+</ul>
+<p>Important note / 重要提醒:</p>
+<ul>
+<li>Current local <code>solution.py</code> is marked modified because of line-ending differences (<code>LF</code>/<code>CRLF</code> warning). The latest pushed commit is <code>1e638ce Update Solution.py V3</code>.</li>
+<li>Some commits include <code>__pycache__</code> files. Those were generated automatically when running Python tests and are not part of the algorithm design. If asked, say that the meaningful authored files are mainly <code>solution.py</code>, <code>Results.md</code>, and <code>test_l1_l4.bat</code>.</li>
+</ul>
+<h3>18.1 Commit Timeline / 提交时间线</h3>
+<table>
+<thead>
+<tr>
+<th>Commit</th>
+<th>Date</th>
+<th>Message</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>6a62fdb</code></td>
+<td>2026-08-30</td>
+<td><code>Update soultuion.py UCS search function</code></td>
+<td>First meaningful UCS implementation in <code>solution.py</code>.</td>
+</tr>
+<tr>
+<td><code>f7f7deb</code></td>
+<td>2026-08-30</td>
+<td><code>Test ucs funtion and find a error</code></td>
+<td>I ran/testing UCS and made a small correction after finding an issue.</td>
+</tr>
+<tr>
+<td><code>7a1ed2e</code></td>
+<td>2026-09-01</td>
+<td><code>Finish A* Version1</code></td>
+<td>First A* version added, reusing UCS structure with heuristic priority.</td>
+</tr>
+<tr>
+<td><code>25b6ac9</code></td>
+<td>2026-09-01</td>
+<td><code>Add a script to test</code></td>
+<td>Added <code>test_l1_l4.bat</code> to run repeated local checks more easily.</td>
+</tr>
+<tr>
+<td><code>72b0489</code></td>
+<td>2026-09-01</td>
+<td><code>Update solution V2</code></td>
+<td>Improved/adjusted solution and recorded results in <code>Results.md</code>.</td>
+</tr>
+<tr>
+<td><code>1e638ce</code></td>
+<td>2026-09-01</td>
+<td><code>Update Solution.py V3</code></td>
+<td>Final refinement of <code>solution.py</code> and results before submission.</td>
+</tr>
+</tbody>
+</table>
+<p>中文表述：</p>
+<table>
+<thead>
+<tr>
+<th>Commit</th>
+<th>日期</th>
+<th>信息</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>6a62fdb</code></td>
+<td>2026-08-30</td>
+<td><code>Update soultuion.py UCS search function</code></td>
+<td>第一次主要实现 UCS。</td>
+</tr>
+<tr>
+<td><code>f7f7deb</code></td>
+<td>2026-08-30</td>
+<td><code>Test ucs funtion and find a error</code></td>
+<td>测试 UCS 后发现问题，并做了小修正。</td>
+</tr>
+<tr>
+<td><code>7a1ed2e</code></td>
+<td>2026-09-01</td>
+<td><code>Finish A* Version1</code></td>
+<td>加入第一版 A*，在 UCS 结构上加入 heuristic priority。</td>
+</tr>
+<tr>
+<td><code>25b6ac9</code></td>
+<td>2026-09-01</td>
+<td><code>Add a script to test</code></td>
+<td>加入 <code>test_l1_l4.bat</code>，方便重复运行本地测试。</td>
+</tr>
+<tr>
+<td><code>72b0489</code></td>
+<td>2026-09-01</td>
+<td><code>Update solution V2</code></td>
+<td>改进 solution，并把测试结果记录到 <code>Results.md</code>。</td>
+</tr>
+<tr>
+<td><code>1e638ce</code></td>
+<td>2026-09-01</td>
+<td><code>Update Solution.py V3</code></td>
+<td>提交前对 <code>solution.py</code> 和 results 做最终整理。</td>
+</tr>
+</tbody>
+</table>
+<h3>18.2 Why I Made These Commits / 我为什么要这样提交</h3>
+<p>English:</p>
+<p>I used commits as development checkpoints. Each commit records a stage of the assignment: implementing UCS, testing and correcting it, implementing A*, adding a testing script, and refining the final solution. This helped me avoid losing work, compare versions if a change made results worse, and show an honest development process rather than one unexplained final upload.</p>
+<p>中文：</p>
+<p>我把 commits 当作开发过程中的 checkpoints。每个 commit 记录 assignment 的一个阶段：实现 UCS、测试并修正 UCS、实现 A*、加入测试脚本、最后优化和整理 solution。这样做可以防止丢失工作，也方便在某个改动让结果变差时回看之前版本，同时展示一个真实的开发过程，而不是只有一个无法解释的最终上传。</p>
+<h3>18.3 How To Explain The Development Process / 怎么用第一人称讲开发过程</h3>
+<p>English:</p>
+<p>"My Git history shows the order I worked in. I started with UCS because the lecture suggests implementing uninformed weighted search first, and UCS is the baseline for optimal path cost. After testing UCS, I fixed an issue and then moved to A<em>. For A</em>, I reused the same frontier and <code>visited_cost</code> idea, but changed the priority from <code>g(n)</code> to <code>g(n)+h(n)</code>. After that I added a batch script so I could quickly rerun L1-L4 and compare UCS and A* costs. The later V2 and V3 commits were refinements to the heuristic and final results."</p>
+<p>中文：</p>
+<p>“我的 Git history 可以看出我的开发顺序。我先写 UCS，因为 lecture 里 weighted search 的基础就是 UCS，它也是 optimal path cost 的 baseline。测试 UCS 后我修了一个问题，然后开始写 A<em>。A</em> 复用了同样的 frontier 和 <code>visited_cost</code> 思路，只是把 priority 从 <code>g(n)</code> 改成 <code>g(n)+h(n)</code>。之后我加了一个 batch script，方便快速重跑 L1-L4，并比较 UCS 和 A* 的 costs。后面的 V2 和 V3 commits 主要是 heuristic 和最终结果的 refinement。”</p>
+<h3>18.4 If Asked About Commit Messages / 如果被问 commit message 写得不规范</h3>
+<p>English:</p>
+<p>"Some commit messages have typos, like <code>soultuion</code> and <code>funtion</code>. That was just my informal development history while working. The content still shows the development progression: UCS, testing, A*, testing script, and final revisions."</p>
+<p>中文：</p>
+<p>“有些 commit message 有 typo，比如 <code>soultuion</code> 和 <code>funtion</code>。这是我开发时比较随手写的历史记录。但内容上还是能看出开发过程：UCS、测试、A*、测试脚本、最终修改。”</p>
+<h3>18.5 If Asked About <code>__pycache__</code> / 如果被问为什么提交了 <code>__pycache__</code></h3>
+<p>English:</p>
+<p>"Those files were generated automatically when I ran Python tests. They were accidentally committed, but they are not part of my algorithm. The meaningful source changes are in <code>solution.py</code>, and the testing support is <code>test_l1_l4.bat</code> and <code>Results.md</code>."</p>
+<p>中文：</p>
+<p>“这些文件是我运行 Python 测试时自动生成的，后来不小心也被 commit 进去了。它们不是算法的一部分。真正有意义的 source changes 在 <code>solution.py</code>，测试辅助文件是 <code>test_l1_l4.bat</code> 和 <code>Results.md</code>。”</p>
+<h3>18.6 Short Answer To Memorise / 可背短答</h3>
+<p>English:</p>
+<p>"I committed after meaningful milestones so the history records how the solution developed: first UCS, then testing and fixing, then A*, then a testing script, and finally heuristic/result refinements. The commits are useful evidence that I built and checked the solver iteratively."</p>
+<p>中文：</p>
+<p>“我是在有意义的 milestones 后提交的，所以 history 记录了 solution 的发展过程：先 UCS，然后测试和修错，然后 A*，再加测试脚本，最后做 heuristic 和 result 的 refinement。这些 commits 可以说明我是逐步 build 和 check 这个 solver 的。”</p>
+<h2>19. Likely Questions / 常见问题</h2>
+<p>Q: What is the search graph in this assignment?</p>
+<p>A: The vertices are <code>GameState</code>s, and the edges are valid actions returned by <code>perform_action</code>. Edge cost is <code>ACTION_COST[action]</code>.</p>
+<p>问：这个 assignment 里的 search graph 是什么？</p>
+<p>答：Vertices 是 <code>GameState</code>，edges 是 <code>perform_action</code> 产生的合法 actions。Edge cost 是 <code>ACTION_COST[action]</code>。</p>
+<p>Q: Why is CrystalRover not just shortest path on grid cells?</p>
+<p>A: Because the state includes more than position. Crystal collection status and rocket jumps left affect future validity and goal satisfaction.</p>
+<p>问：为什么 CrystalRover 不只是 grid cell 上的 shortest path？</p>
+<p>答：因为 state 不只是 position。Crystal collection status 和 rocket jumps left 会影响之后 action 是否合法，以及 goal 是否满足。</p>
+<p>Q: Why can UCS return when the first goal is popped?</p>
+<p>A: UCS pops nodes in nondecreasing <code>g(n)</code>. With positive edge costs, no unexpanded frontier path can lead to a cheaper goal once a goal is popped.</p>
+<p>问：为什么 UCS 第一次 pop 到 goal 就可以返回？</p>
+<p>答：UCS 按非递减的 <code>g(n)</code> pop nodes。所有 edge costs 为正时，一旦 goal 被 pop，frontier 里不可能还有能通向更便宜 goal 的 path。</p>
+<p>Q: What is the difference between Greedy Best-First Search and A*?</p>
+<p>A: Greedy best-first uses only <code>h(n)</code>, so it chases what looks closest to the goal and is not optimal in general. A* uses <code>g(n)+h(n)</code>, combining real cost so far with estimated remaining cost.</p>
+<p>问：Greedy Best-First Search 和 A* 有什么区别？</p>
+<p>答：Greedy best-first 只用 <code>h(n)</code>，所以它追逐看起来离 goal 最近的方向，一般不保证 optimal。A* 用 <code>g(n)+h(n)</code>，结合已经付出的真实 cost 和剩余 cost 估计。</p>
+<p>Q: What makes a heuristic admissible?</p>
+<p>A: It never overestimates the true shortest cost-to-goal. My heuristic is optimistic because it solves an easier version of the game.</p>
+<p>问：什么是 admissible heuristic？</p>
+<p>答：它不会高估真实的 shortest cost-to-goal。我的 heuristic 是 optimistic 的，因为它解的是更容易的版本。</p>
+<p>Q: What would happen if the heuristic were zero everywhere?</p>
+<p>A: A* would become UCS because <code>f(n)=g(n)+0</code>.</p>
+<p>问：如果 heuristic 全部是 0 会怎样？</p>
+<p>答：A* 会退化成 UCS，因为 <code>f(n)=g(n)+0</code>。</p>
+<p>Q: What would happen if the heuristic overestimated?</p>
+<p>A: A* might become faster, but it would no longer guarantee optimality.</p>
+<p>问：如果 heuristic 高估了会怎样？</p>
+<p>答：A* 可能更快，但不再保证 optimality。</p>
+<p>Q: Why do you cache heuristic components?</p>
+<p>A: A* calls the heuristic many times, and many calls reuse the same pairwise distances or crystal-tail subproblems. <code>lru_cache</code> avoids recomputation.</p>
+<p>问：为什么要 cache heuristic components？</p>
+<p>答：A* 会调用很多次 heuristic，而且很多调用会重复同样的 pairwise distances 或 crystal-tail subproblems。<code>lru_cache</code> 可以避免重复计算。</p>
+<p>Q: What is one improvement you could make?</p>
+<p>A: Precompute more accurate shortest-path lower bounds between important locations while still preserving admissibility, or incorporate obstacle-aware distances carefully.</p>
+<p>问：你可以怎么改进？</p>
+<p>答：可以在重要位置之间预计算更准确的 shortest-path lower bounds，同时保持 admissibility；或者谨慎加入 obstacle-aware distances。</p>
+<p>Q: Why did you make multiple GitHub commits?</p>
+<p>A: I used commits as checkpoints: UCS implementation, UCS testing/fix, first A* version, testing script, and later refinements. This helped me track progress and verify changes step by step.</p>
+<p>问：为什么你有多个 GitHub commits？</p>
+<p>答：我把 commits 当 checkpoints：UCS implementation、UCS testing/fix、first A* version、testing script，以及后续 refinements。这样可以记录进度，也方便一步步验证改动。</p>
+<p>Q: What do your commits show about authorship?</p>
+<p>A: They show an iterative development process instead of one final unexplained upload. I can connect the commits to the code: UCS first, then A*, then testing and refinements.</p>
+<p>问：你的 commits 如何说明 authorship？</p>
+<p>答：它们显示的是一个 iterative development process，而不是只有一个最终上传。我能把 commits 和代码对应起来：先 UCS，然后 A*，再测试和优化。</p>
+<h2>20. Practice Script / 口头练习稿</h2>
+<p>English:</p>
+<p>I treated CrystalRover as a state-space search problem. The state graph has <code>GameState</code>s as nodes and valid actions as weighted edges. My UCS follows the lecture version of best-first search with priority <code>f(n)=g(n)</code>, so it expands the cheapest path so far. My A* changes the priority to <code>f(n)=g(n)+h(n)</code>. The heuristic estimates the relaxed remaining cost: collect the required number of remaining crystals in the cheapest relaxed order, then travel to the nearest launch. The relaxed problem ignores rocks, craters, and jump restrictions, so it should not overestimate the true cost. My Git commits match this process: I first implemented UCS, tested and fixed it, added A<em>, then added a testing script and final refinements. That makes A</em> much more directed than UCS while still aiming to preserve optimality.</p>
+<p>中文：</p>
+<p>我把 CrystalRover 当作 state-space search problem。State graph 里的 nodes 是 <code>GameState</code>，合法 actions 是带 cost 的 edges。我的 UCS 对应 lecture 里的 best-first search，priority 是 <code>f(n)=g(n)</code>，所以它扩展目前 path cost 最低的 node。我的 A* 把 priority 改成 <code>f(n)=g(n)+h(n)</code>。Heuristic 估计 relaxed remaining cost：用最便宜的 relaxed order 收集还需要的 crystals，然后到最近的 launch。这个 relaxed problem 忽略 rocks、craters 和 jump restrictions，所以它不应该高估真实 cost。我的 Git commits 也对应这个过程：先实现 UCS，测试并修正，然后加入 A<em>，再加测试脚本和最终 refinement。这样 A</em> 比 UCS 更有方向，同时仍然尽量保持 optimality。</p>
+<h2>21. Before Interview Checklist / 面试前清单</h2>
+<ul>
+<li>Student ID card / 学生证。</li>
+<li>Laptop / 笔记本电脑。</li>
+<li>Submitted <code>solution.py</code> and report / 提交的代码和报告。</li>
+<li>AI usage logs if available / 如果有 AI 使用记录，带上。</li>
+<li>GitHub repository and commit history / GitHub 仓库和提交记录。</li>
+<li>Practise explaining <code>GameState</code> / 练习解释 <code>GameState</code>。</li>
+<li>Practise explaining UCS with <code>frontier</code> and <code>visited_cost</code> / 练习用 <code>frontier</code> 和 <code>visited_cost</code> 解释 UCS。</li>
+<li>Practise explaining A* with <code>g</code>, <code>h</code>, and <code>f</code> / 练习解释 A* 的 <code>g</code>、<code>h</code>、<code>f</code>。</li>
+<li>Practise explaining why your heuristic is admissible / 练习解释 heuristic 为什么 admissible。</li>
+<li>Practise explaining why each commit was made / 练习解释每个 commit 为什么提交。</li>
+<li>Be ready to name one limitation / 准备说出一个局限。</li>
+</ul></main></body></html>

@@ -1,0 +1,30 @@
+# two shortcuts
+# num rows, num cols
+10, 25
+# rocket jumps
+2
+# min samples
+3
+# storm direction
+LEFT
+# storm directional cost
+0.5
+# cost targets (min score target, max score target)
+26.5, 26.0
+# nodes targets (min score target, max score target)
+303, 30
+# UCS run time targets (min score target, max score target)
+0.7429, 0.3715
+# A* run time targets (min score target, max score target)
+0.0281, 0.014
+# grid data
+RRRRRRRRRRRRRRRRRRRRRRRRR
+R P   C   C   C   C     R
+R                       R
+RRR*RRRRRRRRRRRRRRRRRRRRR
+R                       R
+R     C        C        R
+RRR*RRRRRRRRRRRRRRRRRRRRR
+R                       R
+RE                     ER
+RRRRRRRRRRRRRRRRRRRRRRRRR

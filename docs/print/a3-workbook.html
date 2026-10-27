@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>A3 报告学习工作稿</title><link href="../styles.css" rel="stylesheet"/><link href="../graphite.css" media="screen" rel="stylesheet"/></head><body class="print-document"><main class="prose"><p><a href="../index.html#assignments">← A1 / A2 / A3 作业复盘</a></p><h1>A3 报告学习工作稿</h1><p>COMP3702 A3 学习工作稿</p>
+<p>CrystalRover 强化学习  代码复核与实验记录</p>
+<p>这份工作稿供你运行参考实现、核对数据，再独立重写。允许 AI 的部分附代码对应说明和实测图表；禁止 AI 的小问仅保留题目和作答区域。</p>
+<p>姓名：________________  学号：________________  邮箱：________________</p>
+<p>作业标注截止时间：2026 年 10 月 30 日 16:00。代码与报告各占 50 分。</p>
+<h2>Q1 Q learning 与 Value Iteration</h2>
+<p>本题共 5 分。Q1a 与 Q1b 均禁止 AI。</p>
+<h3>Q1a 相似点 2点5分</h3>
+<p>描述标准表格型 Q-learning 与标准表格型 Value Iteration 的两个关键相似点，答案不超过五行。</p>
+<p>[独立作答区域]</p>
+<h3>Q1b 不同点 2点5分</h3>
+<p>描述两个关键不同点，答案不超过五行。不要换一种表述重复同一个核心点。</p>
+<p>[独立作答区域]</p>
+<p>Q1 的答案由你独立填写。</p>
+<hr/>
+<h2>Q2 实现与学习率实验</h2>
+<h3>Q2a 实现说明 3分 允许AI但需明确验证</h3>
+<p>参考 QL 使用 epsilon-greedy。每个 episode 开始时根据已用训练步数计算 epsilon，训练中的贪心并列动作随机打破并列；评估方法使用确定性的贪心选择。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>参考实现设置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QL 学习率</td>
+<td>固定 alpha = 0.2</td>
+</tr>
+<tr>
+<td>epsilon</td>
+<td>从 0.25 线性降到 0.02</td>
+</tr>
+<tr>
+<td>衰减区间</td>
+<td>训练步数预算的前 80%</td>
+</tr>
+<tr>
+<td>初始化</td>
+<td>Q 表按需创建，初始 Q 值为 0</td>
+</tr>
+<tr>
+<td>实验候选学习率</td>
+<td>0.1  0.2  0.4，均为固定值</td>
+</tr>
+</tbody>
+</table>
+<p>这些值用于演示与复现，不宣称已经最优。最终采用值、替代方案及选择依据，请根据你的实际实验与最终实现补充：________________。</p>
+<p>自动检查已核对单步终止更新、合法动作、训练状态链、有限特征与评估不改权重。你的验证记录：检查命令、手算样本、实际观察和发现的问题：________________。</p>
+<h3>Q2b 三个固定学习率 4分 允许AI</h3>
+<p>L1，环境与探索种子 1914。三次独立训练只改变 alpha，均使用官方步数及累计奖励预算；最终策略评估 1000 次。图中为训练回报的 50-episode 移动平均。</p>
+<p><img alt="学习曲线" src="../assignments/a3/results/learning_rates/learning_curves.png"/></p>
+<table>
+<thead>
+<tr>
+<th>alpha</th>
+<th>训练episode</th>
+<th>评估平均回报</th>
+<th>成功次数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1</td>
+<td>13,428</td>
+<td>-31.56</td>
+<td>996/1000</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>14,388</td>
+<td>-31.65</td>
+<td>994/1000</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td>13,295</td>
+<td>-38.00</td>
+<td>995/1000</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2>Q2c 独立作答</h2>
+<p>本小问 6 分，禁止 AI。结合自己的图表，讨论学习率对学习速度、稳定性和最终观测表现的影响，解释意外结果及实验限制。</p>
+<p>[独立作答区域]</p>
+<h2>Q3a 特征设计 4分 允许AI但需明确验证</h2>
+<p>FQ 使用 21 维固定长度向量，Q 值为学习权重与特征的点积。权重从全 0 开始，以固定 alpha=0.03 做样本半梯度更新。以下为归一化前的特征定义。</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>特征</th>
+<th>计算与作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0至7</td>
+<td>bias 类型 方向</td>
+<td>常数、walk/boost/jump 指示、左/右/上/下指示，表示动作类别与朝向。</td>
+</tr>
+<tr>
+<td>8至9</td>
+<td>目标距离</td>
+<td>当前格、前方一格的地图 BFS 距离，除以行数加列数。</td>
+</tr>
+<tr>
+<td>10至12</td>
+<td>朝目标的进展</td>
+<td>当前距离减前方一格距离；boost 另看两格与四格，除以同一尺度。</td>
+</tr>
+<tr>
+<td>13至14</td>
+<td>岩浆位置</td>
+<td>正前方是否岩浆，以及两个侧邻格的岩浆指示平均值。</td>
+</tr>
+<tr>
+<td>15至16</td>
+<td>岩石与陨石坑</td>
+<td>正前方格的地形指示，描述方向上的障碍和坑。</td>
+</tr>
+<tr>
+<td>17至18</td>
+<td>收集进度</td>
+<td>尚缺样本数除以最低要求，以及是否已满足最低数量。</td>
+</tr>
+<tr>
+<td>19至20</td>
+<td>目标在前方</td>
+<td>前方一格是否有未收集水晶；数量足够后是否是发射点。</td>
+</tr>
+</tbody>
+</table>
+<p>目标在样本不足时是最近未收集水晶，足够后是最近发射点。BFS 仅查看公开地图，将岩石和岩浆视为不可通行，未使用隐藏概率或成本。直线方向查询遇岩石、岩浆或坑时停止，不代表真实随机转移概率。</p>
+<p>原始向量统一除以 max(1, L2范数)，保持数值尺度有限。因此归一化后的 bias 不一定是 1。局限是最近目标不代表全程最优目标组合，距离忽略风暴、随机移动和真实动作成本，局部地形也不能描述所有远处风险。</p>
+<p>验证请实际提取若干状态与动作的向量，手算对应距离与地形，并用官方特征检查核对长度。你的检查记录与修订：________________。</p>
+<hr/>
+<h2>Q3b 四个关卡的学习权重 2分 允许AI</h2>
+<p>使用 baseline 中各关卡官方 FQ 预算训练结束后的原始权重。列名与代码 FEATURE_NAMES 一一对应；所有特征都经过前述向量归一化。</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>L1</th>
+<th>L2</th>
+<th>L3</th>
+<th>L4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bias</td>
+<td>-5.6116</td>
+<td>2.2012</td>
+<td>-333.3518</td>
+<td>-167.2476</td>
+</tr>
+<tr>
+<td>walk</td>
+<td>0.1316</td>
+<td>2.0101</td>
+<td>-113.0617</td>
+<td>-63.3955</td>
+</tr>
+<tr>
+<td>boost</td>
+<td>-5.7432</td>
+<td>2.6319</td>
+<td>-114.5966</td>
+<td>-60.2299</td>
+</tr>
+<tr>
+<td>jump</td>
+<td>0.0000</td>
+<td>-2.4408</td>
+<td>-105.6934</td>
+<td>-43.6222</td>
+</tr>
+<tr>
+<td>left</td>
+<td>-0.9095</td>
+<td>-0.6808</td>
+<td>-83.1122</td>
+<td>-38.9930</td>
+</tr>
+<tr>
+<td>right</td>
+<td>-0.8573</td>
+<td>3.7714</td>
+<td>-86.4017</td>
+<td>-45.7872</td>
+</tr>
+<tr>
+<td>up</td>
+<td>-1.8586</td>
+<td>4.3092</td>
+<td>-76.0920</td>
+<td>-36.5142</td>
+</tr>
+<tr>
+<td>down</td>
+<td>-1.9863</td>
+<td>-5.1986</td>
+<td>-87.7458</td>
+<td>-45.9532</td>
+</tr>
+<tr>
+<td>target_distance</td>
+<td>-32.8363</td>
+<td>-39.6792</td>
+<td>-105.1490</td>
+<td>-104.9193</td>
+</tr>
+<tr>
+<td>target_distance_ahead_1</td>
+<td>-42.3131</td>
+<td>-54.5965</td>
+<td>-118.1725</td>
+<td>-115.2836</td>
+</tr>
+<tr>
+<td>target_progress_ahead_1</td>
+<td>9.4768</td>
+<td>14.9173</td>
+<td>13.0235</td>
+<td>10.3643</td>
+</tr>
+<tr>
+<td>target_progress_ahead_2</td>
+<td>1.1236</td>
+<td>11.1194</td>
+<td>5.4814</td>
+<td>7.9385</td>
+</tr>
+<tr>
+<td>target_progress_ahead_4</td>
+<td>1.4927</td>
+<td>25.4850</td>
+<td>6.0413</td>
+<td>6.2557</td>
+</tr>
+<tr>
+<td>lava_forward</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>-112.8411</td>
+<td>-149.5981</td>
+</tr>
+<tr>
+<td>lava_side</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>-44.9624</td>
+<td>-54.9584</td>
+</tr>
+<tr>
+<td>rock_forward</td>
+<td>-9.2912</td>
+<td>-19.8659</td>
+<td>-96.5613</td>
+<td>-77.7325</td>
+</tr>
+<tr>
+<td>crater_forward</td>
+<td>0.0000</td>
+<td>-14.7261</td>
+<td>-86.4097</td>
+<td>-61.8877</td>
+</tr>
+<tr>
+<td>crystals_remaining_fraction</td>
+<td>-47.5741</td>
+<td>-79.6931</td>
+<td>-239.4484</td>
+<td>-233.0373</td>
+</tr>
+<tr>
+<td>ready_for_launch</td>
+<td>9.6088</td>
+<td>-11.7971</td>
+<td>34.0911</td>
+<td>65.7897</td>
+</tr>
+<tr>
+<td>uncollected_crystal_ahead</td>
+<td>-5.8336</td>
+<td>0.8100</td>
+<td>-51.7691</td>
+<td>32.1440</td>
+</tr>
+<tr>
+<td>launch_ahead</td>
+<td>-6.0808</td>
+<td>-5.9204</td>
+<td>51.5923</td>
+<td>108.6143</td>
+</tr>
+</tbody>
+</table>
+<h3>Q3c 权重解读 6分 禁止AI</h3>
+<p>结合特征定义讨论权重的符号和大小、是否符合你对良好策略的预期，以及关卡之间的差异。</p>
+<p>[独立作答区域]</p>
+<hr/>
+<h2>Q4a QL 与 FQ 实验比较 6分 允许AI</h2>
+<p>选择 L1 和 L3：L1 为无岩浆走廊地图；L3 包含岩浆、陨石坑且需三个样本，以覆盖不同地形与收集要求。</p>
+<p>两种算法每关共用 30000 步上限和相同累计奖励下限，使用相同评估种子、1000 次最终评估与同一个阈值。回报区间取两种官方区间的包络，阈值为下限加区间宽度的 75%。学习率分别为 QL 0.2、FQ 0.03；epsilon 设置相同。</p>
+<table>
+<thead>
+<tr>
+<th>关卡</th>
+<th>累计奖励下限</th>
+<th>学习阈值</th>
+<th>评估截断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td>-58,000.00</td>
+<td>-47.750</td>
+<td>-87.80</td>
+</tr>
+<tr>
+<td>L3</td>
+<td>-118,000.00</td>
+<td>-128.825</td>
+<td>-237.80</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="学习曲线" src="../assignments/a3/results/comparison/learning_curves.png"/></p>
+<table>
+<thead>
+<tr>
+<th>运行</th>
+<th>达标episode</th>
+<th>达标步数</th>
+<th>平均回报</th>
+<th>成功次数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1_ql</td>
+<td>未达到</td>
+<td>未达到</td>
+<td>-89.07</td>
+<td>11/1000</td>
+</tr>
+<tr>
+<td>L1_fq</td>
+<td>167</td>
+<td>7,208</td>
+<td>-35.10</td>
+<td>1000/1000</td>
+</tr>
+<tr>
+<td>L3_ql</td>
+<td>未达到</td>
+<td>未达到</td>
+<td>-470.92</td>
+<td>1/1000</td>
+</tr>
+<tr>
+<td>L3_fq</td>
+<td>未达到</td>
+<td>未达到</td>
+<td>-234.06</td>
+<td>538/1000</td>
+</tr>
+</tbody>
+</table>
+<p>阈值来自每 1/25 训练步数预算的一次 50-episode 贪心评估。未达到保留为未达到；训练回报曲线与贪心评估不是同一统计量。</p>
+<hr/>
+<h2>Q4b 概念预测 6分 禁止AI</h2>
+<p>预测哪种算法学习更快、哪种最终表现更好，并说明理由。讨论表格型和特征型表示的优点、局限、泛化和近似误差。</p>
+<p>[独立作答区域]</p>
+<h2>Q4c 结果解读与结论 8分 禁止AI</h2>
+<p>结合自己的图表比较学习轨迹、速度、稳定性与最终质量；核对概念预测，讨论两个关卡的差异，并以实验支持解释。</p>
+<p>[独立作答区域]</p>
+<h2>附录 AI声明与参考来源</h2>
+<p>AI 使用记录草稿：OpenAI Codex 于 2026 年 10 月 26 日协助生成学习参考代码、实验脚本、实测图表及本工作稿允许 AI 的部分。模型版本：按你所用界面实际信息填写。</p>
+<p>请按实际情况补充最终保留的内容、你做过的验证与修订。禁止 AI 的答案需由你独立完成，不要声明尚未做过的验证。</p>
+<p>参考来源：COMP3702 Assignment 3 CrystalRover Reinforcement Learning，2026，课程提供的作业说明。</p>
+<p>官方支持代码与接口：https://github.com/comp3702-2026/2026-Assignment-3-Support-Code</p>
+<p>支持代码版本：0e498b0adbe94b0e6b084945e575de3df4988d0e。原始实验数据保存在 results 的三个分组中。</p></main></body></html>

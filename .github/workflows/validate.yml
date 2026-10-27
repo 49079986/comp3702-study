@@ -1,0 +1,23 @@
+name: Validate study website
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Validate files and links
+        run: python3 scripts/validate_public_site.py
+      - name: Verify algorithms and bilingual content
+        run: |
+          node scripts/verify.js
+          node scripts/verify_bilingual.js
+          node scripts/verify_a3_unit.cjs
+      - name: Verify motion and navigation fallbacks
+        run: |
+          node scripts/test_motion.cjs
+          node scripts/test_page_transitions.cjs

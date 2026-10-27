@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"/><title>Mock A - English practice</title><link href="../styles.css" rel="stylesheet"/><body class="print-document"><main class="prose"><h1>Comprehensive Mock A · 100 marks</h1>
+<p>Original practice paper. Suggested duration: 120 minutes. This is not an official examination paper or duration. Answer in English and show all working.</p>
+<h2>1 · Search and heuristics (16 marks)</h2>
+<p>Directed edges: S→A:2, S→B:1, A→C:2, A→G:9, B→C:2, B→D:6, C→G:3, D→G:1. h(S, A, B, C, D, G)=(5,5,4,3,1,0). Use listed successor order, insertion-order priority ties and removal-time goal tests. BFS marks on generation; UCS/A* retain minimum g. Give removal orders, paths and costs for BFS, UCS, A*, then test consistency.</p>
+<h2>2 · CSP propagation (12 marks)</h2>
+<p>D(A)=D(B)=D(C)={1,2,3}, with A&lt;B and B&lt;C. Start with arcs A→B, B→A, B→C, C→B and reinsert affected arcs as required. Show deletions and final domains. Explain why AC does not generally establish global satisfiability.</p>
+<h2>3 · Probability and utility (10 marks)</h2>
+<p>P(H)=.1, P(E|H)=.8, P(E|¬H)=.2. Find the posterior. Separately compare certain 16 with an equally likely 0/36 lottery under U(x)=√x.</p>
+<h2>4 · MDP and value iteration (18 marks)</h2>
+<p>A moves to B for 0 or exits for 4; B only exits for 10; E absorbs with 0 reward. γ=.9, V₀=0. Compute synchronous V₁, V₂, V₃ and the policy. Also calculate Q for an action reaching X with probability .8, reward 2, V(X)=5, or Y with probability .2, reward −1, V(Y)=1. Explain entry versus exit rewards.</p>
+<h2>5 · Bandits and MCTS (10 marks)</h2>
+<p>Two arms have means 2.3575/1.795, counts 4/2, total N=6. Select using Q+√(5lnN/n). Name the four MCTS phases. An edge with old N=3, Q=2 receives return 6; update its mean.</p>
+<h2>6 · Reinforcement learning (14 marks)</h2>
+<p>Q(s, a)=3, r=2,γ=.9,α=.5. Successor Q=[8,1] and behaviour selects the second action. Compute Q-learning and SARSA updates, including a terminal-successor variant. Give the MC return of rewards [2,0,10] and explain bootstrapping/on-policy/off-policy.</p>
+<h2>7 · Adversarial search and mixed equilibrium (14 marks)</h2>
+<p>A MAX root has MIN subtrees A=[3,5,6], B=[2,9,1], C=[4,7,8]. Apply left-to-right alpha-beta; give root value, chosen action, pruned leaves and justification. For penalty kicks with matrix[[.6,.2],[.3,.9]], find both players' right-action probabilities and goal probability.</p>
+<h2>8 · Responsible AI (6 marks)</h2>
+<p>A care-allocation AI uses past healthcare expenditure to estimate need, allocating less care to one group. Explain the risk and propose two measurable improvements using the course framework.</p></main></body></html>
