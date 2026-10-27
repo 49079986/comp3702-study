@@ -57,7 +57,7 @@ test('generated source snippets and sample hash match unchanged Python',()=>{
 });
 test('standalone document has exclusively local runtime resources',()=>{
   const page=fs.readFileSync(path.join(root,'a3/index.html'),'utf8');
-  for(const m of page.matchAll(/(?:src|href)="([^"]+)"/g)){if(m[1].startsWith('#'))continue;assert.ok(!/^https?:/.test(m[1]));const file=decodeURI(m[1].split('#')[0]);assert.ok(fs.existsSync(path.resolve(root,'a3',file)),file);}
+  for(const m of page.matchAll(/(?:src|href)="([^"]+)"/g)){if(m[1].startsWith('#'))continue;assert.ok(!/^https?:/.test(m[1]));const file=decodeURI(m[1].split(/[?#]/)[0]);assert.ok(fs.existsSync(path.resolve(root,'a3',file)),file);}
 });
 function unitHarness(reduce=false,unavailableStorage=false){
   const docEvents={},events={},nodes=new Map(),timers=new Set(),stored=new Map();
