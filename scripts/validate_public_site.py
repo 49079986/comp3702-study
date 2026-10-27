@@ -3,6 +3,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import json
+import hashlib
 import re
 import sys
 
@@ -71,6 +72,11 @@ def main():
         checked += 1
         if curve['csv'] not in files:
             errors.append('Missing A3 curve: ' + curve['csv'])
+    manifest = json.loads((SITE / 'assignments/manifest.json').read_text(encoding='utf-8'))
+    for item in manifest['files']:
+        path = SITE / item['path']
+        if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != item['sha256']:
+            errors.append('Download checksum mismatch: ' + item['path'])
     print(json.dumps({'status': 'failed' if errors else 'passed', 'files': len(files), 'html_pages': sum(path.suffix == '.html' for path in files.values()), 'checked_links': checked, 'errors': errors}, ensure_ascii=False, indent=2))
     return bool(errors)
 

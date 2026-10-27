@@ -768,11 +768,6 @@
       "sha256": "1dba3234e15896a60773f8e550d289fcc2cb597e4e9fd9d55c3c95caf8593542"
     },
     {
-      "path": "assignments/manifest.json",
-      "bytes": 28972,
-      "sha256": "8661d275178ca8a01cda8f1afe150adea58c2982beac587d858333932bf4333f"
-    },
-    {
       "path": "assignments/README.md",
       "bytes": 586,
       "sha256": "0fdc61bb586b42f477deb31348bcdac20b62e408635f5f5d2796b7510780ffb7"
